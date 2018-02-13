@@ -27,11 +27,15 @@ App.propTypes = {
   token: PropTypes.string
 };
 
-const mapStateToProps = ({ isLoading, token, error }) => ({
-  isLoading,
-  token,
-  error
-});
+const mapStateToProps = ({ loginReducer }) => {
+  const { isLoading, token, error } = loginReducer;
+
+  return {
+    isLoading,
+    token,
+    error
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   submitHandler: (username, password) => {
