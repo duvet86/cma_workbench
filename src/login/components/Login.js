@@ -1,9 +1,26 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import Input from "login/components/Input";
+import { withStyles } from "material-ui/styles";
+import Button from "material-ui/Button";
+import TextField from "material-ui/TextField";
 
-export default class Login extends Component {
+const styles = theme => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200
+  },
+  menu: {
+    width: 200
+  }
+});
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,12 +29,12 @@ export default class Login extends Component {
     };
   }
 
-  setUsername = username => {
-    this.setState({ username: username });
+  setUsername = e => {
+    this.setState({ username: e.target.value });
   };
 
-  setPassword = password => {
-    this.setState({ password: password });
+  setPassword = e => {
+    this.setState({ password: e.target.value });
   };
 
   submitHandler = e => {
@@ -27,21 +44,43 @@ export default class Login extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <form onSubmit={this.submitHandler}>
-        <Input
+      <form
+        className={classes.container}
+        noValidate
+        autoComplete="off"
+        onSubmit={this.submitHandler}
+      >
+        <TextField
+          required
           id="username"
-          labelName="Username: "
-          inputType="text"
-          parentFunction={this.setUsername}
+          label="username"
+          className={classes.textField}
+          onChange={this.setUsername}
+          margin="normal"
+          placeholder="Placeholder"
         />
-        <Input
+        <TextField
+          required
           id="password"
-          labelName="Password: "
-          inputType="password"
-          parentFunction={this.setPassword}
+          label="Password"
+          className={classes.textField}
+          onChange={this.setPassword}
+          variant="password"
+          autoComplete="current-password"
+          margin="normal"
+          placeholder="Placeholder"
         />
-        <button type="submit">Login</button>
+        <Button
+          type="submit"
+          variant="raised"
+          color="primary"
+          className={classes.button}
+        >
+          Submit
+        </Button>
       </form>
     );
   }
@@ -51,3 +90,5 @@ Login.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   token: PropTypes.string
 };
+
+export default withStyles(styles)(Login);

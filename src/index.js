@@ -1,9 +1,15 @@
+import "typeface-roboto";
+
+import "rxjs/add/observable/of";
 import "rxjs/add/observable/fromPromise";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/map";
 
-import App from "./App";
+import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
+import Reboot from "material-ui/Reboot";
+
+import App from "App";
 
 import React from "react";
 import { render } from "react-dom";
@@ -17,7 +23,10 @@ const store = configureStore();
 
 render(
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider theme={createMuiTheme()}>
+      <Reboot />
+      <App />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
