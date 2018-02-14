@@ -6,6 +6,14 @@ import Login from "login/components/Login";
 import { loginRequest } from "login/actions";
 
 class LoginContainer extends Component {
+  componentWillMount() {
+    document.body.style.backgroundColor = "#eee";
+  }
+
+  componentWillUnmount() {
+    document.body.style.backgroundColor = null;
+  }
+
   render() {
     const { submitHandler, isLoading, error, token } = this.props;
     if (error) {

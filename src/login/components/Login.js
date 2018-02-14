@@ -1,22 +1,35 @@
+import logo from "login/logo.svg";
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
+import Grid from "material-ui/Grid";
+import Paper from "material-ui/Paper";
+import Typography from "material-ui/Typography";
 import Button from "material-ui/Button";
-import TextField from "material-ui/TextField";
+import { FormControl } from "material-ui/Form";
+import Input, { InputLabel, InputAdornment } from "material-ui/Input";
+import IconButton from "material-ui/IconButton";
+import Visibility from "material-ui-icons/Visibility";
+import VisibilityOff from "material-ui-icons/VisibilityOff";
 
 const styles = theme => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap"
+    marginTop: theme.spacing.unit * 10
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
+  paper: {
+    padding: theme.spacing.unit * 3
+  },
+  form: {
+    marginTop: theme.spacing.unit * 3
+  },
+  passwordControl: {
     marginRight: theme.spacing.unit,
-    width: 200
+    marginBottom: theme.spacing.unit * 3
   },
-  menu: {
-    width: 200
+  logoContainer: {
+    textAlign: "center"
   }
 });
 
@@ -25,16 +38,21 @@ class Login extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      showPassword: false
     };
   }
 
-  setUsername = e => {
-    this.setState({ username: e.target.value });
+  handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
   };
 
-  setPassword = e => {
-    this.setState({ password: e.target.value });
+  handleMouseDownPassword = e => {
+    e.preventDefault();
+  };
+
+  handleClickShowPasssword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
   };
 
   submitHandler = e => {
@@ -47,46 +65,69 @@ class Login extends Component {
     const { classes } = this.props;
 
     return (
-      <form
+      <Grid
+        container
+        alignItems="center"
+        justify="center"
         className={classes.container}
-        noValidate
-        autoComplete="off"
-        onSubmit={this.submitHandler}
+        spacing={0}
       >
-        <TextField
-          required
-          id="username"
-          label="username"
-          className={classes.textField}
-          onChange={this.setUsername}
-          margin="normal"
-          placeholder="Placeholder"
-        />
-        <TextField
-          required
-          id="password"
-          label="Password"
-          className={classes.textField}
-          onChange={this.setPassword}
-          variant="password"
-          autoComplete="current-password"
-          margin="normal"
-          placeholder="Placeholder"
-        />
-        <Button
-          type="submit"
-          variant="raised"
-          color="primary"
-          className={classes.button}
-        >
-          Submit
-        </Button>
-      </form>
+        <Grid item md={3} xs={11}>
+          <Paper className={classes.paper}>
+            <div className={classes.logoContainer}>
+              <img src={logo} className="App-logo" alt="logo" />
+            </div>
+            <Typography component="p" align="center">
+              Reactive
+            </Typography>
+            <Typography variant="headline" component="h3" align="center">
+              Connected Mine Analitycs
+            </Typography>
+            <form
+              className={classes.form}
+              noValidate
+              autoComplete="off"
+              onSubmit={this.submitHandler}
+            >
+              <FormControl fullWidth>
+                <InputLabel htmlFor="username">User Name</InputLabel>
+                <Input id="username" onChange={this.handleChange("username")} />
+              </FormControl>
+              <FormControl className={classes.passwordControl} fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  id="password"
+                  type={this.state.showPassword ? "text" : "password"}
+                  onChange={this.handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={this.handleClickShowPasssword}
+                        onMouseDown={this.handleMouseDownPassword}
+                      >
+                        {this.state.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+              <Button type="submit" variant="raised" color="primary" fullWidth>
+                Login
+              </Button>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 }
 
 Login.propTypes = {
+  classes: PropTypes.object.isRequired,
   submitHandler: PropTypes.func.isRequired,
   token: PropTypes.string
 };

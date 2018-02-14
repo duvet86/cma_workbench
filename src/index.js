@@ -1,4 +1,5 @@
 import "typeface-roboto";
+import "index.css";
 
 import "rxjs/add/observable/of";
 import "rxjs/add/observable/fromPromise";
