@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import Login from "login/components/Login";
 import { loginRequest } from "login/actions";
+
+import Loading from "common/Loading";
+import Login from "login/components/Login";
 
 class LoginContainer extends Component {
   componentWillMount() {
@@ -15,15 +17,9 @@ class LoginContainer extends Component {
   }
 
   render() {
-    const { submitHandler, isLoading, error, token } = this.props;
-    if (error) {
-      return <div>{error}</div>;
-    }
-    if (token && !isLoading) {
-      return <div>{token}</div>;
-    }
+    const { submitHandler, isLoading, ...props } = this.props;
     if (isLoading) {
-      return <div>Loading</div>;
+      return <Loading {...props} />;
     }
     return <Login submitHandler={submitHandler} />;
   }

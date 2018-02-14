@@ -3,22 +3,26 @@ import "index.css";
 
 import "rxjs/add/observable/of";
 import "rxjs/add/observable/fromPromise";
+import "rxjs/add/observable/concat";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/map";
 
-import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
-import Reboot from "material-ui/Reboot";
-
-import App from "App";
-
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
+import { Route, Switch } from "react-router";
+import { ConnectedRouter } from "react-router-redux";
 
+import history from "lib/history";
 import registerServiceWorker from "lib/registerServiceWorker";
-
 import configureStore from "lib/configureStore";
+import loadAsync from "lib/loadAsync";
+
+import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
+import Reboot from "material-ui/Reboot";
+
+import PrivateRouteContainer from "routes/PrivateRouteContainer";
 
 const store = configureStore();
 
@@ -26,9 +30,24 @@ render(
   <Provider store={store}>
     <MuiThemeProvider theme={createMuiTheme()}>
       <Reboot />
-      <App />
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route
+            path="/login"
+            component={loadAsync(() =>
+              import("login/components/LoginContainer")
+            )}
+          />
+          <PrivateRouteContainer
+            exact
+            path="/"
+            component={loadAsync(() => import("workbench/Workbench"))}
+          />
+        </Switch>
+      </ConnectedRouter>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
+
 registerServiceWorker();
