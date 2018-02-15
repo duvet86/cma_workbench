@@ -11,7 +11,7 @@ import "rxjs/add/operator/map";
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { Route, Switch } from "react-router";
+import { Switch } from "react-router";
 import { ConnectedRouter } from "react-router-redux";
 
 import history from "lib/history";
@@ -22,7 +22,8 @@ import loadAsync from "lib/loadAsync";
 import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
 import Reboot from "material-ui/Reboot";
 
-import PrivateRouteContainer from "routes/PrivateRouteContainer";
+import AnonymousRoute from "routes/AnonymousRoute";
+import AuthenticatedRoute from "routes/AuthenticatedRoute";
 
 const store = configureStore();
 
@@ -32,13 +33,13 @@ render(
       <Reboot />
       <ConnectedRouter history={history}>
         <Switch>
-          <Route
+          <AnonymousRoute
             path="/login"
             component={loadAsync(() =>
               import("login/components/LoginContainer")
             )}
           />
-          <PrivateRouteContainer
+          <AuthenticatedRoute
             exact
             path="/"
             component={loadAsync(() => import("workbench/Workbench"))}

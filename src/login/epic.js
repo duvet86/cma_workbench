@@ -2,16 +2,21 @@ import { Observable } from "rxjs/Observable";
 import { push } from "react-router-redux";
 
 import { LOGIN_REQUEST, loginSuccess, loginError } from "login/actions";
-import { authorize, storeItem } from "login/api";
+import { getTokenAsync, storeToken, clearToken } from "lib/authApi";
 
 function storeTokenAndTriggerLogingSucces(token) {
-  storeItem(token);
-  return loginSuccess(token);
+  storeToken(token);
+  return loginSuccess();
+}
+
+function deleteTokenAndTriggerLogingError(error) {
+  clearToken();
+  return loginError(error);
 }
 
 export const fetchUserEpic = action$ =>
   action$.ofType(LOGIN_REQUEST).mergeMap(({ username, password }) =>
-    authorize(username, password)
+    getTokenAsync(username, password)
       .flatMap(token =>
         Observable.concat(
           // Fire 2 actions, one after the other
@@ -19,5 +24,5 @@ export const fetchUserEpic = action$ =>
           Observable.of(push("/"))
         )
       )
-      .catch(error => Observable.of(loginError(error)))
+      .catch(error => Observable.of(deleteTokenAndTriggerLogingError(error)))
   );

@@ -9,11 +9,7 @@ export const loginRequest = (username, password) => ({
   password
 });
 
-export const loginSuccess = token => ({
-  type: LOGIN_SUCCESS,
-  token,
-  loggedAt: Date.now()
-});
+export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
 
 export const loginError = error => ({ type: LOGIN_ERROR, error });
 

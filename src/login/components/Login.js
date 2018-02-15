@@ -128,8 +128,7 @@ class Login extends Component {
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
-  submitHandler: PropTypes.func.isRequired,
-  token: PropTypes.string
+  submitHandler: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Login);

@@ -27,13 +27,11 @@ class LoginContainer extends Component {
 
 LoginContainer.propTypes = {
   submitHandler: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  token: PropTypes.string
+  isLoading: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = ({ loginReducer: { isLoading, token, error } }) => ({
+const mapStateToProps = ({ loginReducer: { isLoading, error } }) => ({
   isLoading,
-  token,
   error
 });
 
