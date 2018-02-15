@@ -15,6 +15,14 @@ import Visibility from "material-ui-icons/Visibility";
 import VisibilityOff from "material-ui-icons/VisibilityOff";
 
 const styles = theme => ({
+  "@keyframes appLogoSpin": {
+    from: {
+      transform: "rotate(0deg)"
+    },
+    to: {
+      transform: "rotate(360deg)"
+    }
+  },
   container: {
     marginTop: theme.spacing.unit * 10
   },
@@ -30,6 +38,10 @@ const styles = theme => ({
   },
   logoContainer: {
     textAlign: "center"
+  },
+  appLogo: {
+    animation: "appLogoSpin infinite 20s linear",
+    height: "50px"
   }
 });
 
@@ -75,7 +87,7 @@ class Login extends Component {
         <Grid item md={3} xs={11}>
           <Paper className={classes.paper}>
             <div className={classes.logoContainer}>
-              <img src={logo} className="App-logo" alt="logo" />
+              <img src={logo} className={classes.appLogo} alt="logo" />
             </div>
             <Typography component="p" align="center">
               Reactive
@@ -115,7 +127,12 @@ class Login extends Component {
                   }
                 />
               </FormControl>
-              <Button type="submit" variant="raised" color="primary" fullWidth>
+              <Button
+                type="submit"
+                variant="raised"
+                color="secondary"
+                fullWidth
+              >
                 Login
               </Button>
             </form>

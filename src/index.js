@@ -1,5 +1,5 @@
-import "typeface-roboto";
 import "index.css";
+import "typeface-roboto";
 
 import "rxjs/add/observable/of";
 import "rxjs/add/observable/fromPromise";
@@ -17,19 +17,21 @@ import { ConnectedRouter } from "react-router-redux";
 import history from "lib/history";
 import registerServiceWorker from "lib/registerServiceWorker";
 import configureStore from "lib/configureStore";
+import configureTheme from "lib/configureTheme";
 import loadAsync from "lib/loadAsync";
 
-import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
+import { MuiThemeProvider } from "material-ui/styles";
 import Reboot from "material-ui/Reboot";
 
 import AnonymousRoute from "routes/AnonymousRoute";
 import AuthenticatedRoute from "routes/AuthenticatedRoute";
 
 const store = configureStore();
+const theme = configureTheme();
 
 render(
   <Provider store={store}>
-    <MuiThemeProvider theme={createMuiTheme()}>
+    <MuiThemeProvider theme={theme}>
       <Reboot />
       <ConnectedRouter history={history}>
         <Switch>
@@ -42,7 +44,7 @@ render(
           <AuthenticatedRoute
             exact
             path="/"
-            component={loadAsync(() => import("workbench/Workbench"))}
+            component={loadAsync(() => import("app/App"))}
           />
         </Switch>
       </ConnectedRouter>

@@ -17,7 +17,7 @@ const AuthenticatedRoute = ({ component, ...props }) => {
       />
     );
 
-  return <Route {...props} render={boundRender} />;
+  return <Route exact {...props} render={boundRender} />;
 };
 
 AuthenticatedRoute.propTypes = {
