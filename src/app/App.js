@@ -1,18 +1,23 @@
 import React from "react";
-import PropTypes from "prop-types";
+
+import Grid from "material-ui/Grid";
 
 import TopBarContainer from "topBar/TopBarContainer";
 import SideBar from "sideBar/SideBar";
+import AppBody from "appBody/AppBody";
 
-const App = ({ classes }) => (
+const App = () => (
   <div>
     <TopBarContainer />
-    <SideBar />
+    <Grid container>
+      <Grid item>
+        <SideBar />
+      </Grid>
+      <Grid item>
+        <AppBody />
+      </Grid>
+    </Grid>
   </div>
 );
-
-App.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default App;

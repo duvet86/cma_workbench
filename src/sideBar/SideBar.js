@@ -1,22 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 
 import { withStyles } from "material-ui/styles";
 import Drawer from "material-ui/Drawer";
-import List, { ListItem, ListItemText } from "material-ui/List";
+import List, { ListItem, ListItemAvatar, ListItemText } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
-import Search from "material-ui-icons/Search";
-import WorkIcon from "material-ui-icons/Work";
-import BeachAccessIcon from "material-ui-icons/BeachAccess";
 import Divider from "material-ui/Divider";
 
-const drawerWidth = 240;
+import Dashboard from "material-ui-icons/Dashboard";
 
 const styles = theme => ({
   drawerPaper: {
     position: "relative",
-    width: drawerWidth,
     display: "flex"
+  },
+  list: {
+    padding: 0
+  },
+  listItem: {
+    cursor: "pointer"
+  },
+  avatar: {
+    width: 35,
+    height: 35
+  },
+  icon: {
+    width: 25,
+    height: 25
   }
 });
 
@@ -52,27 +63,25 @@ class SideBar extends React.Component {
         open={open}
       >
         <div>
-          <List>
-            <ListItem>
-              <ListItemText primary="Data Query" secondary="Query a data service." />
-              <Avatar>
-                <Search />
-              </Avatar>
+          <List className={classes.list}>
+            <ListItem component={NavLink} to="/workbench/1">
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <Dashboard className={classes.icon} />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="PageBuilder Item 1" />
             </ListItem>
             <Divider />
-            <ListItem>
-              <ListItemText primary="Work" secondary="Jan 7, 2014" />
-              <Avatar>
-                <WorkIcon />
-              </Avatar>
+            <ListItem component={NavLink} to="/workbench/2">
+              <ListItemAvatar>
+                <Avatar className={classes.avatar}>
+                  <Dashboard className={classes.icon} />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="PageBuilder Item 2" />
             </ListItem>
             <Divider />
-            <ListItem>
-              <ListItemText primary="Vacation" secondary="July 20, 2014" />
-              <Avatar>
-                <BeachAccessIcon />
-              </Avatar>
-            </ListItem>
           </List>
         </div>
       </Drawer>

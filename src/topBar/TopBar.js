@@ -1,6 +1,6 @@
 import trimbleLogo from "topBar/trimbleLogo.png";
 
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ import Person from "material-ui-icons/Person";
 const toolbarRelativeProperties = theme => ({
   appBar: {
     position: "relative",
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 2
   },
   trimbleLogo: {
     height: "36px",
@@ -33,7 +33,7 @@ const toolbarRelativeProperties = theme => ({
   }
 });
 
-class MenuAppBar extends React.Component {
+class TopBar extends Component {
   state = {
     anchorEl: null
   };
@@ -101,9 +101,8 @@ class MenuAppBar extends React.Component {
   }
 }
 
-MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  clickHandler: PropTypes.func.isRequired
+TopBar.propTypes = {
+  classes: PropTypes.object.isRequired
 };
 
-export default withStyles(toolbarRelativeProperties)(MenuAppBar);
+export default withStyles(toolbarRelativeProperties)(TopBar);

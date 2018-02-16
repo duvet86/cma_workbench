@@ -42,7 +42,6 @@ render(
             )}
           />
           <AuthenticatedRoute
-            exact
             path="/"
             component={loadAsync(() => import("app/App"))}
           />
