@@ -1,8 +1,4 @@
-import {
-  PROFILE_REQUEST,
-  PROFILE_SUCCESS,
-  PROFILE_ERROR
-} from "profile/actions";
+import { PROFILE_REQUEST, PROFILE_SUCCESS } from "profile/actions";
 
 function profile(
   state = {
@@ -22,13 +18,6 @@ function profile(
         ...state,
         isLoading: false,
         userInfo: action.userInfo
-      };
-
-    case PROFILE_ERROR:
-      return {
-        ...state,
-        isLoading: false,
-        error: action.error
       };
 
     default:

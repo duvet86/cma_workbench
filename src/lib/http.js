@@ -16,7 +16,10 @@ const getJwtHeaders = token => ({
 
 const handleErrors = response => {
   if (!response.ok) {
-    throw response;
+    return response.text().then(error => {
+      // eslint-disable-next-line no-throw-literal
+      throw { status: response.status, error: error && JSON.parse(error) };
+    });
   }
   return response.json();
 };

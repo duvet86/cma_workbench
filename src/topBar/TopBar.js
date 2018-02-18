@@ -12,7 +12,7 @@ import Menu, { MenuItem } from "material-ui/Menu";
 import Typography from "material-ui/Typography";
 import Person from "material-ui-icons/Person";
 
-const toolbarRelativeProperties = theme => ({
+const styles = theme => ({
   appBar: {
     position: "relative",
     zIndex: theme.zIndex.drawer + 2
@@ -94,4 +94,4 @@ TopBar.propTypes = {
   anchorEl: PropTypes.object
 };
 
-export default withStyles(toolbarRelativeProperties)(TopBar);
+export default withStyles(styles)(TopBar);

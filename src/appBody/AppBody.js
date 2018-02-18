@@ -1,15 +1,22 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
 
-import loadAsync from "lib/loadAsync";
-
+import { withStyles } from "material-ui/styles";
 import Grid from "material-ui/Grid";
 
+import loadAsync from "lib/loadAsync";
 import NotFoundRoute from "routes/NotFoundRoute";
 
-const AppBody = () => (
-  <Grid item>
-    <Grid container>
+const styles = theme => ({
+  innerContainer: {
+    marginTop: 15
+  }
+});
+
+const AppBody = ({ classes }) => (
+  <Grid item xs={10}>
+    <Grid container justify="center" className={classes.innerContainer}>
       <Grid item xs={12}>
         <Switch>
           <Route
@@ -32,6 +39,11 @@ const AppBody = () => (
             path="/profile"
             component={loadAsync(() => import("profile/ProfileContainer"))}
           />
+          <Route
+            exact
+            path="/error"
+            component={loadAsync(() => import("errorPage/ErrorPageContainer"))}
+          />
           <NotFoundRoute />
         </Switch>
       </Grid>
@@ -39,4 +51,8 @@ const AppBody = () => (
   </Grid>
 );
 
-export default AppBody;
+AppBody.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(AppBody);

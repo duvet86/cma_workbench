@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR } from "login/actions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS } from "login/actions";
 
 function login(
   state = {
@@ -17,13 +17,6 @@ function login(
       return {
         ...state,
         isLoading: false
-      };
-
-    case LOGIN_ERROR:
-      return {
-        ...state,
-        isLoading: false,
-        error: action.error
       };
 
     default:
