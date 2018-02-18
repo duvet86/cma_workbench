@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 import { withStyles } from "material-ui/styles";
+import Grid from "material-ui/Grid";
 import Drawer from "material-ui/Drawer";
 import List, { ListItem, ListItemAvatar, ListItemText } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
@@ -55,14 +56,14 @@ class SideBar extends React.Component {
     const { open } = this.state;
 
     return (
-      <Drawer
-        classes={{
-          paper: classes.drawerPaper
-        }}
-        variant="persistent"
-        open={open}
-      >
-        <div>
+      <Grid item>
+        <Drawer
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          variant="persistent"
+          open={open}
+        >
           <List className={classes.list}>
             <ListItem component={NavLink} to="/workbench/1">
               <ListItemAvatar>
@@ -83,8 +84,8 @@ class SideBar extends React.Component {
             </ListItem>
             <Divider />
           </List>
-        </div>
-      </Drawer>
+        </Drawer>
+      </Grid>
     );
   }
 }

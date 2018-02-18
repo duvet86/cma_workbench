@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { createEpicMiddleware } from "redux-observable";
 import { routerMiddleware } from "react-router-redux";
 
@@ -10,8 +10,9 @@ const epicMiddleware = createEpicMiddleware(rootEpic);
 const browserRouterMiddleware = routerMiddleware(history);
 
 const middleware = [epicMiddleware, browserRouterMiddleware];
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const configureStore = () =>
-  createStore(rootReducer, applyMiddleware(...middleware));
+  createStore(rootReducer, composeEnhancers(applyMiddleware(...middleware)));
 
 export default configureStore;

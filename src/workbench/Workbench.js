@@ -1,5 +1,5 @@
 import React from "react";
 
-const Workbench = () => <div>Ciao</div>;
+const Workbench = () => <div>Workbench</div>;
 
 export default Workbench;

@@ -37,9 +37,7 @@ render(
         <Switch>
           <AnonymousRoute
             path="/login"
-            component={loadAsync(() =>
-              import("login/components/LoginContainer")
-            )}
+            component={loadAsync(() => import("login/LoginContainer"))}
           />
           <AuthenticatedRoute
             path="/"

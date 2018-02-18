@@ -1,6 +1,6 @@
 import trimbleLogo from "topBar/trimbleLogo.png";
 
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -33,76 +33,65 @@ const toolbarRelativeProperties = theme => ({
   }
 });
 
-class TopBar extends Component {
-  state = {
-    anchorEl: null
-  };
-
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  logoutHandler = () => {
-    const { logoutHandler } = this.props;
-    this.setState({ anchorEl: null });
-    logoutHandler();
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-
-    return (
-      <AppBar className={classes.appBar}>
-        <Toolbar className={classes.toolBar}>
-          <div>
-            <Link to="/">
-              <img
-                src={trimbleLogo}
-                className={classes.trimbleLogo}
-                alt="trimbleLogo"
-              />
-            </Link>
-          </div>
-          <Typography variant="title" className={classes.matchColor}>
-            CONNECTED MINE ANALYTIC
-          </Typography>
-          <div>
-            <Button color="inherit" onClick={this.handleMenu}>
-              <Person className={classes.matchColor} />
-            </Button>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right"
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
-              }}
-              open={open}
-              onClose={this.handleClose}
-              getContentAnchorEl={null}
-            >
-              <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-              <MenuItem onClick={this.logoutHandler}>Sign Out</MenuItem>
-            </Menu>
-          </div>
-        </Toolbar>
-      </AppBar>
-    );
-  }
-}
+const TopBar = ({
+  classes,
+  anchorEl,
+  open,
+  onMenuClickHandler,
+  onMenuCloseHandler,
+  onLogoutClickHandler,
+  onProfileClickHandler,
+  ...props
+}) => (
+  <AppBar {...props} className={classes.appBar}>
+    <Toolbar className={classes.toolBar}>
+      <div>
+        <Link to="/">
+          <img
+            src={trimbleLogo}
+            className={classes.trimbleLogo}
+            alt="trimbleLogo"
+          />
+        </Link>
+      </div>
+      <Typography variant="title" className={classes.matchColor}>
+        CONNECTED MINE ANALYTIC
+      </Typography>
+      <div>
+        <Button color="inherit" onClick={onMenuClickHandler}>
+          <Person className={classes.matchColor} />
+        </Button>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right"
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right"
+          }}
+          open={open}
+          onClose={onMenuCloseHandler}
+          getContentAnchorEl={null}
+        >
+          <MenuItem onClick={onProfileClickHandler}>Profile</MenuItem>
+          <MenuItem onClick={onLogoutClickHandler}>Sign Out</MenuItem>
+        </Menu>
+      </div>
+    </Toolbar>
+  </AppBar>
+);
 
 TopBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
+  onMenuClickHandler: PropTypes.func.isRequired,
+  onMenuCloseHandler: PropTypes.func.isRequired,
+  onLogoutClickHandler: PropTypes.func.isRequired,
+  onProfileClickHandler: PropTypes.func.isRequired,
+  anchorEl: PropTypes.object
 };
 
 export default withStyles(toolbarRelativeProperties)(TopBar);

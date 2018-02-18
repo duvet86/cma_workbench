@@ -7,25 +7,34 @@ import Grid from "material-ui/Grid";
 
 import NotFoundRoute from "routes/NotFoundRoute";
 
-const yo = () => <div>PIppo</div>;
-
 const AppBody = () => (
-  <Grid container>
-    <Grid item xs={12}>
-      <Switch>
-        <Route exact path="/" component={yo} />
-        <Route
-          exact
-          path="/workbench/:id"
-          component={loadAsync(() => import("workbench/Workbench"))}
-        />
-        <Route
-          exact
-          path="/pagebuilder/:id"
-          component={loadAsync(() => import("workbench/Workbench"))}
-        />
-        <NotFoundRoute />
-      </Switch>
+  <Grid item>
+    <Grid container>
+      <Grid item xs={12}>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={loadAsync(() => import("helpPage/HelpPage"))}
+          />
+          <Route
+            exact
+            path="/workbench/:id"
+            component={loadAsync(() => import("workbench/Workbench"))}
+          />
+          <Route
+            exact
+            path="/pagebuilder/:id"
+            component={loadAsync(() => import("workbench/Workbench"))}
+          />
+          <Route
+            exact
+            path="/profile"
+            component={loadAsync(() => import("profile/ProfileContainer"))}
+          />
+          <NotFoundRoute />
+        </Switch>
+      </Grid>
     </Grid>
   </Grid>
 );

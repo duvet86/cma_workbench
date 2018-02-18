@@ -1,18 +1,15 @@
 import { Observable } from "rxjs/Observable";
 import { encode } from "base-64";
+import { push } from "react-router-redux";
 
 import constants from "lib/constants";
+import { getAsync } from "lib/http";
 
 export const getTokenAsync = (userName, password) =>
   Observable.fromPromise(
-    fetch("http://desktop-ejm4rss/dev/api/token", {
-      method: "GET",
-      headers: {
-        Authorization: `Basic ${encode(userName + ":" + password)}`
-      }
+    getAsync("http://desktop-ejm4rss/dev/api/token", {
+      Authorization: `Basic ${encode(userName + ":" + password)}`
     })
-      .then(response => response.json())
-      .then(token => token)
   );
 
 export const storeToken = token =>
@@ -28,6 +25,11 @@ export const clearToken = () => sessionStorage.removeItem(constants.TOKEN_KEY);
 
 export const getToken = () =>
   JSON.parse(sessionStorage.getItem(constants.TOKEN_KEY));
+
+export function deleteTokenAndRedirectLogin() {
+  clearToken();
+  return Observable.of(push("/login"));
+}
 
 export function isUserAuthenticated() {
   // attempt to grab the token from localstorage

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { loginRequest } from "login/actions";
 
 import Loading from "common/Loading";
-import Login from "login/components/Login";
+import Login from "login/Login";
 
 class LoginContainer extends Component {
   componentWillMount() {

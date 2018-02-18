@@ -1,25 +1,30 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_ERROR } from "login/actions";
+import {
+  PROFILE_REQUEST,
+  PROFILE_SUCCESS,
+  PROFILE_ERROR
+} from "profile/actions";
 
-function login(
+function profile(
   state = {
-    isLoading: false
+    isLoading: true
   },
   action
 ) {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case PROFILE_REQUEST:
       return {
         ...state,
         isLoading: true
       };
 
-    case LOGIN_SUCCESS:
+    case PROFILE_SUCCESS:
       return {
         ...state,
-        isLoading: false
+        isLoading: false,
+        userInfo: action.userInfo
       };
 
-    case LOGIN_ERROR:
+    case PROFILE_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -31,4 +36,4 @@ function login(
   }
 }
 
-export default login;
+export default profile;

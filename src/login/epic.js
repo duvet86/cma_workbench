@@ -2,19 +2,18 @@ import { Observable } from "rxjs/Observable";
 import { push } from "react-router-redux";
 
 import { LOGIN_REQUEST, loginSuccess, loginError } from "login/actions";
-import { getTokenAsync, storeToken, clearToken } from "lib/authApi";
+import {
+  getTokenAsync,
+  storeToken,
+  deleteTokenAndRedirectLogin
+} from "lib/authApi";
 
 function storeTokenAndTriggerLogingSucces(token) {
   storeToken(token);
   return loginSuccess();
 }
 
-function deleteTokenAndTriggerLogingError(error) {
-  clearToken();
-  return loginError(error);
-}
-
-export const fetchUserEpic = action$ =>
+export const loginEpic = action$ =>
   action$.ofType(LOGIN_REQUEST).mergeMap(({ username, password }) =>
     getTokenAsync(username, password)
       .flatMap(token =>
@@ -24,5 +23,9 @@ export const fetchUserEpic = action$ =>
           Observable.of(push("/"))
         )
       )
-      .catch(error => Observable.of(deleteTokenAndTriggerLogingError(error)))
+      .catch(error => {
+        error.status === 401
+          ? deleteTokenAndRedirectLogin()
+          : Observable.of(loginError(error));
+      })
   );

@@ -6,6 +6,6 @@ export default function loadAsync(component) {
     loader: component,
     loading: Loading,
     delay: 200,
-    timeout: 10
+    timeout: 10000
   });
 }

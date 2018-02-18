@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import Grid from "material-ui/Grid";
 
@@ -7,17 +7,13 @@ import SideBar from "sideBar/SideBar";
 import AppBody from "appBody/AppBody";
 
 const App = () => (
-  <div>
+  <Fragment>
     <TopBarContainer />
     <Grid container>
-      <Grid item>
-        <SideBar />
-      </Grid>
-      <Grid item>
-        <AppBody />
-      </Grid>
+      <SideBar />
+      <AppBody />
     </Grid>
-  </div>
+  </Fragment>
 );
 
 export default App;
