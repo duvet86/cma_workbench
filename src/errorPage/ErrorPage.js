@@ -9,7 +9,7 @@ import Typography from "material-ui/Typography";
 
 import Warning from "material-ui-icons/Warning";
 
-const styles = theme => ({
+const styles = {
   cardActions: {
     justifyContent: "flex-end"
   },
@@ -24,7 +24,7 @@ const styles = theme => ({
     width: 40,
     height: 40
   }
-});
+};
 
 const ErrorPage = ({ error, classes }) => (
   <Card>

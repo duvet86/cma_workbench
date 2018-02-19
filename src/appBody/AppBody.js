@@ -15,38 +15,36 @@ const styles = theme => ({
 });
 
 const AppBody = ({ classes }) => (
-  <Grid item xs={10}>
-    <Grid container justify="center" className={classes.innerContainer}>
-      <Grid item xs={12}>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={loadAsync(() => import("helpPage/HelpPage"))}
-          />
-          <Route
-            exact
-            path="/workbench/:id"
-            component={loadAsync(() => import("workbench/Workbench"))}
-          />
-          <Route
-            exact
-            path="/pagebuilder/:id"
-            component={loadAsync(() => import("workbench/Workbench"))}
-          />
-          <Route
-            exact
-            path="/profile"
-            component={loadAsync(() => import("profile/ProfileContainer"))}
-          />
-          <Route
-            exact
-            path="/error"
-            component={loadAsync(() => import("errorPage/ErrorPageContainer"))}
-          />
-          <NotFoundRoute />
-        </Switch>
-      </Grid>
+  <Grid item xs={10} className={classes.innerContainer}>
+    <Grid container>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          component={loadAsync(() => import("helpPage/HelpPage"))}
+        />
+        <Route
+          exact
+          path="/workbench/:id"
+          component={loadAsync(() => import("workbench/Workbench"))}
+        />
+        <Route
+          exact
+          path="/pagebuilder/:id"
+          component={loadAsync(() => import("workbench/Workbench"))}
+        />
+        <Route
+          exact
+          path="/profile"
+          component={loadAsync(() => import("profile/ProfileContainer"))}
+        />
+        <Route
+          exact
+          path="/error"
+          component={loadAsync(() => import("errorPage/ErrorPageContainer"))}
+        />
+        <NotFoundRoute />
+      </Switch>
     </Grid>
   </Grid>
 );

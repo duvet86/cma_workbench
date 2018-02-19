@@ -9,7 +9,7 @@ import AppBody from "appBody/AppBody";
 const App = () => (
   <Fragment>
     <TopBarContainer />
-    <Grid container spacing={40}>
+    <Grid container>
       <SideBar />
       <AppBody />
     </Grid>

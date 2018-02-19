@@ -12,6 +12,9 @@ import Divider from "material-ui/Divider";
 import Dashboard from "material-ui-icons/Dashboard";
 
 const styles = theme => ({
+  container: {
+    marginRight: 30
+  },
   drawerPaper: {
     position: "relative",
     display: "flex"
@@ -56,7 +59,7 @@ class SideBar extends React.Component {
     const { open } = this.state;
 
     return (
-      <Grid item>
+      <Grid item className={classes.container}>
         <Drawer
           classes={{
             paper: classes.drawerPaper
