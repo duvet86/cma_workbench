@@ -6,10 +6,13 @@ import { Link } from "react-router-dom";
 
 import { withStyles } from "material-ui/styles";
 import AppBar from "material-ui/AppBar";
+import IconButton from "material-ui/IconButton";
+import MenuIcon from "material-ui-icons/Menu";
 import Toolbar from "material-ui/Toolbar";
 import Button from "material-ui/Button";
 import Menu, { MenuItem } from "material-ui/Menu";
 import Typography from "material-ui/Typography";
+
 import Person from "material-ui-icons/Person";
 
 const styles = theme => ({
@@ -20,6 +23,10 @@ const styles = theme => ({
   trimbleLogo: {
     height: "36px",
     padding: "4px 0"
+  },
+  iconContainer: {
+    display: "flex",
+    alignItems: "center"
   },
   matchColor: {
     color: "#01609d"
@@ -41,11 +48,19 @@ const TopBar = ({
   onMenuCloseHandler,
   onLogoutClickHandler,
   onProfileClickHandler,
+  handleDrawerOpen,
   ...props
 }) => (
   <AppBar {...props} className={classes.appBar}>
     <Toolbar className={classes.toolBar}>
-      <div>
+      <div className={classes.iconContainer}>
+        <IconButton
+          className={classes.matchColor}
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+        >
+          <MenuIcon />
+        </IconButton>
         <Link to="/">
           <img
             src={trimbleLogo}

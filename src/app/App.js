@@ -1,19 +1,48 @@
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 
-import Grid from "material-ui/Grid";
+import { withStyles } from "material-ui/styles";
 
 import TopBarContainer from "topBar/TopBarContainer";
 import SideBar from "sideBar/SideBar";
 import AppBody from "appBody/AppBody";
 
-const App = () => (
-  <Fragment>
-    <TopBarContainer />
-    <Grid container>
-      <SideBar />
-      <AppBody />
-    </Grid>
-  </Fragment>
-);
+const styles = {
+  bodyContainer: {
+    height: "100%",
+    width: "100%",
+    display: "flex"
+  }
+};
 
-export default App;
+class App extends Component {
+  state = {
+    open: true
+  };
+
+  handleDrawerOpen = () => {
+    this.setState(prevState => ({
+      open: !prevState.open
+    }));
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <Fragment>
+        <TopBarContainer handleDrawerOpen={this.handleDrawerOpen} />
+        <div className={classes.bodyContainer}>
+          <SideBar open={this.state.open} />
+          <AppBody />
+        </div>
+      </Fragment>
+    );
+  }
+}
+
+App.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(App);
