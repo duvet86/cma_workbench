@@ -41,7 +41,7 @@ render(
           />
           <AuthenticatedRoute
             path="/"
-            component={loadAsync(() => import("app/App"))}
+            component={loadAsync(() => import("app/AppContainer"))}
           />
         </Switch>
       </ConnectedRouter>

@@ -10,10 +10,20 @@ import Divider from "material-ui/Divider";
 
 import Dashboard from "material-ui-icons/Dashboard";
 
+import NavigationTabs from "sideBar/NavigationTabs";
+
+const drawerPaperStyles = {
+  position: "relative"
+};
+
 const styles = {
-  drawerPaper: {
-    position: "relative",
-    width: 250
+  drawerPaperOpen: {
+    ...drawerPaperStyles,
+    width: 300
+  },
+  drawerPaperClosed: {
+    ...drawerPaperStyles,
+    width: 0
   },
   list: {
     padding: 0
@@ -31,42 +41,37 @@ const styles = {
   }
 };
 
-class SideBar extends React.Component {
-  render() {
-    const { classes, open } = this.props;
-
-    return (
-      <Drawer
-        classes={{
-          paper: classes.drawerPaper
-        }}
-        variant="persistent"
-        open={open}
-      >
-        <List className={classes.list}>
-          <ListItem component={NavLink} to="/workbench/1">
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <Dashboard className={classes.icon} />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="PageBuilder Item 1" />
-          </ListItem>
-          <Divider />
-          <ListItem component={NavLink} to="/workbench/2">
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <Dashboard className={classes.icon} />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="PageBuilder Item 2" />
-          </ListItem>
-          <Divider />
-        </List>
-      </Drawer>
-    );
-  }
-}
+const SideBar = ({ classes, open }) => (
+  <Drawer
+    classes={{
+      paper: open ? classes.drawerPaperOpen : classes.drawerPaperClosed
+    }}
+    variant="persistent"
+    open={open}
+  >
+    <NavigationTabs />
+    <List className={classes.list}>
+      <ListItem component={NavLink} to="/workbench/1">
+        <ListItemAvatar>
+          <Avatar className={classes.avatar}>
+            <Dashboard className={classes.icon} />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="PageBuilder Item 1" />
+      </ListItem>
+      <Divider />
+      <ListItem component={NavLink} to="/workbench/2">
+        <ListItemAvatar>
+          <Avatar className={classes.avatar}>
+            <Dashboard className={classes.icon} />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="PageBuilder Item 2" />
+      </ListItem>
+      <Divider />
+    </List>
+  </Drawer>
+);
 
 SideBar.propTypes = {
   classes: PropTypes.object.isRequired
