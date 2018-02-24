@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import Drawer from "material-ui/Drawer";
 
-import NavigationTabs from "sideBar/NavigationTabs";
+import NavigationTabsContainer from "sideBar/navigationTabs/NavigationTabsContainer";
 import MyItemsListContainer from "sideBar/myItems/MyItemsListContainer";
 
 const drawerPaperStyles = {
@@ -30,7 +30,7 @@ const SideBar = ({ classes, open, ...props }) => (
     variant="persistent"
     open={open}
   >
-    <NavigationTabs />
+    <NavigationTabsContainer {...props} />
     <MyItemsListContainer {...props} />
   </Drawer>
 );

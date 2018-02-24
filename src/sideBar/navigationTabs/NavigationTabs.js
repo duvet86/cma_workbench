@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import Tabs, { Tab } from "material-ui/Tabs";
 
-import tabButtons from "sideBar/tabsData";
+import tabButtons from "sideBar/navigationTabs/tabsData";
 
 const styles = {
   tabRoot: {
@@ -13,8 +13,13 @@ const styles = {
   }
 };
 
-const NavigationTabs = ({ classes, open }) => (
-  <Tabs value={0} indicatorColor="primary" textColor="primary">
+const NavigationTabs = ({ classes, visibleTab, handleChange }) => (
+  <Tabs
+    value={visibleTab}
+    onChange={handleChange}
+    indicatorColor="primary"
+    textColor="primary"
+  >
     {tabButtons.map(({ id, label, disabled }) => (
       <Tab
         key={id}
@@ -30,7 +35,9 @@ const NavigationTabs = ({ classes, open }) => (
 );
 
 NavigationTabs.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  visibleTab: PropTypes.number.isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(NavigationTabs);

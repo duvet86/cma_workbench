@@ -1,10 +1,17 @@
+import { ofType } from "redux-observable";
+import { mergeMap, map, catchError } from "rxjs/operators";
+
 import { handleException } from "lib/epicUtils";
 import { MY_ITEMS_REQUEST, myItemsSuccess } from "sideBar/myItems/actions";
 import { getMyItemsAsync } from "sideBar/myItems/api";
 
 export const myItemsEpic = action$ =>
-  action$.ofType(MY_ITEMS_REQUEST).mergeMap(() =>
-    getMyItemsAsync()
-      .map(response => myItemsSuccess(response))
-      .catch(error => handleException(error))
+  action$.pipe(
+    ofType(MY_ITEMS_REQUEST),
+    mergeMap(() =>
+      getMyItemsAsync().pipe(
+        map(response => myItemsSuccess(response)),
+        catchError(error => handleException(error))
+      )
+    )
   );

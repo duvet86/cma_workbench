@@ -1,8 +1,8 @@
-import { Observable } from "rxjs/Observable";
+import { fromPromise } from "rxjs/observable/fromPromise";
 
 import { getWithJwtAsync } from "lib/http";
 
 export const getUserInfoAsync = () =>
-  Observable.fromPromise(
+  fromPromise(
     getWithJwtAsync("http://desktop-ejm4rss/dev/api/platform/myprofile")
   );

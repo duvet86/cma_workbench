@@ -1,4 +1,5 @@
-import { Observable } from "rxjs/Observable";
+import { fromPromise } from "rxjs/observable/fromPromise";
+import { of } from "rxjs/observable/of";
 import { encode } from "base-64";
 import { push } from "react-router-redux";
 
@@ -6,7 +7,7 @@ import constants from "lib/constants";
 import { getAsync } from "lib/http";
 
 export const getTokenAsync = (userName, password) =>
-  Observable.fromPromise(
+  fromPromise(
     getAsync("http://desktop-ejm4rss/dev/api/token", {
       Authorization: `Basic ${encode(userName + ":" + password)}`
     })
@@ -28,7 +29,7 @@ export const getToken = () =>
 
 export function deleteTokenAndRedirectLogin() {
   clearToken();
-  return Observable.of(push("/login"));
+  return of(push("/login"));
 }
 
 export function isUserAuthenticated() {

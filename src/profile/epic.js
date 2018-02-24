@@ -1,10 +1,17 @@
+import { ofType } from "redux-observable";
+import { mergeMap, map, catchError } from "rxjs/operators";
+
 import { handleException } from "lib/epicUtils";
 import { PROFILE_REQUEST, profileSuccess } from "profile/actions";
 import { getUserInfoAsync } from "profile/api";
 
 export const fetchProfileEpic = action$ =>
-  action$.ofType(PROFILE_REQUEST).mergeMap(() =>
-    getUserInfoAsync()
-      .map(response => profileSuccess(response))
-      .catch(error => handleException(error))
+  action$.pipe(
+    ofType(PROFILE_REQUEST),
+    mergeMap(() =>
+      getUserInfoAsync().pipe(
+        map(response => profileSuccess(response)),
+        catchError(error => handleException(error))
+      )
+    )
   );

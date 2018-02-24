@@ -1,9 +1,9 @@
-import { Observable } from "rxjs/Observable";
+import { fromPromise } from "rxjs/observable/fromPromise";
 
 import { getWithJwtAsync } from "lib/http";
 
 export const getMyItemsAsync = () =>
-  Observable.fromPromise(
+  fromPromise(
     Promise.all([
       getWithJwtAsync("http://desktop-ejm4rss/dev/api/useritems/myitems"),
       getWithJwtAsync("http://desktop-ejm4rss/dev/api/useritems/sharedwithme")
