@@ -15,11 +15,11 @@ const styles = {
   }
 };
 
-const App = ({ classes, handleDrawerOpen, open }) => (
+const App = ({ classes, handleDrawerOpen, open, ...props }) => (
   <Fragment>
     <TopBarContainer handleDrawerOpen={handleDrawerOpen} />
     <div className={classes.bodyContainer}>
-      <SideBar open={open} />
+      <SideBar open={open} {...props} />
       <AppBody />
     </div>
   </Fragment>

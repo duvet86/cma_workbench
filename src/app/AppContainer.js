@@ -15,7 +15,11 @@ export default class AppContainer extends Component {
 
   render() {
     return (
-      <App open={this.state.open} handleDrawerOpen={this.handleDrawerOpen} />
+      <App
+        open={this.state.open}
+        handleDrawerOpen={this.handleDrawerOpen}
+        {...this.props}
+      />
     );
   }
 }

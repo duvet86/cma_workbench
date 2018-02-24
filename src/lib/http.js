@@ -39,12 +39,20 @@ export const postAsync = (url, data, headers = null) =>
 
 export const getWithJwtAsync = url => {
   const token = getJwtToken();
+  const headers = {
+    section: "demo",
+    ...getJwtHeaders(token)
+  };
 
-  return getAsync(url, getJwtHeaders(token));
+  return getAsync(url, headers);
 };
 
 export const postWithJwtAsync = (url, data) => {
   const token = getJwtToken();
+  const headers = {
+    section: "demo",
+    ...getJwtHeaders(token)
+  };
 
-  return postAsync(url, data, getJwtHeaders(token));
+  return postAsync(url, data, headers);
 };

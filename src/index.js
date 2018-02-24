@@ -4,6 +4,8 @@ import "typeface-roboto";
 import "rxjs/add/observable/of";
 import "rxjs/add/observable/fromPromise";
 import "rxjs/add/observable/concat";
+import "rxjs/add/observable/merge";
+
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/map";
