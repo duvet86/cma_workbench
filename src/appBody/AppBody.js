@@ -22,7 +22,7 @@ const AppBody = ({ classes }) => (
           <Route
             exact
             path="/"
-            component={loadAsync(() => import("helpPage/HelpPage"))}
+            component={loadAsync(() => import("welcomePage/WelcomePage"))}
           />
           <Route
             exact

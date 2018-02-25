@@ -13,7 +13,13 @@ const syles = {
   }
 };
 
-const HelpPageCard = ({ classes, IconComponent, label, description, to }) => (
+const WelcomePageCard = ({
+  classes,
+  IconComponent,
+  label,
+  description,
+  to
+}) => (
   <NavLink to={to}>
     <Card>
       <CardContent>
@@ -27,7 +33,7 @@ const HelpPageCard = ({ classes, IconComponent, label, description, to }) => (
   </NavLink>
 );
 
-HelpPageCard.propTypes = {
+WelcomePageCard.propTypes = {
   classes: PropTypes.object.isRequired,
   IconComponent: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
@@ -35,4 +41,4 @@ HelpPageCard.propTypes = {
   to: PropTypes.string.isRequired
 };
 
-export default withStyles(syles)(HelpPageCard);
+export default withStyles(syles)(WelcomePageCard);

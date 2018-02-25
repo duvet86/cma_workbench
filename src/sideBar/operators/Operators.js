@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import List, { ListItem, ListItemText } from "material-ui/List";
 import Divider from "material-ui/Divider";
+import Avatar from "material-ui/Avatar";
 
 import withLoading from "lib/withLoading";
 
+import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
+
 const styles = theme => ({
-  list: {
-    padding: 0
-  },
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular
@@ -18,16 +18,27 @@ const styles = theme => ({
 });
 
 const Operators = ({ classes, operators }) => (
-  <List className={classes.list}>
-    {operators.map(({ OperatorServiceId, Label }) => (
+  <List>
+    {operators.map(({ OperatorServiceId, Label, Description }) => (
       <Fragment key={OperatorServiceId}>
         <ListItem>
           <ListItemText
             primary={Label}
+            secondary={Description}
             classes={{
               primary: classes.heading
             }}
           />
+          <Avatar
+            style={{
+              backgroundColor:
+                operatorsExtraInfo[OperatorServiceId].backgroundColor
+            }}
+          >
+            {React.createElement(
+              operatorsExtraInfo[OperatorServiceId].IconComponent
+            )}
+          </Avatar>
         </ListItem>
         <Divider />
       </Fragment>

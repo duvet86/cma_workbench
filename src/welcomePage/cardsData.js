@@ -9,7 +9,7 @@ const linksList = [
   {
     id: 1,
     IconComponent: Work,
-    label: "Workbench",
+    label: "New Workbench",
     description:
       "This is where you can query, filter and manipulate your data.",
     to: "/workbench/new"
@@ -17,8 +17,8 @@ const linksList = [
   {
     id: 2,
     IconComponent: Dashboard,
-    label: "Pagebuilder",
-    description: "This is where you visualise your query.",
+    label: "New Pagebuilder",
+    description: "This is where you visualise your queries.",
     to: "/pagebuilder/new"
   },
   {
