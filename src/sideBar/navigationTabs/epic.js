@@ -21,11 +21,11 @@ export const navigationTabsEpic = action$ =>
     switchMap(({ location: { pathname } }) => {
       switch (pathname) {
         case "/workbench/new":
-          return of(showTools());
+          return of(showTools([false, false, false]));
         case "/pagebuilder/new":
-          return of(showFilters());
+          return of(showFilters([false, false, true]));
         default:
-          return of(showMyItems());
+          return of(showMyItems([false, true, true]));
       }
     })
   );

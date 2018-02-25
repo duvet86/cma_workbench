@@ -6,27 +6,51 @@ import Tabs, { Tab } from "material-ui/Tabs";
 
 import tabButtons from "sideBar/navigationTabs/tabsData";
 
-const styles = {
+const styles = theme => ({
   tabRoot: {
     minWidth: 0,
-    flex: "inherit"
+    flex: "auto"
+  },
+  labelContainer: {
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: theme.spacing.unit * 2,
+      paddingRight: theme.spacing.unit * 2
+    }
+  },
+  rootPrimary: {
+    color: "black"
+  },
+  rootPrimarySelected: {
+    color: theme.palette.primary.main
+  },
+  rootPrimaryDisabled: {
+    color: theme.palette.text.disabled
   }
-};
+});
 
-const NavigationTabs = ({ classes, visibleTab, handleChange }) => (
+const NavigationTabs = ({
+  classes,
+  visibleTab,
+  disabledTabs,
+  handleChange
+}) => (
   <Tabs
     value={visibleTab}
     onChange={handleChange}
     indicatorColor="primary"
     textColor="primary"
   >
-    {tabButtons.map(({ id, label, disabled }) => (
+    {tabButtons.map(({ id, label, disabled }, index) => (
       <Tab
         key={id}
         label={label}
-        disabled={disabled}
+        disabled={disabledTabs[index]}
         classes={{
-          root: classes.tabRoot
+          root: classes.tabRoot,
+          labelContainer: classes.labelContainer,
+          rootPrimary: classes.rootPrimary,
+          rootPrimarySelected: classes.rootPrimarySelected,
+          rootPrimaryDisabled: classes.rootPrimaryDisabled
         }}
       />
     ))}
@@ -37,6 +61,7 @@ const NavigationTabs = ({ classes, visibleTab, handleChange }) => (
 NavigationTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   visibleTab: PropTypes.number.isRequired,
+  disabledTabs: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired
 };
 

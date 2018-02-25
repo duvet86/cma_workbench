@@ -32,7 +32,7 @@ const AppBody = ({ classes }) => (
           <Route
             exact
             path="/pagebuilder/:id"
-            component={loadAsync(() => import("workbench/Workbench"))}
+            component={loadAsync(() => import("pagebuilder/Pagebuilder"))}
           />
           <Route
             exact

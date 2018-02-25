@@ -5,7 +5,7 @@ import { withStyles } from "material-ui/styles";
 import Drawer from "material-ui/Drawer";
 
 import NavigationTabsContainer from "sideBar/navigationTabs/NavigationTabsContainer";
-import MyItemsListContainer from "sideBar/myItems/MyItemsListContainer";
+import SideBarBodyContainer from "sideBar/SideBarBodyContainer";
 
 const drawerPaperStyles = {
   position: "relative"
@@ -31,7 +31,7 @@ const SideBar = ({ classes, open, ...props }) => (
     open={open}
   >
     <NavigationTabsContainer {...props} />
-    <MyItemsListContainer {...props} />
+    <SideBarBodyContainer {...props} />
   </Drawer>
 );
 

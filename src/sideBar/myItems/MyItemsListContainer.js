@@ -17,6 +17,7 @@ class MyItemsListContainer extends Component {
 }
 
 MyItemsListContainer.propTypes = {
+  dispatchLoadMyItems: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   items: PropTypes.object,

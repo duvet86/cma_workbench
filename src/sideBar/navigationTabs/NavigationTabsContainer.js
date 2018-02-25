@@ -14,18 +14,17 @@ class NavigationTabsContainer extends Component {
     const {
       location: { pathname },
       dispatchShowFilters,
-      dispatchShowMyTools,
-      dispatchShowMyItems
+      dispatchShowMyTools
     } = this.props;
 
     if (pathname.includes("/pagebuilder/")) {
-      return dispatchShowFilters();
+      return dispatchShowFilters([false, false, true]);
     }
     if (pathname.includes("/workbench/")) {
-      return dispatchShowMyTools();
+      return dispatchShowMyTools([false, false, false]);
     }
-
-    return dispatchShowMyItems();
+    // By default it sets the tab to myItems with the others disabled.
+    // See reducer inital state.
   }
 
   handleChange = (event, value) => {
@@ -49,11 +48,12 @@ class NavigationTabsContainer extends Component {
   };
 
   render() {
-    const { visibleTab } = this.props;
+    const { visibleTab, disabledTabs } = this.props;
 
     return (
       <NavigationTabs
         visibleTab={visibleTab}
+        disabledTabs={disabledTabs}
         handleChange={this.handleChange}
       />
     );
@@ -61,22 +61,30 @@ class NavigationTabsContainer extends Component {
 }
 
 NavigationTabsContainer.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  visibleTab: PropTypes.number.isRequired,
+  disabledTabs: PropTypes.array.isRequired,
+  dispatchShowMyItems: PropTypes.func.isRequired,
+  dispatchShowFilters: PropTypes.func.isRequired,
+  dispatchShowMyTools: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ navigationTabsReducer: { visibleTab } }) => ({
-  visibleTab
+const mapStateToProps = ({
+  navigationTabsReducer: { visibleTab, disabledTabs }
+}) => ({
+  visibleTab,
+  disabledTabs
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchShowMyItems: () => {
-    dispatch(showMyItems());
+  dispatchShowMyItems: disabledTabs => {
+    dispatch(showMyItems(disabledTabs));
   },
-  dispatchShowFilters: () => {
-    dispatch(showFilters());
+  dispatchShowFilters: disabledTabs => {
+    dispatch(showFilters(disabledTabs));
   },
-  dispatchShowMyTools: () => {
-    dispatch(showTools());
+  dispatchShowMyTools: disabledTabs => {
+    dispatch(showTools(disabledTabs));
   }
 });
 
