@@ -6,7 +6,7 @@ import loginReducer from "login/reducer";
 import profileReducer from "profile/reducer";
 import myItemsReducer from "sideBar/myItems/reducer";
 import navigationTabsReducer from "sideBar/navigationTabs/reducer";
-import operatorsReducer from "sideBar/workbenchTools/reducer";
+import operatorsReducer from "sideBar/operators/reducer";
 
 export default combineReducers({
   routerReducer,

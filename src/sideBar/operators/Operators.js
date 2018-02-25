@@ -17,7 +17,7 @@ const styles = theme => ({
   }
 });
 
-const WorkbenchTools = ({ classes, operators }) => (
+const Operators = ({ classes, operators }) => (
   <List className={classes.list}>
     {operators.map(({ OperatorServiceId, Label }) => (
       <Fragment key={OperatorServiceId}>
@@ -35,9 +35,9 @@ const WorkbenchTools = ({ classes, operators }) => (
   </List>
 );
 
-WorkbenchTools.propTypes = {
+Operators.propTypes = {
   classes: PropTypes.object.isRequired,
   operators: PropTypes.array.isRequired
 };
 
-export default withLoading(withStyles(styles)(WorkbenchTools));
+export default withLoading(withStyles(styles)(Operators));

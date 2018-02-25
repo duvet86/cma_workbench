@@ -2,12 +2,9 @@ import { ofType } from "redux-observable";
 import { mergeMap, map, catchError } from "rxjs/operators";
 
 import { handleException } from "lib/epicUtils";
-import {
-  OPERATORS_REQUEST,
-  operatorsSuccess
-} from "sideBar/workbenchTools/actions";
+import { OPERATORS_REQUEST, operatorsSuccess } from "sideBar/operators/actions";
 
-import { getOperatorsAsync } from "sideBar/workbenchTools/api";
+import { getOperatorsAsync } from "sideBar/operators/api";
 
 export const operatorsEpic = action$ =>
   action$.pipe(

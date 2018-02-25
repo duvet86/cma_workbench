@@ -12,7 +12,7 @@ import registerServiceWorker from "lib/registerServiceWorker";
 import configureStore from "lib/configureStore";
 import configureTheme from "lib/configureTheme";
 import loadAsync from "lib/loadAsync";
-import { locationChange } from "rootActions";
+import { locationChange } from "routes/actions";
 
 import { MuiThemeProvider } from "material-ui/styles";
 import Reboot from "material-ui/Reboot";

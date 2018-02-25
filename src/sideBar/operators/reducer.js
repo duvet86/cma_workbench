@@ -1,7 +1,7 @@
 import {
   OPERATORS_REQUEST,
   OPERATORS_SUCCESS
-} from "sideBar/workbenchTools/actions";
+} from "sideBar/operators/actions";
 
 function operators(
   state = {

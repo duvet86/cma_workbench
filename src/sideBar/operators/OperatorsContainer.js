@@ -2,21 +2,21 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { operatorsRequest } from "sideBar/workbenchTools/actions";
+import { operatorsRequest } from "sideBar/operators/actions";
 
-import WorkbenchTools from "sideBar/workbenchTools/WorkbenchTools";
+import Operators from "sideBar/operators/Operators";
 
-class WorkbenchToolsContainer extends Component {
+class OperatorsContainer extends Component {
   componentWillMount() {
     this.props.dispatchLoadOperators();
   }
 
   render() {
-    return <WorkbenchTools {...this.props} />;
+    return <Operators {...this.props} />;
   }
 }
 
-WorkbenchToolsContainer.propTypes = {
+OperatorsContainer.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   dispatchLoadOperators: PropTypes.func.isRequired,
@@ -38,6 +38,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  WorkbenchToolsContainer
-);
+export default connect(mapStateToProps, mapDispatchToProps)(OperatorsContainer);

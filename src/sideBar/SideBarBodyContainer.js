@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import MyItemsListContainer from "sideBar/myItems/MyItemsListContainer";
-import WorkbenchToolsContainer from "sideBar/workbenchTools/WorkbenchToolsContainer";
+import OperatorsContainer from "sideBar/operators/OperatorsContainer";
 
 const SideBarBodyContainer = ({ visibleTab, ...props }) => {
   switch (visibleTab) {
     case 1:
       return <div>Filters</div>;
     case 2:
-      return <WorkbenchToolsContainer {...props} />;
+      return <OperatorsContainer {...props} />;
     default:
       return <MyItemsListContainer {...props} />;
   }

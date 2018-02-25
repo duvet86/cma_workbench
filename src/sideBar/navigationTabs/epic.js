@@ -2,7 +2,7 @@ import { of } from "rxjs/observable/of";
 import { filter, switchMap } from "rxjs/operators";
 import { ofType } from "redux-observable";
 
-import { LOCATION_CHANGE } from "rootActions";
+import { LOCATION_CHANGE } from "routes/actions";
 import {
   showMyItems,
   showFilters,
