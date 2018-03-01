@@ -12,7 +12,6 @@ import registerServiceWorker from "lib/registerServiceWorker";
 import configureStore from "lib/configureStore";
 import configureTheme from "lib/configureTheme";
 import loadAsync from "lib/loadAsync";
-import { locationChange } from "routes/actions";
 
 import { MuiThemeProvider } from "material-ui/styles";
 import Reboot from "material-ui/Reboot";
@@ -23,13 +22,11 @@ import AuthenticatedRoute from "routes/AuthenticatedRoute";
 const store = configureStore();
 const theme = configureTheme();
 
-history.listen(location => store.dispatch(locationChange(location)));
-
 render(
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <Reboot />
-      <ConnectedRouter history={history}>
+    <ConnectedRouter history={history}>
+      <MuiThemeProvider theme={theme}>
+        <Reboot />
         <Switch>
           <AnonymousRoute
             path="/login"
@@ -40,8 +37,8 @@ render(
             component={loadAsync(() => import("app/AppContainer"))}
           />
         </Switch>
-      </ConnectedRouter>
-    </MuiThemeProvider>
+      </MuiThemeProvider>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );

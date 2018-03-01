@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { operatorsRequest } from "sideBar/operators/actions";
+import OperatorsList from "sideBar/operators/OperatorsList";
+import { enhancedOperatorsSelector } from "sideBar/operators/selectors";
 
-import Operators from "sideBar/operators/Operators";
-
-class OperatorsContainer extends Component {
+class OperatorsListContainer extends Component {
   componentWillMount() {
     this.props.dispatchLoadOperators();
   }
 
   render() {
-    return <Operators {...this.props} />;
+    return <OperatorsList {...this.props} />;
   }
 }
 
-OperatorsContainer.propTypes = {
+OperatorsListContainer.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   dispatchLoadOperators: PropTypes.func.isRequired,
@@ -27,8 +27,8 @@ OperatorsContainer.propTypes = {
 const mapStateToProps = ({
   operatorsReducer: { isLoading, operators, error }
 }) => ({
+  operators: operators && enhancedOperatorsSelector(operators),
   isLoading,
-  operators,
   error
 });
 
@@ -38,4 +38,6 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OperatorsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  OperatorsListContainer
+);

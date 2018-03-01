@@ -1,7 +1,7 @@
 import { ofType } from "redux-observable";
 import { mergeMap, map, catchError } from "rxjs/operators";
 
-import { handleException } from "lib/epicUtils";
+import { handleException } from "errorPage/epic";
 import { PROFILE_REQUEST, profileSuccess } from "profile/actions";
 import { getUserInfoAsync } from "profile/api";
 

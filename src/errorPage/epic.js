@@ -17,7 +17,7 @@ export const errorPage = error => [
   push("/error")
 ];
 
-export const handleException = (response) => {
+export const handleException = response => {
   switch (response.status) {
     case 401:
       return deleteTokenAndRedirectLogin();

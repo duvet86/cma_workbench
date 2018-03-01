@@ -8,8 +8,7 @@ import Profile from "profile/Profile";
 
 class ProfileContainer extends Component {
   componentWillMount() {
-    const { dispatchLoadProfile } = this.props;
-    dispatchLoadProfile();
+    this.props.dispatchLoadProfile();
   }
 
   render() {

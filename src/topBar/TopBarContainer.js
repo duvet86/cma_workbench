@@ -18,6 +18,12 @@ class TopBarContainer extends Component {
 
   onMenuCloseHandler = () => this.setState({ anchorEl: null });
 
+  onWelcomePageClickHandler = () => {
+    this.onMenuCloseHandler();
+    const { dispatchWelcomePage } = this.props;
+    dispatchWelcomePage();
+  };
+
   onProfileClickHandler = () => {
     this.onMenuCloseHandler();
     const { dispatchProfileClick } = this.props;
@@ -32,7 +38,12 @@ class TopBarContainer extends Component {
 
   render() {
     const { anchorEl } = this.state;
-    const { dispatchLogout, dispatchProfileClick, ...props } = this.props;
+    const {
+      dispatchLogout,
+      dispatchProfileClick,
+      dispatchWelcomePage,
+      ...props
+    } = this.props;
     const open = Boolean(anchorEl);
 
     return (
@@ -42,6 +53,7 @@ class TopBarContainer extends Component {
         open={open}
         onMenuClickHandler={this.onMenuClickHandler}
         onMenuCloseHandler={this.onMenuCloseHandler}
+        onWelcomePageClickHandler={this.onWelcomePageClickHandler}
         onProfileClickHandler={this.onProfileClickHandler}
         onLogoutClickHandler={this.onLogoutClickHandler}
       />
@@ -50,11 +62,15 @@ class TopBarContainer extends Component {
 }
 
 TopBarContainer.propTypes = {
+  dispatchWelcomePage: PropTypes.func.isRequired,
   dispatchLogout: PropTypes.func.isRequired,
   dispatchProfileClick: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
+  dispatchWelcomePage: () => {
+    dispatch(push("/"));
+  },
   dispatchLogout: () => {
     clearToken();
     dispatch(push("/login"));

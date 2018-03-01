@@ -1,5 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
+import { withStyles } from "material-ui/styles";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 
@@ -7,8 +9,14 @@ import HelpPageCard from "welcomePage/HelpPageCard";
 
 import linksList from "welcomePage/cardsData";
 
-const WelcomePage = () => (
-  <Fragment>
+const styles = {
+  container: {
+    padding: 25
+  }
+};
+
+const WelcomePage = ({ classes }) => (
+  <Grid container className={classes.container}>
     <Grid item xs={12}>
       <Typography variant="headline" gutterBottom>
         Welcome
@@ -19,7 +27,11 @@ const WelcomePage = () => (
         <HelpPageCard {...rest} />
       </Grid>
     ))}
-  </Fragment>
+  </Grid>
 );
 
-export default WelcomePage;
+WelcomePage.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(WelcomePage);

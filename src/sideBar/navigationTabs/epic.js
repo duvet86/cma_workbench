@@ -2,7 +2,7 @@ import { of } from "rxjs/observable/of";
 import { filter, switchMap } from "rxjs/operators";
 import { ofType } from "redux-observable";
 
-import { LOCATION_CHANGE } from "routes/actions";
+import { LOCATION_CHANGE } from "react-router-redux";
 import {
   showMyItems,
   showFilters,
@@ -13,12 +13,12 @@ export const navigationTabsEpic = action$ =>
   action$.pipe(
     ofType(LOCATION_CHANGE),
     filter(
-      ({ location: { pathname } }) =>
+      ({ payload: { pathname } }) =>
         pathname === "/" ||
         pathname === "/workbench/new" ||
         pathname === "/pagebuilder/new"
     ),
-    switchMap(({ location: { pathname } }) => {
+    switchMap(({ payload: { pathname } }) => {
       switch (pathname) {
         case "/workbench/new":
           return of(showTools([false, false, false]));

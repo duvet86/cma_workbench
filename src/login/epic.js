@@ -4,7 +4,7 @@ import { push } from "react-router-redux";
 
 import { LOGIN_REQUEST, loginSuccess } from "login/actions";
 import { getTokenAsync, storeToken } from "lib/authApi";
-import { handleException } from "lib/epicUtils";
+import { handleException } from "errorPage/epic";
 
 function storeTokenAndTriggerLogingSucces(token) {
   storeToken(token);

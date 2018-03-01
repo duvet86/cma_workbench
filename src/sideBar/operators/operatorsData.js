@@ -6,6 +6,10 @@ import ShareIcon from "material-ui-icons/Share";
 import SubdirectoryArrowRightIcon from "material-ui-icons/SubdirectoryArrowRight";
 import SubdirectoryArrowLeftIcon from "material-ui-icons/SubdirectoryArrowLeft";
 
+export const itemType = {
+  OPERATOR: "OPERATOR"
+};
+
 export const staticOperatorsList = [
   {
     OperatorServiceId: 1,

@@ -1,11 +1,16 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
+import { DragDropContextProvider } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+
 import { withStyles } from "material-ui/styles";
 
 import TopBarContainer from "topBar/TopBarContainer";
 import SideBar from "sideBar/SideBar";
 import AppBody from "appBody/AppBody";
+
+import withLoading from "lib/withLoading";
 
 const styles = {
   bodyContainer: {
@@ -16,13 +21,15 @@ const styles = {
 };
 
 const App = ({ classes, handleDrawerOpen, open, ...props }) => (
-  <Fragment>
-    <TopBarContainer handleDrawerOpen={handleDrawerOpen} />
-    <div className={classes.bodyContainer}>
-      <SideBar open={open} {...props} />
-      <AppBody />
-    </div>
-  </Fragment>
+  <DragDropContextProvider backend={HTML5Backend}>
+    <Fragment>
+      <TopBarContainer handleDrawerOpen={handleDrawerOpen} />
+      <div className={classes.bodyContainer}>
+        <SideBar open={open} {...props} />
+        <AppBody />
+      </div>
+    </Fragment>
+  </DragDropContextProvider>
 );
 
 App.propTypes = {
@@ -31,4 +38,4 @@ App.propTypes = {
   open: PropTypes.bool.isRequired
 };
 
-export default withStyles(styles)(App);
+export default withLoading(withStyles(styles)(App));

@@ -98,12 +98,15 @@ class Login extends Component {
             <form
               className={classes.form}
               noValidate
-              autoComplete="off"
               onSubmit={this.submitHandler}
             >
               <FormControl fullWidth>
                 <InputLabel htmlFor="username">User Name</InputLabel>
-                <Input id="username" onChange={this.handleChange("username")} />
+                <Input
+                  id="username"
+                  onChange={this.handleChange("username")}
+                  autoComplete="username"
+                />
               </FormControl>
               <FormControl className={classes.passwordControl} fullWidth>
                 <InputLabel htmlFor="password">Password</InputLabel>
@@ -111,6 +114,7 @@ class Login extends Component {
                   id="password"
                   type={this.state.showPassword ? "text" : "password"}
                   onChange={this.handleChange("password")}
+                  autoComplete="current-password"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton

@@ -1,5 +1,25 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Pagebuilder = () => <div>Pagebuilder</div>;
+import { withStyles } from "material-ui/styles";
+import Grid from "material-ui/Grid";
 
-export default Pagebuilder;
+const styles = {
+  container: {
+    padding: 25
+  }
+};
+
+const Pagebuilder = ({ classes }) => (
+  <Grid container className={classes.container}>
+    <Grid item xs={12}>
+      Workbench
+    </Grid>
+  </Grid>
+);
+
+Pagebuilder.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(Pagebuilder);

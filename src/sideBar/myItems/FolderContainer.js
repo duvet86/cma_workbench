@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { matchPath } from "react-router";
-
 import Folder from "sideBar/myItems/Folder";
 
 class FolderContainer extends Component {
@@ -16,14 +14,11 @@ class FolderContainer extends Component {
       return;
     }
 
-    const match = Children.filter(c => c.ChildType === "I")
-      .map(c =>
-        matchPath(`/workbench/${c.ChildItemId}`, {
-          path: location.pathname,
-          exact: true
-        })
-      )
-      .find(m => m && m.isExact);
+    const match = Children.some(
+      c =>
+        c.ChildType === "I" &&
+        `/workbench/${c.ChildItemId}` === location.pathname
+    );
 
     if (match) {
       this.setState({ expanded: true });

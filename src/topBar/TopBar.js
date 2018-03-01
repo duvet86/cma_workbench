@@ -46,6 +46,7 @@ const TopBar = ({
   open,
   onMenuClickHandler,
   onMenuCloseHandler,
+  onWelcomePageClickHandler,
   onLogoutClickHandler,
   onProfileClickHandler,
   handleDrawerOpen,
@@ -91,6 +92,7 @@ const TopBar = ({
           onClose={onMenuCloseHandler}
           getContentAnchorEl={null}
         >
+          <MenuItem onClick={onWelcomePageClickHandler}>Welcome Page</MenuItem>
           <MenuItem onClick={onProfileClickHandler}>Profile</MenuItem>
           <MenuItem onClick={onLogoutClickHandler}>Sign Out</MenuItem>
         </Menu>
@@ -104,6 +106,7 @@ TopBar.propTypes = {
   open: PropTypes.bool.isRequired,
   onMenuClickHandler: PropTypes.func.isRequired,
   onMenuCloseHandler: PropTypes.func.isRequired,
+  onWelcomePageClickHandler: PropTypes.func.isRequired,
   onLogoutClickHandler: PropTypes.func.isRequired,
   onProfileClickHandler: PropTypes.func.isRequired,
   anchorEl: PropTypes.object

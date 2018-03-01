@@ -12,6 +12,9 @@ import Warning from "material-ui-icons/Warning";
 
 const styles = {
   container: {
+    padding: 25
+  },
+  innerContainer: {
     marginTop: "3%"
   },
   cardActions: {
@@ -31,25 +34,27 @@ const styles = {
 };
 
 const ErrorPage = ({ error, classes }) => (
-  <Grid item xs={12}>
-    <Grid container justify="center" className={classes.container}>
-      <Grid item xs={6}>
-        <Card>
-          <CardContent className={classes.cardContent}>
-            <Warning className={classes.icon} />
-            <Typography variant="headline" component="h2">
-              OOOPS SOMETHING WENT WRONG
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <Typography>{JSON.stringify(error)}</Typography>
-          </CardContent>
-          <CardActions className={classes.cardActions}>
-            <Button variant="raised" component={Link} to="/">
-              Back to the Home Page
-            </Button>
-          </CardActions>
-        </Card>
+  <Grid container className={classes.container}>
+    <Grid item xs={12}>
+      <Grid container justify="center" className={classes.innerContainer}>
+        <Grid item xs={6}>
+          <Card>
+            <CardContent className={classes.cardContent}>
+              <Warning className={classes.icon} />
+              <Typography variant="headline" component="h2">
+                OOOPS SOMETHING WENT WRONG
+              </Typography>
+            </CardContent>
+            <CardContent>
+              <Typography>{JSON.stringify(error)}</Typography>
+            </CardContent>
+            <CardActions className={classes.cardActions}>
+              <Button variant="raised" component={Link} to="/">
+                Back to the Home Page
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
       </Grid>
     </Grid>
   </Grid>
