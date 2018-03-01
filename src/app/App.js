@@ -5,6 +5,7 @@ import { DragDropContextProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
 import { withStyles } from "material-ui/styles";
+import withLoading from "lib/withLoading";
 
 import TopBarContainer from "topBar/TopBarContainer";
 import SideBar from "sideBar/SideBar";
@@ -36,4 +37,4 @@ App.propTypes = {
   open: PropTypes.bool.isRequired
 };
 
-export default withStyles(styles)(App);
+export default withLoading(withStyles(styles)(App));

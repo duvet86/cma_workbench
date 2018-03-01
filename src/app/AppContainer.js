@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import { qesEnabledRequest } from "app/actions";
 
-import LoadingContainer from "common/LoadingContainer";
 import App from "app/App";
 
 class AppContainer extends Component {
@@ -28,20 +27,16 @@ class AppContainer extends Component {
   };
 
   render() {
-    const { isQesEnabled, isLoading, error, ...rest } = this.props;
+    const { isQesEnabled, ...rest } = this.props;
 
-    return (
-      <LoadingContainer isLoading={isLoading} error={error}>
-        {isQesEnabled ? (
-          <App
-            open={this.state.open}
-            handleDrawerOpen={this.handleDrawerOpen}
-            {...rest}
-          />
-        ) : (
-          <div>Error Message.</div>
-        )}
-      </LoadingContainer>
+    return isQesEnabled ? (
+      <App
+        open={this.state.open}
+        handleDrawerOpen={this.handleDrawerOpen}
+        {...rest}
+      />
+    ) : (
+      <div>Error Message.</div>
     );
   }
 }

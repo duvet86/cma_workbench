@@ -4,16 +4,13 @@ import { connect } from "react-redux";
 
 import { operatorsRequest } from "sideBar/operators/actions";
 import OperatorsList from "sideBar/operators/OperatorsList";
-import { enhancedOperatorsSelector } from "sideBar/operators/selectors";
-
-import LoadingContainer from "common/LoadingContainer";
 
 class OperatorsListContainer extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
     dispatchLoadOperators: PropTypes.func.isRequired,
-    operators: PropTypes.array,
+    operators: PropTypes.object,
     error: PropTypes.object
   };
 
@@ -22,20 +19,14 @@ class OperatorsListContainer extends Component {
   }
 
   render() {
-    const { isLoading, error, ...rest } = this.props;
-
-    return (
-      <LoadingContainer isLoading={isLoading} error={error}>
-        <OperatorsList {...rest} />
-      </LoadingContainer>
-    );
+    return <OperatorsList {...this.props} />;
   }
 }
 
 const mapStateToProps = ({
   operatorsReducer: { isLoading, operators, error }
 }) => ({
-  operators: operators && enhancedOperatorsSelector(operators),
+  operators: operators,
   isLoading,
   error
 });

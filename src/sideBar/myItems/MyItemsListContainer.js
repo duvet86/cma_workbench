@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import { myItemsRequest } from "sideBar/myItems/actions";
 
-import LoadingContainer from "common/LoadingContainer";
 import MyItemsList from "sideBar/myItems/MyItemsList";
 
 class MyItemsListContainer extends Component {
@@ -21,13 +20,7 @@ class MyItemsListContainer extends Component {
   }
 
   render() {
-    const { isLoading, error, ...rest } = this.props;
-
-    return (
-      <LoadingContainer isLoading={isLoading} error={error}>
-        <MyItemsList {...rest} />
-      </LoadingContainer>
-    );
+    return <MyItemsList {...this.props} />;
   }
 }
 

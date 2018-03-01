@@ -1,20 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import List from "material-ui/List";
+import withLoading from "lib/withLoading";
 
+import List from "material-ui/List";
 import Operator from "sideBar/operators/Operator";
 
 const OperatorsList = ({ operators }) => (
   <List>
-    {operators.map(operator => (
-      <Operator key={operator.operatorServiceId} {...operator} />
+    {Object.keys(operators).map(key => (
+      <Operator key={key} {...operators[key]} />
     ))}
   </List>
 );
 
 OperatorsList.propTypes = {
-  operators: PropTypes.array.isRequired
+  operators: PropTypes.object.isRequired
 };
 
-export default OperatorsList;
+export default withLoading(OperatorsList);

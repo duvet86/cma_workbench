@@ -2,12 +2,15 @@ import grid20 from "workbench/grid20.png";
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import { connect } from "react-redux";
 import { DropTarget } from "react-dnd";
+
+import withLoading from "lib/withLoading";
 
 import { withStyles } from "material-ui/styles";
 import Grid from "material-ui/Grid";
 
+import { enhancedOperatorsSelector } from "sideBar/operators/selectors";
 import { itemType } from "sideBar/operators/operatorsData";
 
 const styles = {
@@ -32,9 +35,13 @@ const operatorTarget = {
 };
 
 class DroppableCanvas extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   state = {
     scale: 1,
-    operators: {}
+    operatorsInCanvas: {}
   };
 
   handleWheel = e => {
@@ -50,7 +57,7 @@ class DroppableCanvas extends Component {
 
   handleDrop = (operatorId, x, y) => {
     this.setState({
-      operators: {
+      operatorsInCanvas: {
         [operatorId]: {
           top: y,
           left: x
@@ -60,8 +67,12 @@ class DroppableCanvas extends Component {
   };
 
   render() {
-    const { classes, connectDropTarget } = this.props;
-    const { operators } = this.state;
+    const {
+      classes,
+      connectDropTarget
+      //operators
+    } = this.props;
+    const { operatorsInCanvas } = this.state;
 
     return connectDropTarget(
       <span>
@@ -78,13 +89,13 @@ class DroppableCanvas extends Component {
               transform: `scale(${this.state.scale})`
             }}
           >
-            {Object.keys(operators).map(key => (
+            {Object.keys(operatorsInCanvas).map(key => (
               <div
                 key={key}
                 style={{
                   position: "absolute",
-                  top: operators[key].top,
-                  left: operators[key].left
+                  top: operatorsInCanvas[key].top,
+                  left: operatorsInCanvas[key].left
                 }}
               >
                 Luca
@@ -97,14 +108,20 @@ class DroppableCanvas extends Component {
   }
 }
 
-DroppableCanvas.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+const mapStateToProps = ({
+  operatorsReducer: { isLoading, operators, error }
+}) => ({
+  operators: operators && enhancedOperatorsSelector(operators),
+  isLoading,
+  error
+});
 
-export default withStyles(styles)(
-  DropTarget(itemType.OPERATOR, operatorTarget, (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
-  }))(DroppableCanvas)
+export default connect(mapStateToProps)(
+  withStyles(styles)(
+    DropTarget(itemType.OPERATOR, operatorTarget, (connect, monitor) => ({
+      connectDropTarget: connect.dropTarget(),
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop()
+    }))(withLoading(DroppableCanvas))
+  )
 );

@@ -21,21 +21,6 @@ export const staticOperatorsList = [
     Label: "Filter",
     Description: "Filter your data"
   }
-  // {
-  //   OperatorServiceId: 3,
-  //   Label: "Text/Notes",
-  //   Description: "Add notes to your queries",
-  // },
-  // {
-  //   OperatorServiceId: 4,
-  //   Label: "Top N",
-  //   Description: "Select only top n records from your query",
-  // },
-  // {
-  //   OperatorServiceId: 5,
-  //   Label: "Rank",
-  //   Description: "Partion your data in groups",
-  // }
 ];
 
 export const operatorsExtraInfo = {
@@ -49,21 +34,6 @@ export const operatorsExtraInfo = {
     IconComponent: FilterListIcon,
     backgroundColor: "#2c5367"
   },
-  // // Text/Notes.
-  // 3: {
-  //   IconComponent: NoteIcon
-  //   //backgroundColor: "#e0b841"
-  // },
-  // // Top N.
-  // 4: {
-  //   IconComponent: ArrowUpwardIcon
-  //   //backgroundColor: "#c2b29f"
-  // },
-  // // Rank.
-  // 5: {
-  //   IconComponent: ArrowDownwardIcon
-  //   //backgroundColor: "#c2b29f"
-  // },
   // Calculator.
   "f2b180d1-8c2c-422c-bd70-3a84cad759ee": {
     IconComponent: FunctionsIcon,

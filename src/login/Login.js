@@ -4,6 +4,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
+import withLoading from "lib/withLoading";
+
 import Grid from "material-ui/Grid";
 import Paper from "material-ui/Paper";
 import Typography from "material-ui/Typography";
@@ -152,4 +154,4 @@ Login.propTypes = {
   submitHandler: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(Login);
+export default withLoading(withStyles(styles)(Login));

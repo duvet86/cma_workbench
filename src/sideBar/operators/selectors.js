@@ -6,12 +6,15 @@ const operatorsSelector = operators => operators;
 
 export const enhancedOperatorsSelector = createSelector(
   operatorsSelector,
-  operators =>
-    operators.map(({ OperatorServiceId, Label, Description }) => ({
-      operatorServiceId: OperatorServiceId,
-      label: Label,
-      description: Description,
-      backgroundColor: operatorsExtraInfo[OperatorServiceId].backgroundColor,
-      IconComponent: operatorsExtraInfo[OperatorServiceId].IconComponent
-    }))
+  operators => {
+    const asd = Object.keys(operators).map(key => ({
+      operatorServiceId: key,
+      label: operators[key].Label,
+      description: operators[key].Description,
+      backgroundColor: operatorsExtraInfo[key].backgroundColor,
+      IconComponent: operatorsExtraInfo[key].IconComponent
+    }));
+    
+    return asd;
+  }
 );
