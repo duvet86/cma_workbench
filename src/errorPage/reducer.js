@@ -11,7 +11,6 @@ function profile(
   switch (action.type) {
     case TRIGGER_ERROR:
       return {
-        ...state,
         error: action.error
       };
 

@@ -10,8 +10,6 @@ import TopBarContainer from "topBar/TopBarContainer";
 import SideBar from "sideBar/SideBar";
 import AppBody from "appBody/AppBody";
 
-import withLoading from "lib/withLoading";
-
 const styles = {
   bodyContainer: {
     height: "100%",
@@ -38,4 +36,4 @@ App.propTypes = {
   open: PropTypes.bool.isRequired
 };
 
-export default withLoading(withStyles(styles)(App));
+export default withStyles(styles)(App);

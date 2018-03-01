@@ -2,7 +2,8 @@ import { PROFILE_REQUEST, PROFILE_SUCCESS } from "profile/actions";
 
 function profile(
   state = {
-    isLoading: true
+    isLoading: true,
+    userInfo: undefined
   },
   action
 ) {
@@ -15,7 +16,6 @@ function profile(
 
     case PROFILE_SUCCESS:
       return {
-        ...state,
         isLoading: false,
         userInfo: action.userInfo
       };

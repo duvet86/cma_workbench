@@ -2,7 +2,7 @@ import { QES_ENABLED_REQUEST, QES_ENABLED_SUCCESS } from "app/actions";
 
 function login(
   state = {
-    isLoading: false,
+    isLoading: true,
     isQesEnabled: false
   },
   action
@@ -16,7 +16,6 @@ function login(
 
     case QES_ENABLED_SUCCESS:
       return {
-        ...state,
         isLoading: false,
         isQesEnabled: action.isQesEnabled
       };

@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import List from "material-ui/List";
 
-import withLoading from "lib/withLoading";
-
 import FolderContainer from "sideBar/myItems/FolderContainer";
 import Item from "sideBar/myItems/Item";
 
@@ -53,4 +51,4 @@ MyItemsList.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-export default withLoading(withStyles(styles)(MyItemsList));
+export default withStyles(styles)(MyItemsList);

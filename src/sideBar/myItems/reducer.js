@@ -2,7 +2,8 @@ import { MY_ITEMS_REQUEST, MY_ITEMS_SUCCESS } from "sideBar/myItems/actions";
 
 function myItems(
   state = {
-    isLoading: true
+    isLoading: true,
+    items: {}
   },
   action
 ) {
@@ -15,7 +16,6 @@ function myItems(
 
     case MY_ITEMS_SUCCESS:
       return {
-        ...state,
         isLoading: false,
         items: action.items
       };

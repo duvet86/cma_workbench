@@ -4,10 +4,16 @@ import { connect } from "react-redux";
 
 import { loginRequest } from "login/actions";
 
-import Loading from "common/Loading";
+import LoadingContainer from "common/LoadingContainer";
 import Login from "login/Login";
 
 class LoginContainer extends Component {
+  static propTypes = {
+    submitHandler: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    error: PropTypes.object
+  };
+
   componentWillMount() {
     document.body.style.backgroundColor = "#eee";
   }
@@ -17,18 +23,15 @@ class LoginContainer extends Component {
   }
 
   render() {
-    const { submitHandler, isLoading, ...props } = this.props;
-    if (isLoading) {
-      return <Loading {...props} />;
-    }
-    return <Login submitHandler={submitHandler} />;
+    const { isLoading, error, ...rest } = this.props;
+
+    return (
+      <LoadingContainer isLoading={isLoading} error={error}>
+        <Login {...rest} />
+      </LoadingContainer>
+    );
   }
 }
-
-LoginContainer.propTypes = {
-  submitHandler: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = ({ loginReducer: { isLoading, error } }) => ({
   isLoading,

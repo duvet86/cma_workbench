@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 import Grid from "material-ui/Grid";
 
-import withLoading from "lib/withLoading";
-
 const styles = {
   container: {
     padding: 25
@@ -25,4 +23,4 @@ Profile.propTypes = {
   userInfo: PropTypes.object.isRequired
 };
 
-export default withLoading(withStyles(styles)(Profile));
+export default withStyles(styles)(Profile);

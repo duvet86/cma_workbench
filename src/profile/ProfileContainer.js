@@ -4,23 +4,30 @@ import { connect } from "react-redux";
 
 import { profileRequest } from "profile/actions";
 
+import LoadingContainer from "common/LoadingContainer";
 import Profile from "profile/Profile";
 
 class ProfileContainer extends Component {
+  static propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    error: PropTypes.object,
+    userInfo: PropTypes.object
+  };
+
   componentWillMount() {
     this.props.dispatchLoadProfile();
   }
 
   render() {
-    return <Profile {...this.props} />;
+    const { isLoading, error, ...rest } = this.props;
+
+    return (
+      <LoadingContainer isLoading={isLoading} error={error}>
+        <Profile {...rest} />
+      </LoadingContainer>
+    );
   }
 }
-
-ProfileContainer.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
-  userInfo: PropTypes.object
-};
 
 const mapStateToProps = ({
   profileReducer: { isLoading, userInfo, error }

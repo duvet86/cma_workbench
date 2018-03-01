@@ -4,25 +4,32 @@ import { connect } from "react-redux";
 
 import { myItemsRequest } from "sideBar/myItems/actions";
 
+import LoadingContainer from "common/LoadingContainer";
 import MyItemsList from "sideBar/myItems/MyItemsList";
 
 class MyItemsListContainer extends Component {
+  static propTypes = {
+    dispatchLoadMyItems: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
+    items: PropTypes.object,
+    error: PropTypes.object
+  };
+
   componentWillMount() {
     this.props.dispatchLoadMyItems();
   }
 
   render() {
-    return <MyItemsList {...this.props} />;
+    const { isLoading, error, ...rest } = this.props;
+
+    return (
+      <LoadingContainer isLoading={isLoading} error={error}>
+        <MyItemsList {...rest} />
+      </LoadingContainer>
+    );
   }
 }
-
-MyItemsListContainer.propTypes = {
-  dispatchLoadMyItems: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  location: PropTypes.object.isRequired,
-  items: PropTypes.object,
-  error: PropTypes.object
-};
 
 const mapStateToProps = ({ myItemsReducer: { isLoading, items, error } }) => ({
   isLoading,

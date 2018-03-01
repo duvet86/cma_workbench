@@ -4,9 +4,15 @@ import { connect } from "react-redux";
 
 import { qesEnabledRequest } from "app/actions";
 
+import LoadingContainer from "common/LoadingContainer";
 import App from "app/App";
 
 class AppContainer extends Component {
+  static propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    isQesEnabled: PropTypes.bool.isRequired
+  };
+
   state = {
     open: true
   };
@@ -22,24 +28,23 @@ class AppContainer extends Component {
   };
 
   render() {
-    const { isQesEnabled } = this.props;
+    const { isQesEnabled, isLoading, error, ...rest } = this.props;
 
-    return isQesEnabled ? (
-      <App
-        open={this.state.open}
-        handleDrawerOpen={this.handleDrawerOpen}
-        {...this.props}
-      />
-    ) : (
-      <div>Error Message.</div>
+    return (
+      <LoadingContainer isLoading={isLoading} error={error}>
+        {isQesEnabled ? (
+          <App
+            open={this.state.open}
+            handleDrawerOpen={this.handleDrawerOpen}
+            {...rest}
+          />
+        ) : (
+          <div>Error Message.</div>
+        )}
+      </LoadingContainer>
     );
   }
 }
-
-AppContainer.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  isQesEnabled: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = ({
   appReducer: { isLoading, isQesEnabled, error }

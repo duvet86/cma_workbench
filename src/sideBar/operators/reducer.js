@@ -5,7 +5,8 @@ import {
 
 function operators(
   state = {
-    isLoading: true
+    isLoading: true,
+    operators: []
   },
   action
 ) {
@@ -18,7 +19,6 @@ function operators(
 
     case OPERATORS_SUCCESS:
       return {
-        ...state,
         isLoading: false,
         operators: action.operators
       };
