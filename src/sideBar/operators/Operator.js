@@ -45,8 +45,7 @@ const Operator = ({
   backgroundColor,
   IconComponent,
   isDragging,
-  connectDragSource,
-  connectDragPreview
+  connectDragSource
 }) => (
   <Fragment>
     <ListItem classes={{ root: classes.listItemRoot }}>
@@ -88,7 +87,6 @@ export default DragSource(
   operatorSource,
   (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
-    connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging()
   })
 )(withStyles(styles)(Operator));

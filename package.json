@@ -5,6 +5,7 @@
   "dependencies": {
     "base-64": "^0.1.0",
     "history": "^4.7.2",
+    "immutability-helper": "^2.6.5",
     "material-ui": "^1.0.0-beta.33",
     "material-ui-icons": "^1.0.0-beta.17",
     "react": "^16.2.0",

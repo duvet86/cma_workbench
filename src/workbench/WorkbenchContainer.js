@@ -4,7 +4,7 @@ import Snackbar from "material-ui/Snackbar";
 import Button from "material-ui/Button";
 
 import WorkbenchToolbar from "workbench/WorkbenchToolbar";
-import DroppableCanvas from "workbench/DroppableCanvas";
+import DroppableCanvasContainer from "workbench/droppableCanvas/DroppableCanvasContainer";
 
 class WorkbenchContainer extends Component {
   state = {
@@ -40,7 +40,7 @@ class WorkbenchContainer extends Component {
           }
         />
         <WorkbenchToolbar />
-        <DroppableCanvas />
+        <DroppableCanvasContainer />
       </Fragment>
     );
   }

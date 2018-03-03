@@ -27,16 +27,12 @@ class AppContainer extends Component {
   };
 
   render() {
-    const { isQesEnabled, ...rest } = this.props;
-
-    return isQesEnabled ? (
+    return (
       <App
+        {...this.props}
         open={this.state.open}
         handleDrawerOpen={this.handleDrawerOpen}
-        {...rest}
       />
-    ) : (
-      <div>Error Message.</div>
     );
   }
 }

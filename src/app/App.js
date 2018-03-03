@@ -19,17 +19,20 @@ const styles = {
   }
 };
 
-const App = ({ classes, handleDrawerOpen, open, ...props }) => (
-  <DragDropContextProvider backend={HTML5Backend}>
-    <Fragment>
-      <TopBarContainer handleDrawerOpen={handleDrawerOpen} />
-      <div className={classes.bodyContainer}>
-        <SideBar open={open} {...props} />
-        <AppBody />
-      </div>
-    </Fragment>
-  </DragDropContextProvider>
-);
+const App = ({ classes, handleDrawerOpen, open, isQesEnabled, ...props }) =>
+  isQesEnabled ? (
+    <DragDropContextProvider backend={HTML5Backend}>
+      <Fragment>
+        <TopBarContainer handleDrawerOpen={handleDrawerOpen} />
+        <div className={classes.bodyContainer}>
+          <SideBar open={open} {...props} />
+          <AppBody />
+        </div>
+      </Fragment>
+    </DragDropContextProvider>
+  ) : (
+    <div>Error Message.</div>
+  );
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
