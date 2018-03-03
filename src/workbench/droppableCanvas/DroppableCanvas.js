@@ -7,11 +7,11 @@ import { withStyles } from "material-ui/styles";
 import withLoading from "lib/withLoading";
 
 import Grid from "material-ui/Grid";
-import CanvasOperator from "workbench/droppableCanvas/CanvasOperator";
-import Connector from "workbench/droppableCanvas/Connector";
+import CanvasOperatorContainer from "workbench/canvasOperator/CanvasOperatorContainer";
 
 const styles = {
   container: {
+    position: "relative",
     height: "400%",
     width: "400%"
   },
@@ -23,43 +23,37 @@ const styles = {
 
 const DroppableCanvas = ({
   classes,
-  scale,
-  handleWheel,
+  id,
+  jsPlumbInstance,
   operators,
   operatorsInCanvas,
-  connectors
+  moveOperatorInCanvas
 }) => (
-  <Grid container className={classes.container} onWheel={handleWheel}>
-    <Grid
-      item
-      xs={12}
-      className={classes.item}
-      style={{
-        transform: `scale(${scale})`
-      }}
-    >
+  <Grid id={id} container className={classes.container}>
+    <Grid item xs={12} className={classes.item}>
       {operatorsInCanvas.map(({ operatorId, ...rest }, index) => (
-        <CanvasOperator
+        <CanvasOperatorContainer
           key={index}
+          id={index}
+          jsPlumbInstance={jsPlumbInstance}
           index={index}
+          operatorId={operatorId}
           label={operators[operatorId].label}
           iconComponent={operators[operatorId].IconComponent}
           backgroundColor={operators[operatorId].backgroundColor}
+          moveOperatorInCanvas={moveOperatorInCanvas}
           {...rest}
         />
-      ))}
-      {connectors.map(({ connectorId, ...rest }, index) => (
-        <Connector key={index} index={index} {...rest} />
       ))}
     </Grid>
   </Grid>
 );
 
 DroppableCanvas.propTypes = {
+  id: PropTypes.string.isRequired,
+  jsPlumbInstance: PropTypes.object.isRequired,
   operators: PropTypes.object.isRequired,
-  operatorsInCanvas: PropTypes.array.isRequired,
-  scale: PropTypes.number.isRequired,
-  handleWheel: PropTypes.func.isRequired
+  operatorsInCanvas: PropTypes.array.isRequired
 };
 
 export default withLoading(withStyles(styles)(DroppableCanvas));
