@@ -8,7 +8,7 @@ class FolderContainer extends Component {
     expanded: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { Children, location } = this.props;
     if (!Children || Children.length === 0) {
       return;

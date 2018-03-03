@@ -10,13 +10,18 @@ const styles = {
   operatorContainer: {
     position: "absolute",
     display: "flex",
+    flexFlow: "column",
     alignItems: "center",
     cursor: "all-scroll",
     borderRadius: 5,
     border: "1px solid #003b86",
     padding: 5,
-    backgroundColor: "#eee",
-    width: 150
+    width: 165
+  },
+  title: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: 15
   },
   avatar: {
     marginRight: 15
@@ -37,11 +42,16 @@ const CanvasOperator = ({
     className={classes.operatorContainer}
     style={{ left: x, top: y }}
   >
-    <Avatar className={classes.avatar} style={{ backgroundColor }}>
-      <IconComponent />
-    </Avatar>
-    <Typography variant="subheading" gutterBottom>
-      {label}
+    <div className={classes.title}>
+      <Avatar className={classes.avatar} style={{ backgroundColor }}>
+        <IconComponent />
+      </Avatar>
+      <Typography variant="subheading" gutterBottom>
+        {label}
+      </Typography>
+    </div>
+    <Typography variant="subheading" gutterBottom noWrap>
+      Query #1
     </Typography>
   </div>
 );

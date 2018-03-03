@@ -15,7 +15,7 @@ class LoadingContainer extends Component {
     pastDelay: false
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this._delay = setTimeout(() => {
       this.setState({ pastDelay: true });
     }, this.props.delay || 200);

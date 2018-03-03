@@ -42,6 +42,12 @@ class DroppableCanvasContainer extends Component {
     operatorsInCanvas: [
       { operatorId: 2, x: 500, y: 150 },
       { operatorId: 1, x: 1000, y: 300 }
+    ],
+    connections: [
+      {
+        source: "canvas-operator-0",
+        target: "canvas-operator-1"
+      }
     ]
   };
 
@@ -76,13 +82,20 @@ class DroppableCanvasContainer extends Component {
   makeConnection = e => {
     this.state.jsPlumbInstance.connect({
       source: "canvas-operator-0",
-      target: "canvas-operator-1"
+      target: "canvas-operator-1",
+      detachable: false,
+      anchors: ["Bottom", "Top"],
+      endpoints: ["Blank", "Blank"],
+      connector: ["Flowchart", { cornerRadius: 5 }],
+      overlays: [
+        ["Arrow", { location: 30, width: 10, height: 10, foldback: 0 }]
+      ]
     });
   };
 
   render() {
     const { connectDropTarget, ...rest } = this.props;
-    const { jsPlumbInstance, operatorsInCanvas } = this.state;
+    const { jsPlumbInstance, operatorsInCanvas, connections } = this.state;
 
     return jsPlumbInstance
       ? connectDropTarget(
@@ -93,6 +106,7 @@ class DroppableCanvasContainer extends Component {
               jsPlumbInstance={jsPlumbInstance}
               moveOperatorInCanvas={this.moveOperatorInCanvas}
               operatorsInCanvas={operatorsInCanvas}
+              connections={connections}
               {...rest}
             />
           </span>

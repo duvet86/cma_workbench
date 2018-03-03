@@ -27,6 +27,7 @@ const DroppableCanvas = ({
   jsPlumbInstance,
   operators,
   operatorsInCanvas,
+  connections,
   moveOperatorInCanvas
 }) => (
   <Grid id={id} container className={classes.container}>
@@ -42,6 +43,7 @@ const DroppableCanvas = ({
           iconComponent={operators[operatorId].IconComponent}
           backgroundColor={operators[operatorId].backgroundColor}
           moveOperatorInCanvas={moveOperatorInCanvas}
+          connections={connections}
           {...rest}
         />
       ))}

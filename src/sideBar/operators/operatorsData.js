@@ -14,7 +14,7 @@ export const itemType = {
 export const staticOperatorsList = [
   {
     OperatorServiceId: 1,
-    Label: "Data Query",
+    Label: "Query",
     Description: "Query your data"
   },
   {

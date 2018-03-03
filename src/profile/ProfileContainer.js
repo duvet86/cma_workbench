@@ -13,7 +13,7 @@ class ProfileContainer extends Component {
     userInfo: PropTypes.object
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatchLoadProfile();
   }
 

@@ -14,7 +14,7 @@ class OperatorsListContainer extends Component {
     error: PropTypes.object
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatchLoadOperators();
   }
 

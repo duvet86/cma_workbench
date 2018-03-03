@@ -13,7 +13,7 @@ class LoginContainer extends Component {
     error: PropTypes.object
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.body.style.backgroundColor = "#eee";
   }
 

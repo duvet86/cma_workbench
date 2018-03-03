@@ -15,7 +15,7 @@ class MyItemsListContainer extends Component {
     error: PropTypes.object
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatchLoadMyItems();
   }
 

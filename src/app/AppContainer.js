@@ -16,7 +16,7 @@ class AppContainer extends Component {
     open: true
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatchQesEnabledRequest();
   }
 

@@ -10,7 +10,7 @@ import {
 import NavigationTabs from "sideBar/navigationTabs/NavigationTabs";
 
 class NavigationTabsContainer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const {
       location: { pathname },
       dispatchShowFilters,
