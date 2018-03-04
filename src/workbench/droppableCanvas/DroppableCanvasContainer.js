@@ -56,7 +56,7 @@ class DroppableCanvasContainer extends Component {
       { operatorId: 2, x: 500, y: 150 },
       { operatorId: 1, x: 1000, y: 300 }
     ],
-    connectors: [{ connectorId: 1, x1: 590, y1: 210, x2: 1000, y2: 315 }]
+    connectors: [{ connectorId: 1, x1: 570, y1: 200, x2: 1000, y2: 315 }]
   };
 
   handleWheel = e => {
@@ -92,7 +92,7 @@ class DroppableCanvasContainer extends Component {
     this.setState(
       update(this.state, {
         connectors: {
-          [index]: { $merge: { x1: x, y1: y } }
+          [index]: { $merge: { x1: x + 60, y1: y + 50 } }
         }
       })
     );
