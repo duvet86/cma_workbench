@@ -8,6 +8,8 @@ import myItemsReducer from "sideBar/myItems/reducer";
 import navigationTabsReducer from "sideBar/navigationTabs/reducer";
 import operatorsReducer from "sideBar/operators/reducer";
 import appReducer from "app/reducer";
+import sessionReducer from "workbench/reducer";
+import droppableCanvasReducer from "workbench/droppableCanvas/reducer";
 
 export default combineReducers({
   routerReducer,
@@ -17,5 +19,7 @@ export default combineReducers({
   profileReducer,
   myItemsReducer,
   navigationTabsReducer,
-  operatorsReducer
+  operatorsReducer,
+  sessionReducer,
+  droppableCanvasReducer
 });

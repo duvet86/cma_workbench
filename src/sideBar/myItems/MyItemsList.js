@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
-import withLoading from "lib/withLoading";
 
 import List from "material-ui/List";
 
@@ -53,4 +52,4 @@ MyItemsList.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-export default withLoading(withStyles(styles)(MyItemsList));
+export default withStyles(styles)(MyItemsList);

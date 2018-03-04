@@ -1,16 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import {
+  getElementId,
+  topEndPointConfig,
+  bottomEndPointConfig,
+  connectionConfig
+} from "workbench/utils";
+
 import CanvasOperator from "workbench/canvasOperator/CanvasOperator";
 
 class CanvasOperatorContainer extends Component {
   static propTypes = {
     jsPlumbInstance: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
     label: PropTypes.string.isRequired,
     backgroundColor: PropTypes.string.isRequired,
-    iconComponent: PropTypes.func.isRequired
+    IconComponent: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -18,34 +26,18 @@ class CanvasOperatorContainer extends Component {
       jsPlumbInstance,
       connections,
       moveOperatorInCanvas,
-      id
+      index
     } = this.props;
 
-    const elementId = `canvas-operator-${id}`;
+    const elementId = getElementId(index);
 
-    jsPlumbInstance.addEndpoint(elementId, {
-      anchor: "Top",
-      endpoint: ["Dot", { radius: 5, cssClass: "topendpoint" }],
-      isTarget: false /* MC20170717 - disable drag connections because UI is not complete */,
-      isSource: false /* MC20170717 - disable drag connections because UI is not complete */,
-      maxConnections: -1
-    });
-
-    jsPlumbInstance.addEndpoint(elementId, {
-      anchor: "Bottom",
-      endpoint: [
-        "Rectangle",
-        { width: 10, height: 10, cssClass: "bottomendpoint" }
-      ],
-      isTarget: false /* MC20170717 - disable drag connections because UI is not complete */,
-      isSource: false /* MC20170717 - disable drag connections because UI is not complete */,
-      maxConnections: -1
-    });
+    jsPlumbInstance.addEndpoint(elementId, topEndPointConfig);
+    jsPlumbInstance.addEndpoint(elementId, bottomEndPointConfig);
 
     jsPlumbInstance.draggable(elementId, {
       containment: true,
       stop: ({ pos }) => {
-        moveOperatorInCanvas(id, ...pos);
+        moveOperatorInCanvas(index, ...pos);
       }
     });
 
@@ -57,8 +49,15 @@ class CanvasOperatorContainer extends Component {
     jsPlumbInstance.revalidate();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.connections.length !== nextProps.connections.length) {
+      const { jsPlumbInstance, connections } = nextProps;
+      this.makeConnections(jsPlumbInstance, connections);
+    }
+  }
+
   makeConnections = (jsPlumbInstance, connections) => {
-    jsPlumbInstance.deleteEveryConnection();
+    //jsPlumbInstance.deleteEveryConnection();
     connections.forEach(connObj => {
       if (
         (jsPlumbInstance.getEndpoints(connObj.source).length ||
@@ -66,23 +65,24 @@ class CanvasOperatorContainer extends Component {
         (jsPlumbInstance.getEndpoints(connObj.target).length ||
           jsPlumbInstance.isTarget(connObj.target))
       ) {
-        jsPlumbInstance.connect({
-          source: connObj.source,
-          target: connObj.target,
-          detachable: false,
-          anchors: ["Bottom", "Top"],
-          endpoints: ["Blank", "Blank"],
-          connector: ["Flowchart", { cornerRadius: 5 }],
-          overlays: [
-            ["Arrow", { location: 30, width: 10, height: 10, foldback: 0 }]
-          ]
-        });
+        jsPlumbInstance.connect(
+          {
+            source: connObj.source,
+            target: connObj.target
+          },
+          connectionConfig
+        );
       }
     });
   };
 
   render() {
-    const { jsPlumbInstance, ...rest } = this.props;
+    const {
+      jsPlumbInstance,
+      connections,
+      moveOperatorInCanvas,
+      ...rest
+    } = this.props;
 
     return <CanvasOperator {...rest} />;
   }

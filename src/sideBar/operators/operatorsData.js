@@ -7,8 +7,7 @@ import SubdirectoryArrowRightIcon from "material-ui-icons/SubdirectoryArrowRight
 import SubdirectoryArrowLeftIcon from "material-ui-icons/SubdirectoryArrowLeft";
 
 export const itemType = {
-  OPERATOR: "OPERATOR",
-  CANVAS_OPERATOR: "CANVAS_OPERATOR"
+  OPERATOR: "OPERATOR"
 };
 
 export const staticOperatorsList = [

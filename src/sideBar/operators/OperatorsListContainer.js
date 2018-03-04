@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { operatorsRequest } from "sideBar/operators/actions";
+
+import LoaderContainer from "common/LoaderContainer";
 import OperatorsList from "sideBar/operators/OperatorsList";
 
 class OperatorsListContainer extends Component {
@@ -19,7 +21,13 @@ class OperatorsListContainer extends Component {
   }
 
   render() {
-    return <OperatorsList {...this.props} />;
+    const { isLoading, ...props } = this.props;
+
+    return (
+      <LoaderContainer isLoading={this.props.isLoading}>
+        <OperatorsList {...props} />
+      </LoaderContainer>
+    );
   }
 }
 

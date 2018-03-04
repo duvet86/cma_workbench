@@ -6,7 +6,7 @@ import Paper from "material-ui/Paper";
 import Toolbar from "material-ui/Toolbar";
 import Button from "material-ui/Button";
 
-import toolbarData from "workbench/toolbarData";
+import { toolbarData } from "workbench/utils";
 
 const styles = theme => ({
   root: {

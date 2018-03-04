@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import withLoading from "lib/withLoading";
-
 import List from "material-ui/List";
 import Operator from "sideBar/operators/Operator";
 
@@ -15,7 +13,7 @@ const OperatorsList = ({ operators }) => (
 );
 
 OperatorsList.propTypes = {
-  operators: PropTypes.object.isRequired
+  operators: PropTypes.object
 };
 
-export default withLoading(OperatorsList);
+export default OperatorsList;

@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
+import { getElementId } from "workbench/utils";
+
 import Avatar from "material-ui/Avatar";
 
 import Typography from "material-ui/Typography";
@@ -30,15 +32,15 @@ const styles = {
 
 const CanvasOperator = ({
   classes,
-  id,
+  index,
   x,
   y,
+  label,
   backgroundColor,
-  iconComponent: IconComponent,
-  label
+  IconComponent
 }) => (
   <div
-    id={`canvas-operator-${id}`}
+    id={getElementId(index)}
     className={classes.operatorContainer}
     style={{ left: x, top: y }}
   >
@@ -58,11 +60,12 @@ const CanvasOperator = ({
 
 CanvasOperator.propTypes = {
   classes: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
   backgroundColor: PropTypes.string.isRequired,
-  iconComponent: PropTypes.func.isRequired
+  IconComponent: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(CanvasOperator);

@@ -1,15 +1,25 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import Snackbar from "material-ui/Snackbar";
-import Button from "material-ui/Button";
+import { sessionRequest } from "workbench/actions";
 
-import WorkbenchToolbar from "workbench/WorkbenchToolbar";
-import DroppableCanvasContainer from "workbench/droppableCanvas/DroppableCanvasContainer";
+import LoaderContainer from "common/LoaderContainer";
+import Workbench from "workbench/Workbench";
 
 class WorkbenchContainer extends Component {
+  static propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    sessionInfo: PropTypes.object
+  };
+
   state = {
     tipOpen: true
   };
+
+  componentDidMount() {
+    this.props.dispatchSessionRequest();
+  }
 
   handleTipClose = () => {
     this.setState({ tipOpen: false });
@@ -19,31 +29,25 @@ class WorkbenchContainer extends Component {
     const { tipOpen } = this.state;
 
     return (
-      <Fragment>
-        <Snackbar
-          anchorOrigin={{ vertical: "top", horizontal: "left" }}
-          autoHideDuration={3000}
-          open={tipOpen}
-          onClose={this.handleTipClose}
-          SnackbarContentProps={{
-            "aria-describedby": "message-id"
-          }}
-          message={
-            <span id="message-id">
-              Tip: drag and drop an icon on the canvas!
-            </span>
-          }
-          action={
-            <Button color="inherit" size="small" onClick={this.handleTipClose}>
-              Ok
-            </Button>
-          }
-        />
-        <WorkbenchToolbar />
-        <DroppableCanvasContainer />
-      </Fragment>
+      <LoaderContainer isLoading={this.props.isLoading}>
+        <Workbench tipOpen={tipOpen} handleTipClose={this.handleTipClose} />
+      </LoaderContainer>
     );
   }
 }
 
-export default WorkbenchContainer;
+const mapStateToProps = ({
+  sessionReducer: { isLoading, sessionInfo, error }
+}) => ({
+  isLoading,
+  sessionInfo,
+  error
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatchSessionRequest: () => {
+    dispatch(sessionRequest());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkbenchContainer);

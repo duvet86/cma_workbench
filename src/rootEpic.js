@@ -6,6 +6,7 @@ import { myItemsEpic } from "sideBar/myItems/epic";
 import { navigationTabsEpic } from "sideBar/navigationTabs/epic";
 import { operatorsEpic } from "sideBar/operators/epic";
 import { appEpic } from "app/epic";
+import { sessionEpic } from "workbench/epic";
 
 const epics = [
   loginEpic,
@@ -13,7 +14,8 @@ const epics = [
   fetchProfileEpic,
   myItemsEpic,
   navigationTabsEpic,
-  operatorsEpic
+  operatorsEpic,
+  sessionEpic
 ];
 
 export default combineEpics(...epics);

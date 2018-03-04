@@ -1,12 +1,22 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import update from "immutability-helper";
+
 import { connect } from "react-redux";
 import { DropTarget } from "react-dnd";
 import { jsPlumb } from "jsplumb";
 
 import { itemType } from "sideBar/operators/operatorsData";
+import { getEnhancedOperators } from "workbench/droppableCanvas/selectors";
+import {
+  canvasOperatorsRequest,
+  canvasOperatorAdd,
+  canvasOperatorMove,
+  canvasOperatorRemove,
+  connectionAdd,
+  connectioRemove
+} from "workbench/droppableCanvas/actions";
 
+import LoaderContainer from "common/LoaderContainer";
 import DroppableCanvas from "workbench/droppableCanvas/DroppableCanvas";
 
 const COMPONENT_ID = "droppable-canvas";
@@ -32,23 +42,29 @@ const operatorTarget = {
 
 class DroppableCanvasContainer extends Component {
   static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
-    operators: PropTypes.object
+    dispatchCanvasOperatorsRequest: PropTypes.func.isRequired,
+    dispatchCanvasOperatorAdd: PropTypes.func.isRequired,
+    dispatchCanvasOperatorMove: PropTypes.func.isRequired,
+    dispatchCanvasOperatorRemove: PropTypes.func.isRequired,
+    dispatchConnectionAdd: PropTypes.func.isRequired,
+    dispatchConnectioRemove: PropTypes.func.isRequired,
+    connections: PropTypes.array.isRequired,
+    operatorsInCanvas: PropTypes.array
   };
 
   state = {
-    jsPlumbInstance: undefined,
-    operatorsInCanvas: [
-      { operatorId: 2, x: 500, y: 150 },
-      { operatorId: 1, x: 1000, y: 300 }
-    ],
-    connections: [
-      {
-        source: "canvas-operator-0",
-        target: "canvas-operator-1"
-      }
-    ]
+    jsPlumbInstance: undefined
+    // operatorsInCanvas: [
+    //   { operatorId: 2, x: 500, y: 150 },
+    //   { operatorId: 1, x: 1000, y: 300 }
+    // ],
+    // connections: [
+    //   {
+    //     source: "canvas-operator-0",
+    //     target: "canvas-operator-1"
+    //   }
+    // ]
   };
 
   componentDidMount() {
@@ -62,47 +78,31 @@ class DroppableCanvasContainer extends Component {
   }
 
   dropOperatorFromSideBar = (operatorId, x, y) => {
-    this.setState(
-      update(this.state, {
-        operatorsInCanvas: { $push: [{ operatorId, y, x }] }
-      })
-    );
+    this.props.dispatchCanvasOperatorAdd(operatorId, x, y);
   };
 
   moveOperatorInCanvas = (index, x, y) => {
-    this.setState(
-      update(this.state, {
-        operatorsInCanvas: {
-          [index]: { $merge: { x, y } }
-        }
-      })
-    );
+    this.props.dispatchCanvasOperatorMove(index, x, y);
   };
 
-  makeConnection = e => {
-    this.state.jsPlumbInstance.connect({
-      source: "canvas-operator-0",
-      target: "canvas-operator-1",
-      detachable: false,
-      anchors: ["Bottom", "Top"],
-      endpoints: ["Blank", "Blank"],
-      connector: ["Flowchart", { cornerRadius: 5 }],
-      overlays: [
-        ["Arrow", { location: 30, width: 10, height: 10, foldback: 0 }]
-      ]
-    });
+  addConnection = (source, target) => {
+    this.props.dispatchConnectionAdd(source, target);
+  };
+
+  removeConnection = index => {
+    this.props.dispatchConnectioRemove(index);
   };
 
   render() {
     const { connectDropTarget, ...rest } = this.props;
     const { jsPlumbInstance, operatorsInCanvas, connections } = this.state;
 
-    return jsPlumbInstance
-      ? connectDropTarget(
+    return (
+      <LoaderContainer isLoading={this.props.isLoading || !jsPlumbInstance}>
+        {connectDropTarget(
           <span>
-            <button onClick={this.makeConnection}>click</button>
             <DroppableCanvas
-              id={COMPONENT_ID}
+              containerId={COMPONENT_ID}
               jsPlumbInstance={jsPlumbInstance}
               moveOperatorInCanvas={this.moveOperatorInCanvas}
               operatorsInCanvas={operatorsInCanvas}
@@ -110,27 +110,53 @@ class DroppableCanvasContainer extends Component {
               {...rest}
             />
           </span>
-        )
-      : null;
+        )}
+      </LoaderContainer>
+    );
   }
 }
 
-const mapStateToProps = ({
-  operatorsReducer: { isLoading, operators, error }
-}) => ({
-  operators: operators,
-  isLoading,
-  error
+const mapStateToProps = state => {
+  const {
+    operatorsReducer: { isLoading: isOperatorsLoading, operators },
+    droppableCanvasReducer: {
+      operatorsInCanvas,
+      connections,
+      isLoading: isCanvasLoading
+    }
+  } = state;
+
+  return {
+    isLoading: isOperatorsLoading && isCanvasLoading,
+    operatorsInCanvas:
+      operators && operatorsInCanvas && getEnhancedOperators(state),
+    connections
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  dispatchCanvasOperatorsRequest: () => {
+    dispatch(canvasOperatorsRequest());
+  },
+  dispatchCanvasOperatorAdd: (operatorId, x, y) => {
+    dispatch(canvasOperatorAdd(operatorId, x, y));
+  },
+  dispatchCanvasOperatorMove: (index, x, y) => {
+    dispatch(canvasOperatorMove(index, x, y));
+  },
+  dispatchCanvasOperatorRemove: index => {
+    dispatch(canvasOperatorRemove(index));
+  },
+  dispatchConnectionAdd: (source, target) => {
+    dispatch(connectionAdd(source, target));
+  },
+  dispatchConnectioRemove: index => {
+    dispatch(connectioRemove(index));
+  }
 });
 
-export default connect(mapStateToProps)(
-  DropTarget(
-    [itemType.OPERATOR, itemType.CANVAS_OPERATOR],
-    operatorTarget,
-    (connect, monitor) => ({
-      connectDropTarget: connect.dropTarget(),
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
-  )(DroppableCanvasContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  DropTarget(itemType.OPERATOR, operatorTarget, (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget()
+  }))(DroppableCanvasContainer)
 );

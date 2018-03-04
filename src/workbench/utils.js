@@ -5,7 +5,9 @@ import RedoIcon from "material-ui-icons/Redo";
 import OpenWithIcon from "material-ui-icons/OpenWith";
 import ArrowDownwardIcon from "material-ui-icons/ArrowDownward";
 
-const toolbarData = [
+export const getElementId = id => `canvas-operator-${id}`;
+
+export const toolbarData = [
   {
     id: 1,
     label: "Save",
@@ -43,4 +45,29 @@ const toolbarData = [
   }
 ];
 
-export default toolbarData;
+export const connectionConfig = {
+  detachable: false,
+  anchors: ["Bottom", "Top"],
+  endpoints: ["Blank", "Blank"],
+  connector: ["Flowchart", { cornerRadius: 5 }],
+  overlays: [["Arrow", { location: 30, width: 10, height: 10, foldback: 0 }]]
+};
+
+export const topEndPointConfig = {
+  anchor: "Top",
+  endpoint: ["Dot", { radius: 5, cssClass: "topendpoint" }],
+  isTarget: false,
+  isSource: false,
+  maxConnections: -1
+};
+
+export const bottomEndPointConfig = {
+  anchor: "Bottom",
+  endpoint: [
+    "Rectangle",
+    { width: 10, height: 10, cssClass: "bottomendpoint" }
+  ],
+  isTarget: false,
+  isSource: false,
+  maxConnections: -1
+};

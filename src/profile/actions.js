@@ -11,4 +11,7 @@ export const profileSuccess = userInfo => ({
   userInfo
 });
 
-export const profileError = error => ({ type: PROFILE_ERROR, error });
+export const profileError = error => ({
+  type: PROFILE_ERROR,
+  error
+});
