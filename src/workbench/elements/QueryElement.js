@@ -20,7 +20,7 @@ const styles = theme => ({
     alignItems: "center",
     cursor: "all-scroll",
     borderRadius: 5,
-    border: "1px solid #003b86",
+    border: "1px solid #7b582d",
     padding: 5,
     width: 165,
     backgroundColor: theme.palette.background.paper

@@ -10,6 +10,7 @@ import {
 import { elementType } from "sideBar/operators/operatorsData";
 
 import QueryElement from "workbench/elements/QueryElement";
+import FilterElement from "workbench/elements/FilterElement";
 
 class ElementsContainer extends Component {
   static propTypes = {
@@ -19,9 +20,9 @@ class ElementsContainer extends Component {
     type: PropTypes.string.isRequired,
     elementId: PropTypes.number.isRequired,
     elementLabel: PropTypes.string.isRequired,
-    columns: PropTypes.array.isRequired,
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
+    y: PropTypes.number.isRequired,
+    columns: PropTypes.array
   };
 
   componentDidMount() {
@@ -92,6 +93,8 @@ class ElementsContainer extends Component {
     switch (type) {
       case elementType.QUERY:
         return <QueryElement {...props} />;
+      case elementType.FILTER:
+        return <FilterElement {...props} />;
       default:
         return null;
     }

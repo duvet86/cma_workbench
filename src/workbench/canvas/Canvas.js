@@ -39,6 +39,15 @@ const Canvas = ({
           {...q}
         />
       ))}
+      {filters.map((f, index) => (
+        <ElementsContainer
+          key={f.elementId}
+          jsPlumbInstance={jsPlumbInstance}
+          moveOperatorInCanvas={moveOperatorInCanvas}
+          index={index}
+          {...f}
+        />
+      ))}
     </Grid>
   </Grid>
 );
