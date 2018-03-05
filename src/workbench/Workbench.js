@@ -1,21 +1,13 @@
 import React, { Fragment } from "react";
-import PropTypes from "prop-types";
 
-import Tip from "workbench/Tip";
 import WorkbenchToolbar from "workbench/toolBar/WorkbenchToolbar";
-import DroppableCanvasContainer from "workbench/droppableCanvas/DroppableCanvasContainer";
+import CanvasContainer from "workbench/canvas/CanvasContainer";
 
-const Workbench = ({ tipOpen, handleTipClose }) => (
+const Workbench = () => (
   <Fragment>
-    <Tip tipOpen={tipOpen} handleTipClose={handleTipClose} />
     <WorkbenchToolbar />
-    <DroppableCanvasContainer />
+    <CanvasContainer />
   </Fragment>
 );
-
-Workbench.propTypes = {
-  tipOpen: PropTypes.bool.isRequired,
-  handleTipClose: PropTypes.func.isRequired
-};
 
 export default Workbench;

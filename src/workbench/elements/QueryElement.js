@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
 import { getElementId } from "workbench/utils";
+import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
 
 import Avatar from "material-ui/Avatar";
 
@@ -30,42 +31,33 @@ const styles = {
   }
 };
 
-const CanvasOperator = ({
-  classes,
-  index,
-  x,
-  y,
-  label,
-  backgroundColor,
-  IconComponent
-}) => (
+const QueryElement = ({ classes, elementId, elementLabel, x, y }) => (
   <div
-    id={getElementId(index)}
+    id={getElementId(elementId)}
     className={classes.operatorContainer}
     style={{ left: x, top: y }}
   >
     <div className={classes.title}>
-      <Avatar className={classes.avatar} style={{ backgroundColor }}>
-        <IconComponent />
+      <Avatar
+        className={classes.avatar}
+        style={{ backgroundColor: operatorsExtraInfo[1].backgroundColor }}
+      >
+        {React.createElement(operatorsExtraInfo[1].IconComponent)}
       </Avatar>
-      <Typography variant="subheading" gutterBottom>
-        {label}
-      </Typography>
     </div>
     <Typography variant="subheading" gutterBottom noWrap>
-      Query #1
+      {elementLabel}
     </Typography>
   </div>
 );
 
-CanvasOperator.propTypes = {
+QueryElement.propTypes = {
   classes: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
+  elementId: PropTypes.number.isRequired,
+  elementLabel: PropTypes.string.isRequired,
+  columns: PropTypes.array.isRequired,
   x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  label: PropTypes.string.isRequired,
-  backgroundColor: PropTypes.string.isRequired,
-  IconComponent: PropTypes.func.isRequired
+  y: PropTypes.number.isRequired
 };
 
-export default withStyles(styles)(CanvasOperator);
+export default withStyles(styles)(QueryElement);

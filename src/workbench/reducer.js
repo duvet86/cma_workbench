@@ -3,6 +3,7 @@ import { SESSION_REQUEST, SESSION_SUCCESS } from "workbench/actions";
 function session(
   state = {
     isLoading: true,
+    dataViewId: undefined,
     sessionInfo: undefined
   },
   action
@@ -11,7 +12,8 @@ function session(
     case SESSION_REQUEST:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        dataViewId: action.dataViewId
       };
 
     case SESSION_SUCCESS:

@@ -11,9 +11,13 @@ import { toolbarData } from "workbench/utils";
 const styles = theme => ({
   root: {
     position: "absolute",
-    marginLeft: theme.spacing.unit * 4,
-    marginTop: theme.spacing.unit * 3,
+    right: 0,
+    marginRight: 5,
+    marginTop: 10,
     zIndex: 1
+  },
+  toolBar: {
+    minHeight: 0
   },
   leftIcon: {
     fill: "#bdbdbd",
@@ -23,7 +27,7 @@ const styles = theme => ({
 
 const WorkbenchToolbar = ({ classes }) => (
   <Paper className={classes.root}>
-    <Toolbar>
+    <Toolbar className={classes.toolBar} disableGutters>
       {toolbarData.map(({ id, label, IconComponent }) => (
         <Button key={id} size="small">
           <IconComponent className={classes.leftIcon} />

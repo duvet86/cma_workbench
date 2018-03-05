@@ -10,6 +10,11 @@ export const itemType = {
   OPERATOR: "OPERATOR"
 };
 
+export const elementType = {
+  QUERY: "QUERY",
+  FILTER: "FILTER"
+};
+
 export const staticOperatorsList = [
   {
     OperatorServiceId: 1,
@@ -26,11 +31,13 @@ export const staticOperatorsList = [
 export const operatorsExtraInfo = {
   // Data Query.
   1: {
+    type: elementType.QUERY,
     IconComponent: SearchIcon,
     backgroundColor: "#7b582d"
   },
   // Filter.
   2: {
+    type: elementType.FILTER,
     IconComponent: FilterListIcon,
     backgroundColor: "#2c5367"
   },

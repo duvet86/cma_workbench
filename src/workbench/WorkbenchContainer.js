@@ -13,40 +13,33 @@ class WorkbenchContainer extends Component {
     sessionInfo: PropTypes.object
   };
 
-  state = {
-    tipOpen: true
-  };
-
   componentDidMount() {
-    this.props.dispatchSessionRequest();
+    const { match } = this.props;
+    const dataViewId = match.params.id === "new" ? undefined : match.params.id;
+
+    this.props.dispatchSessionRequest(dataViewId);
   }
 
-  handleTipClose = () => {
-    this.setState({ tipOpen: false });
-  };
-
   render() {
-    const { tipOpen } = this.state;
+    const { isLoading, sessionInfo } = this.props;
 
+    console.log(sessionInfo);
     return (
-      <LoaderContainer isLoading={this.props.isLoading}>
-        <Workbench tipOpen={tipOpen} handleTipClose={this.handleTipClose} />
+      <LoaderContainer isLoading={isLoading}>
+        <Workbench sessionInfo={sessionInfo} />
       </LoaderContainer>
     );
   }
 }
 
-const mapStateToProps = ({
-  sessionReducer: { isLoading, sessionInfo, error }
-}) => ({
+const mapStateToProps = ({ sessionReducer: { isLoading, sessionInfo } }) => ({
   isLoading,
-  sessionInfo,
-  error
+  sessionInfo
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchSessionRequest: () => {
-    dispatch(sessionRequest());
+  dispatchSessionRequest: dataViewId => {
+    dispatch(sessionRequest(dataViewId));
   }
 });
 

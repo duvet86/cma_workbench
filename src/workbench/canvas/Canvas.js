@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 
 import Grid from "material-ui/Grid";
-import CanvasOperatorContainer from "workbench/canvasOperator/CanvasOperatorContainer";
+import ElementsContainer from "workbench/elements/ElementsContainer";
 
 const styles = {
   container: {
@@ -20,37 +20,36 @@ const styles = {
   }
 };
 
-const DroppableCanvas = ({
+const Canvas = ({
   classes,
   containerId,
   jsPlumbInstance,
-  operatorsInCanvas,
-  connections,
-  moveOperatorInCanvas
+  moveOperatorInCanvas,
+  queries,
+  filters
 }) => (
   <Grid id={containerId} container className={classes.container}>
     <Grid item xs={12} className={classes.item}>
-      {operatorsInCanvas.map((op, index) => (
-        <CanvasOperatorContainer
-          key={index}
-          index={index}
+      {queries.map((q, index) => (
+        <ElementsContainer
+          key={q.elementId}
           jsPlumbInstance={jsPlumbInstance}
           moveOperatorInCanvas={moveOperatorInCanvas}
-          connections={connections}
-          {...op}
+          index={index}
+          {...q}
         />
       ))}
     </Grid>
   </Grid>
 );
 
-DroppableCanvas.propTypes = {
+Canvas.propTypes = {
   classes: PropTypes.object.isRequired,
   containerId: PropTypes.string.isRequired,
   jsPlumbInstance: PropTypes.object.isRequired,
-  operatorsInCanvas: PropTypes.array.isRequired,
-  connections: PropTypes.array.isRequired,
-  moveOperatorInCanvas: PropTypes.func.isRequired
+  moveOperatorInCanvas: PropTypes.func.isRequired,
+  queries: PropTypes.array,
+  filters: PropTypes.array
 };
 
-export default withStyles(styles)(DroppableCanvas);
+export default withStyles(styles)(Canvas);

@@ -8,8 +8,8 @@ import { getSessionInfoAsync } from "workbench/api";
 export const sessionEpic = action$ =>
   action$.pipe(
     ofType(SESSION_REQUEST),
-    mergeMap(() =>
-      getSessionInfoAsync().pipe(
+    mergeMap(({ dataViewId }) =>
+      getSessionInfoAsync(dataViewId).pipe(
         map(response => sessionSuccess(response)),
         catchError(error => handleException(error))
       )

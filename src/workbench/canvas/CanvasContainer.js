@@ -6,51 +6,52 @@ import { DropTarget } from "react-dnd";
 import { jsPlumb } from "jsplumb";
 
 import { itemType } from "sideBar/operators/operatorsData";
-import { getEnhancedOperators } from "workbench/droppableCanvas/selectors";
 import {
-  canvasOperatorsRequest,
-  canvasOperatorAdd,
-  canvasOperatorMove,
-  canvasOperatorRemove,
+  QUERY_ADD,
+  QUERY_MOVE,
+  QUERY_REMOVE,
+  FILTER_ADD,
+  FILTER_MOVE,
+  FILTER_REMOVE,
+  operatorAdd,
+  operatorMove,
+  operatorRemove,
   connectionAdd,
   connectioRemove
-} from "workbench/droppableCanvas/actions";
+} from "workbench/canvas/actions";
+import { getGraphQueries, getGraphFilters } from "workbench/canvas/selectors";
+import { elementType } from "sideBar/operators/operatorsData";
 
 import LoaderContainer from "common/LoaderContainer";
-import DroppableCanvas from "workbench/droppableCanvas/DroppableCanvas";
+import Canvas from "workbench/canvas/Canvas";
 
-const COMPONENT_ID = "droppable-canvas";
+const CONTAINER_ID = "droppable-canvas";
+const ADJUST_X = 370;
+const ADJUST_Y = 65;
 
 const operatorTarget = {
   drop(props, monitor, component) {
-    const droppedItemType = monitor.getItemType();
     const item = monitor.getItem();
+    const { x, y } = monitor.getClientOffset();
 
-    if (droppedItemType === itemType.OPERATOR) {
-      const { x, y } = monitor.getClientOffset();
-
-      component.dropOperatorFromSideBar(item.operatorId, x - 370, y - 65);
-    } else if (droppedItemType === itemType.CANVAS_OPERATOR) {
-      const delta = monitor.getDifferenceFromInitialOffset();
-      const x = Math.round(item.x + delta.x);
-      const y = Math.round(item.y + delta.y);
-
-      component.moveOperatorInCanvas(item.index, x, y);
-    }
+    component.dropOperatorFromSideBar(
+      item.operatorId,
+      x - ADJUST_X,
+      y - ADJUST_Y
+    );
   }
 };
 
-class DroppableCanvasContainer extends Component {
+class CanvasContainer extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
-    dispatchCanvasOperatorsRequest: PropTypes.func.isRequired,
     dispatchCanvasOperatorAdd: PropTypes.func.isRequired,
     dispatchCanvasOperatorMove: PropTypes.func.isRequired,
     dispatchCanvasOperatorRemove: PropTypes.func.isRequired,
     dispatchConnectionAdd: PropTypes.func.isRequired,
     dispatchConnectioRemove: PropTypes.func.isRequired,
-    connections: PropTypes.array.isRequired,
-    operatorsInCanvas: PropTypes.array
+    queries: PropTypes.array,
+    filters: PropTypes.array
   };
 
   state = {
@@ -70,7 +71,7 @@ class DroppableCanvasContainer extends Component {
   componentDidMount() {
     jsPlumb.ready(() => {
       const jsPlumbInstance = jsPlumb.getInstance({
-        Container: COMPONENT_ID
+        Container: CONTAINER_ID
       });
 
       this.setState({ jsPlumbInstance });
@@ -81,8 +82,12 @@ class DroppableCanvasContainer extends Component {
     this.props.dispatchCanvasOperatorAdd(operatorId, x, y);
   };
 
-  moveOperatorInCanvas = (index, x, y) => {
-    this.props.dispatchCanvasOperatorMove(index, x, y);
+  moveOperatorInCanvas = (type, index, x, y) => {
+    this.props.dispatchCanvasOperatorMove(type, index, x, y);
+  };
+
+  deleteOperatorFromCanvas = (operatorId, index) => {
+    this.props.dispatchCanvasOperatorRemove(operatorId, index);
   };
 
   addConnection = (source, target) => {
@@ -94,20 +99,19 @@ class DroppableCanvasContainer extends Component {
   };
 
   render() {
-    const { connectDropTarget, ...rest } = this.props;
-    const { jsPlumbInstance, operatorsInCanvas, connections } = this.state;
+    const { connectDropTarget, queries, filters } = this.props;
+    const { jsPlumbInstance } = this.state;
 
     return (
       <LoaderContainer isLoading={this.props.isLoading || !jsPlumbInstance}>
         {connectDropTarget(
           <span>
-            <DroppableCanvas
-              containerId={COMPONENT_ID}
+            <Canvas
+              containerId={CONTAINER_ID}
               jsPlumbInstance={jsPlumbInstance}
               moveOperatorInCanvas={this.moveOperatorInCanvas}
-              operatorsInCanvas={operatorsInCanvas}
-              connections={connections}
-              {...rest}
+              queries={queries}
+              filters={filters}
             />
           </span>
         )}
@@ -116,36 +120,25 @@ class DroppableCanvasContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const {
-    operatorsReducer: { isLoading: isOperatorsLoading, operators },
-    droppableCanvasReducer: {
-      operatorsInCanvas,
-      connections,
-      isLoading: isCanvasLoading
-    }
-  } = state;
-
-  return {
-    isLoading: isOperatorsLoading && isCanvasLoading,
-    operatorsInCanvas:
-      operators && operatorsInCanvas && getEnhancedOperators(state),
-    connections
-  };
-};
+const mapStateToProps = ({ canvasReducer: { sessionInfo, isLoading } }) => ({
+  isLoading,
+  queries: sessionInfo && getGraphQueries(sessionInfo),
+  filters: sessionInfo && getGraphFilters(sessionInfo)
+});
 
 const mapDispatchToProps = dispatch => ({
-  dispatchCanvasOperatorsRequest: () => {
-    dispatch(canvasOperatorsRequest());
+  dispatchCanvasOperatorAdd: (type, operatorId, x, y) => {
+    const actionType = type === elementType.QUERY ? QUERY_ADD : FILTER_ADD;
+    dispatch(operatorAdd(actionType)(operatorId, x, y));
   },
-  dispatchCanvasOperatorAdd: (operatorId, x, y) => {
-    dispatch(canvasOperatorAdd(operatorId, x, y));
+  dispatchCanvasOperatorMove: (type, index, x, y) => {
+    const actionType = type === elementType.QUERY ? QUERY_MOVE : FILTER_MOVE;
+    dispatch(operatorMove(actionType)(index, x, y));
   },
-  dispatchCanvasOperatorMove: (index, x, y) => {
-    dispatch(canvasOperatorMove(index, x, y));
-  },
-  dispatchCanvasOperatorRemove: index => {
-    dispatch(canvasOperatorRemove(index));
+  dispatchCanvasOperatorRemove: (type, index) => {
+    const actionType =
+      type === elementType.QUERY ? QUERY_REMOVE : FILTER_REMOVE;
+    dispatch(operatorRemove(actionType)(index));
   },
   dispatchConnectionAdd: (source, target) => {
     dispatch(connectionAdd(source, target));
@@ -158,5 +151,5 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(
   DropTarget(itemType.OPERATOR, operatorTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget()
-  }))(DroppableCanvasContainer)
+  }))(CanvasContainer)
 );
