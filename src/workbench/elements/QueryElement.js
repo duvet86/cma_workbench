@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
-import { getElementId } from "workbench/utils";
 import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
 
 import Avatar from "material-ui/Avatar";
@@ -59,7 +58,7 @@ const styles = theme => ({
 
 const QueryElement = ({ classes, columns, elementId, elementLabel, x, y }) => (
   <div
-    id={getElementId(elementId)}
+    id={elementId}
     className={classes.operatorContainer}
     style={{ left: x, top: y }}
   >
@@ -99,7 +98,7 @@ const QueryElement = ({ classes, columns, elementId, elementLabel, x, y }) => (
 
 QueryElement.propTypes = {
   classes: PropTypes.object.isRequired,
-  elementId: PropTypes.number.isRequired,
+  elementId: PropTypes.string.isRequired,
   elementLabel: PropTypes.string.isRequired,
   columns: PropTypes.array.isRequired,
   x: PropTypes.number.isRequired,

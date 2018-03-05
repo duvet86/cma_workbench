@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 import { elementType } from "sideBar/operators/operatorsData";
+import { getElementId } from "workbench/utils";
 
 // These selectors add layout info to the graph queries and filters.
 // The extra info are contained in operatorsExtraInfo obj.
@@ -10,10 +11,13 @@ const queriesSelector = sessionInfo => sessionInfo.InitialQueryGraph.Queries;
 const filtersSelector = sessionInfo =>
   sessionInfo.InitialQueryGraph.InteractiveFilters;
 
+const connectionsSelector = sessionInfo =>
+  sessionInfo.InitialQueryGraph.Connections;
+
 export const getGraphQueries = createSelector(queriesSelector, queries =>
   queries.map(({ ElementId, Label, Columns, LayoutX, LayoutY }) => ({
     type: elementType.QUERY,
-    elementId: ElementId,
+    elementId: getElementId(ElementId),
     elementLabel: Label,
     columns: Columns,
     x: LayoutX,
@@ -22,11 +26,21 @@ export const getGraphQueries = createSelector(queriesSelector, queries =>
 );
 
 export const getGraphFilters = createSelector(filtersSelector, filters =>
-  filters.map(({ ElementId, Label, LayoutX, LayoutY }) => ({
+  filters.map(({ ElementId, Label, FilterType, LayoutX, LayoutY }) => ({
     type: elementType.FILTER,
-    elementId: ElementId,
+    elementId: getElementId(ElementId),
     elementLabel: Label,
+    filterType: FilterType,
     x: LayoutX,
     y: LayoutY
   }))
+);
+
+export const getGraphConnections = createSelector(
+  connectionsSelector,
+  connections =>
+    connections.map(({ FromElementId, ToElementId }) => ({
+      source: getElementId(FromElementId),
+      target: getElementId(ToElementId)
+    }))
 );

@@ -19,7 +19,11 @@ import {
   connectionAdd,
   connectioRemove
 } from "workbench/canvas/actions";
-import { getGraphQueries, getGraphFilters } from "workbench/canvas/selectors";
+import {
+  getGraphQueries,
+  getGraphFilters,
+  getGraphConnections
+} from "workbench/canvas/selectors";
 import { elementType } from "sideBar/operators/operatorsData";
 
 import LoaderContainer from "common/LoaderContainer";
@@ -51,7 +55,8 @@ class CanvasContainer extends Component {
     dispatchConnectionAdd: PropTypes.func.isRequired,
     dispatchConnectioRemove: PropTypes.func.isRequired,
     queries: PropTypes.array,
-    filters: PropTypes.array
+    filters: PropTypes.array,
+    connections: PropTypes.array
   };
 
   state = {
@@ -99,7 +104,7 @@ class CanvasContainer extends Component {
   };
 
   render() {
-    const { connectDropTarget, queries, filters } = this.props;
+    const { connectDropTarget, queries, filters, connections } = this.props;
     const { jsPlumbInstance } = this.state;
 
     return (
@@ -112,6 +117,7 @@ class CanvasContainer extends Component {
               moveOperatorInCanvas={this.moveOperatorInCanvas}
               queries={queries}
               filters={filters}
+              connections={connections}
             />
           </span>
         )}
@@ -123,7 +129,8 @@ class CanvasContainer extends Component {
 const mapStateToProps = ({ canvasReducer: { sessionInfo, isLoading } }) => ({
   isLoading,
   queries: sessionInfo && getGraphQueries(sessionInfo),
-  filters: sessionInfo && getGraphFilters(sessionInfo)
+  filters: sessionInfo && getGraphFilters(sessionInfo),
+  connections: sessionInfo && getGraphConnections(sessionInfo)
 });
 
 const mapDispatchToProps = dispatch => ({

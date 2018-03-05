@@ -26,7 +26,8 @@ const Canvas = ({
   jsPlumbInstance,
   moveOperatorInCanvas,
   queries,
-  filters
+  filters,
+  connections
 }) => (
   <Grid id={containerId} container className={classes.container}>
     <Grid item xs={12} className={classes.item}>
@@ -36,6 +37,7 @@ const Canvas = ({
           jsPlumbInstance={jsPlumbInstance}
           moveOperatorInCanvas={moveOperatorInCanvas}
           index={index}
+          connections={connections}
           {...q}
         />
       ))}
@@ -45,6 +47,7 @@ const Canvas = ({
           jsPlumbInstance={jsPlumbInstance}
           moveOperatorInCanvas={moveOperatorInCanvas}
           index={index}
+          connections={connections}
           {...f}
         />
       ))}
@@ -58,7 +61,8 @@ Canvas.propTypes = {
   jsPlumbInstance: PropTypes.object.isRequired,
   moveOperatorInCanvas: PropTypes.func.isRequired,
   queries: PropTypes.array,
-  filters: PropTypes.array
+  filters: PropTypes.array,
+  connections: PropTypes.array
 };
 
 export default withStyles(styles)(Canvas);

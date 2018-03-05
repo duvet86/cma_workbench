@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import {
-  getElementId,
   topEndPointConfig,
   bottomEndPointConfig,
   connectionConfig
@@ -16,9 +15,10 @@ class ElementsContainer extends Component {
   static propTypes = {
     jsPlumbInstance: PropTypes.object.isRequired,
     moveOperatorInCanvas: PropTypes.func.isRequired,
+    connections: PropTypes.array.isRequired,
     index: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
-    elementId: PropTypes.number.isRequired,
+    elementId: PropTypes.string.isRequired,
     elementLabel: PropTypes.string.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
@@ -28,38 +28,36 @@ class ElementsContainer extends Component {
   componentDidMount() {
     const {
       jsPlumbInstance,
-      //connections,
+      connections,
       moveOperatorInCanvas,
       index,
       type,
       elementId
     } = this.props;
 
-    const elementDOMId = getElementId(elementId);
+    jsPlumbInstance.addEndpoint(elementId, topEndPointConfig);
+    jsPlumbInstance.addEndpoint(elementId, bottomEndPointConfig);
 
-    jsPlumbInstance.addEndpoint(elementDOMId, topEndPointConfig);
-    jsPlumbInstance.addEndpoint(elementDOMId, bottomEndPointConfig);
-
-    jsPlumbInstance.draggable(elementDOMId, {
+    jsPlumbInstance.draggable(elementId, {
       containment: true,
       stop: ({ pos }) => {
         moveOperatorInCanvas(type, index, ...pos);
       }
     });
 
-    //this.makeConnections(jsPlumbInstance, connections);
+    this.makeConnections(jsPlumbInstance, connections);
   }
 
   componentDidUpdate() {
     this.props.jsPlumbInstance.revalidate();
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.connections.length !== nextProps.connections.length) {
-  //     const { jsPlumbInstance, connections } = nextProps;
-  //     this.makeConnections(jsPlumbInstance, connections);
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.connections.length !== nextProps.connections.length) {
+      const { jsPlumbInstance, connections } = nextProps;
+      this.makeConnections(jsPlumbInstance, connections);
+    }
+  }
 
   makeConnections = (jsPlumbInstance, connections) => {
     //jsPlumbInstance.deleteEveryConnection();
