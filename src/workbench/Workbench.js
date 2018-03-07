@@ -1,13 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
 
-import WorkbenchToolbar from "workbench/toolBar/WorkbenchToolbar";
 import CanvasContainer from "workbench/canvas/CanvasContainer";
 
-const Workbench = () => (
-  <Fragment>
-    <WorkbenchToolbar />
-    <CanvasContainer />
-  </Fragment>
-);
+const Workbench = () => <CanvasContainer />;
 
 export default Workbench;

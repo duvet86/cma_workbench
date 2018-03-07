@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
 import { connect } from "react-redux";
-import { DropTarget } from "react-dnd";
+import { DropTarget, DragSource } from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
 import { jsPlumb } from "jsplumb";
 
 import { itemType } from "sideBar/operators/operatorsData";
@@ -46,6 +46,15 @@ const operatorTarget = {
   }
 };
 
+const canvasSource = {
+  beginDrag({ top, left }) {
+    return {
+      top,
+      left
+    };
+  }
+};
+
 class CanvasContainer extends Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
@@ -74,6 +83,12 @@ class CanvasContainer extends Component {
   };
 
   componentDidMount() {
+    // this.props.connectDragPreview(getEmptyImage(), {
+    //   // IE fallback: specify that we'd rather screenshot the node
+    //   // when it already knows it's being dragged so we can hide it with CSS.
+    //   captureDraggingState: true
+    // });
+
     jsPlumb.ready(() => {
       const jsPlumbInstance = jsPlumb.getInstance({
         Container: CONTAINER_ID
@@ -104,22 +119,40 @@ class CanvasContainer extends Component {
   };
 
   render() {
-    const { connectDropTarget, queries, filters, connections } = this.props;
+    const {
+      connectDropTarget,
+      connectDragSource,
+      queries,
+      filters,
+      connections,
+      top,
+      left
+    } = this.props;
     const { jsPlumbInstance } = this.state;
 
     return (
       <LoaderContainer isLoading={this.props.isLoading || !jsPlumbInstance}>
         {connectDropTarget(
-          <span>
-            <Canvas
-              containerId={CONTAINER_ID}
-              jsPlumbInstance={jsPlumbInstance}
-              moveOperatorInCanvas={this.moveOperatorInCanvas}
-              queries={queries}
-              filters={filters}
-              connections={connections}
-            />
-          </span>
+          connectDragSource(
+            <div
+              style={{
+                position: "absolute",
+                height: "100%",
+                width: "100%",
+                top,
+                left
+              }}
+            >
+              <Canvas
+                containerId={CONTAINER_ID}
+                jsPlumbInstance={jsPlumbInstance}
+                moveOperatorInCanvas={this.moveOperatorInCanvas}
+                queries={queries}
+                filters={filters}
+                connections={connections}
+              />
+            </div>
+          )
         )}
       </LoaderContainer>
     );
@@ -158,5 +191,11 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(
   DropTarget(itemType.OPERATOR, operatorTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget()
-  }))(CanvasContainer)
+  }))(
+    DragSource("CANVAS", canvasSource, (connect, monitor) => ({
+      connectDragSource: connect.dragSource(),
+      connectDragPreview: connect.dragPreview(),
+      isDragging: monitor.isDragging()
+    }))(CanvasContainer)
+  )
 );

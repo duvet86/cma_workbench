@@ -50,7 +50,7 @@ export const connectionConfig = {
   anchors: ["Bottom", "Top"],
   endpoints: ["Blank", "Blank"],
   connector: ["Flowchart", { cornerRadius: 5 }],
-  overlays: [["Arrow", { location: 30, width: 10, height: 10, foldback: 0 }]]
+  overlays: [["Arrow", { location: 0.9 }]]
 };
 
 export const topEndPointConfig = {

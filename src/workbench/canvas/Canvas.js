@@ -10,9 +10,9 @@ import ElementsContainer from "workbench/elements/ElementsContainer";
 
 const styles = {
   container: {
-    position: "relative",
-    height: "400%",
-    width: "400%"
+    //position: "relative",
+    height: "100%",
+    width: "100%"
   },
   item: {
     transformOrigin: "0px 0px 0px",
