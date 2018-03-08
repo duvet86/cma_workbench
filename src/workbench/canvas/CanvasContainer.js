@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { DropTarget, DragSource } from "react-dnd";
-import { getEmptyImage } from "react-dnd-html5-backend";
 import { jsPlumb } from "jsplumb";
+import { getEmptyImage } from "react-dnd-html5-backend";
 
 import { itemType } from "sideBar/operators/operatorsData";
 import {
@@ -70,19 +70,11 @@ class CanvasContainer extends Component {
 
   state = {
     jsPlumbInstance: undefined
-    // operatorsInCanvas: [
-    //   { operatorId: 2, x: 500, y: 150 },
-    //   { operatorId: 1, x: 1000, y: 300 }
-    // ],
-    // connections: [
-    //   {
-    //     source: "canvas-operator-0",
-    //     target: "canvas-operator-1"
-    //   }
-    // ]
   };
 
   componentDidMount() {
+    // Use empty image as a drag preview so browsers don't draw it
+    // and we can draw whatever we want on the custom drag layer instead.
     // this.props.connectDragPreview(getEmptyImage(), {
     //   // IE fallback: specify that we'd rather screenshot the node
     //   // when it already knows it's being dragged so we can hide it with CSS.
@@ -122,6 +114,7 @@ class CanvasContainer extends Component {
     const {
       connectDropTarget,
       connectDragSource,
+      isDragging,
       queries,
       filters,
       connections,
@@ -140,7 +133,8 @@ class CanvasContainer extends Component {
                 height: "100%",
                 width: "100%",
                 top,
-                left
+                left,
+                opacity: isDragging ? 0 : 1
               }}
             >
               <Canvas
