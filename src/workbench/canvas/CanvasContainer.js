@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+import { findDOMNode } from "react-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { DropTarget, DragSource } from "react-dnd";
+import { DropTarget } from "react-dnd";
 import { jsPlumb } from "jsplumb";
-import { getEmptyImage } from "react-dnd-html5-backend";
 
 import { itemType } from "sideBar/operators/operatorsData";
 import {
@@ -29,29 +29,18 @@ import { elementType } from "sideBar/operators/operatorsData";
 import LoaderContainer from "common/LoaderContainer";
 import Canvas from "workbench/canvas/Canvas";
 
-const CONTAINER_ID = "droppable-canvas";
-const ADJUST_X = 370;
-const ADJUST_Y = 65;
+const DROPPABLE_CANVAS_ID = "droppable-canvas";
 
 const operatorTarget = {
   drop(props, monitor, component) {
-    const item = monitor.getItem();
-    const { x, y } = monitor.getClientOffset();
+    const { type, operatorServiceId } = monitor.getItem();
+    const clientOffset = monitor.getClientOffset();
+    const containerCoordinates = findDOMNode(component).getBoundingClientRect();
 
-    component.dropOperatorFromSideBar(
-      item.operatorId,
-      x - ADJUST_X,
-      y - ADJUST_Y
-    );
-  }
-};
+    const left = Math.round(clientOffset.x - containerCoordinates.x);
+    const top = Math.round(clientOffset.y - containerCoordinates.y);
 
-const canvasSource = {
-  beginDrag({ top, left }) {
-    return {
-      top,
-      left
-    };
+    component.dropOperatorFromSideBar(type, operatorServiceId, left, top);
   }
 };
 
@@ -73,33 +62,25 @@ class CanvasContainer extends Component {
   };
 
   componentDidMount() {
-    // Use empty image as a drag preview so browsers don't draw it
-    // and we can draw whatever we want on the custom drag layer instead.
-    // this.props.connectDragPreview(getEmptyImage(), {
-    //   // IE fallback: specify that we'd rather screenshot the node
-    //   // when it already knows it's being dragged so we can hide it with CSS.
-    //   captureDraggingState: true
-    // });
-
     jsPlumb.ready(() => {
       const jsPlumbInstance = jsPlumb.getInstance({
-        Container: CONTAINER_ID
+        Container: DROPPABLE_CANVAS_ID
       });
 
       this.setState({ jsPlumbInstance });
     });
   }
 
-  dropOperatorFromSideBar = (operatorId, x, y) => {
-    this.props.dispatchCanvasOperatorAdd(operatorId, x, y);
+  dropOperatorFromSideBar = (type, operatorServiceId, x, y) => {
+    this.props.dispatchCanvasOperatorAdd(type, operatorServiceId, x, y);
   };
 
   moveOperatorInCanvas = (type, index, x, y) => {
     this.props.dispatchCanvasOperatorMove(type, index, x, y);
   };
 
-  deleteOperatorFromCanvas = (operatorId, index) => {
-    this.props.dispatchCanvasOperatorRemove(operatorId, index);
+  deleteOperatorFromCanvas = (type, operatorServiceId, index) => {
+    this.props.dispatchCanvasOperatorRemove(type, operatorServiceId, index);
   };
 
   addConnection = (source, target) => {
@@ -111,42 +92,22 @@ class CanvasContainer extends Component {
   };
 
   render() {
-    const {
-      connectDropTarget,
-      connectDragSource,
-      isDragging,
-      queries,
-      filters,
-      connections,
-      top,
-      left
-    } = this.props;
+    const { connectDropTarget, queries, filters, connections } = this.props;
     const { jsPlumbInstance } = this.state;
 
     return (
       <LoaderContainer isLoading={this.props.isLoading || !jsPlumbInstance}>
         {connectDropTarget(
-          connectDragSource(
-            <div
-              style={{
-                position: "absolute",
-                height: "100%",
-                width: "100%",
-                top,
-                left,
-                opacity: isDragging ? 0 : 1
-              }}
-            >
-              <Canvas
-                containerId={CONTAINER_ID}
-                jsPlumbInstance={jsPlumbInstance}
-                moveOperatorInCanvas={this.moveOperatorInCanvas}
-                queries={queries}
-                filters={filters}
-                connections={connections}
-              />
-            </div>
-          )
+          <span>
+            <Canvas
+              containerId={DROPPABLE_CANVAS_ID}
+              jsPlumbInstance={jsPlumbInstance}
+              moveOperatorInCanvas={this.moveOperatorInCanvas}
+              queries={queries}
+              filters={filters}
+              connections={connections}
+            />
+          </span>
         )}
       </LoaderContainer>
     );
@@ -161,9 +122,9 @@ const mapStateToProps = ({ canvasReducer: { sessionInfo, isLoading } }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchCanvasOperatorAdd: (type, operatorId, x, y) => {
+  dispatchCanvasOperatorAdd: (type, operatorServiceId, x, y) => {
     const actionType = type === elementType.QUERY ? QUERY_ADD : FILTER_ADD;
-    dispatch(operatorAdd(actionType)(operatorId, x, y));
+    dispatch(operatorAdd(actionType)(operatorServiceId, x, y));
   },
   dispatchCanvasOperatorMove: (type, index, x, y) => {
     const actionType = type === elementType.QUERY ? QUERY_MOVE : FILTER_MOVE;
@@ -185,11 +146,5 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps, mapDispatchToProps)(
   DropTarget(itemType.OPERATOR, operatorTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget()
-  }))(
-    DragSource("CANVAS", canvasSource, (connect, monitor) => ({
-      connectDragSource: connect.dragSource(),
-      connectDragPreview: connect.dragPreview(),
-      isDragging: monitor.isDragging()
-    }))(CanvasContainer)
-  )
+  }))(CanvasContainer)
 );

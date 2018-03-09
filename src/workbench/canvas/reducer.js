@@ -19,7 +19,11 @@ function canvas(state, action) {
           InitialQueryGraph: {
             Queries: {
               $push: [
-                { operatorId: action.operatorId, x: action.x, y: action.y }
+                {
+                  ElementId: state.sessionInfo.InitialQueryGraph.NextElementId,
+                  LayoutX: action.x,
+                  LayoutY: action.y
+                }
               ]
             }
           }
@@ -31,7 +35,9 @@ function canvas(state, action) {
         sessionInfo: {
           InitialQueryGraph: {
             Queries: {
-              [action.index]: { $merge: { x: action.x, y: action.y } }
+              [action.index]: {
+                $merge: { LayoutX: action.x, LayoutY: action.y }
+              }
             }
           }
         }
@@ -54,7 +60,11 @@ function canvas(state, action) {
           InitialQueryGraph: {
             InteractiveFilters: {
               $push: [
-                { operatorId: action.operatorId, x: action.x, y: action.y }
+                {
+                  ElementId: state.sessionInfo.InitialQueryGraph.NextElementId,
+                  LayoutX: action.x,
+                  LayoutY: action.y
+                }
               ]
             }
           }
@@ -66,7 +76,9 @@ function canvas(state, action) {
         sessionInfo: {
           InitialQueryGraph: {
             InteractiveFilters: {
-              [action.index]: { $merge: { x: action.x, y: action.y } }
+              [action.index]: {
+                $merge: { LayoutX: action.x, LayoutY: action.y }
+              }
             }
           }
         }
@@ -87,7 +99,13 @@ function canvas(state, action) {
       return update(state, {
         InitialQueryGraph: {
           Connections: {
-            $push: [{ operatorId: action.operatorId, x: action.x, y: action.y }]
+            $push: [
+              {
+                ElementId: state.sessionInfo.InitialQueryGraph.NextElementId,
+                LayoutX: action.x,
+                LayoutY: action.y
+              }
+            ]
           }
         }
       });

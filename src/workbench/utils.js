@@ -5,6 +5,9 @@ import RedoIcon from "material-ui-icons/Redo";
 import OpenWithIcon from "material-ui-icons/OpenWith";
 import ArrowDownwardIcon from "material-ui-icons/ArrowDownward";
 
+export const CANVAS_DRAGGABLE_CONTAINER_ID = "draggable-container-canvas";
+export const CANVAS_DRAGGABLE_ID = "draggable-canvas";
+
 export const getElementId = id => `canvas-operator-${id}`;
 
 export const toolbarData = [

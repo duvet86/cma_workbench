@@ -11,9 +11,10 @@ import Avatar from "material-ui/Avatar";
 import { itemType } from "sideBar/operators/operatorsData";
 
 const operatorSource = {
-  beginDrag(props) {
+  beginDrag({ type, operatorServiceId }) {
     return {
-      operatorId: props.operatorServiceId
+      type,
+      operatorServiceId
     };
   }
 };

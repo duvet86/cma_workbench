@@ -1,24 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { DropTarget } from "react-dnd";
+import { jsPlumb } from "jsplumb";
 
+import { CANVAS_DRAGGABLE_CONTAINER_ID } from "workbench/utils";
 import { sessionRequest } from "workbench/actions";
 
 import LoaderContainer from "common/LoaderContainer";
 import WorkbenchToolbar from "workbench/toolBar/WorkbenchToolbar";
-import CanvasContainer from "workbench/canvas/CanvasContainer";
-
-const canvasTarget = {
-  drop(props, monitor, component) {
-    const item = monitor.getItem();
-    const delta = monitor.getDifferenceFromInitialOffset();
-    const left = Math.round(item.left + delta.x);
-    const top = Math.round(item.top + delta.y);
-
-    component.moveBox(left, top);
-  }
-};
+import Workbench from "workbench/Workbench";
 
 class WorkbenchContainer extends Component {
   static propTypes = {
@@ -27,46 +17,36 @@ class WorkbenchContainer extends Component {
   };
 
   state = {
-    top: 0,
-    left: 0
+    jsPlumbCanvasInstance: undefined
   };
 
   componentDidMount() {
+    jsPlumb.ready(() => {
+      const jsPlumbCanvasInstance = jsPlumb.getInstance({
+        Container: CANVAS_DRAGGABLE_CONTAINER_ID
+      });
+
+      this.setState({ jsPlumbCanvasInstance });
+    });
+
     const { match } = this.props;
     const dataViewId = match.params.id === "new" ? undefined : match.params.id;
 
     this.props.dispatchSessionRequest(dataViewId);
   }
 
-  moveBox(left, top) {
-    this.setState({
-      top,
-      left
-    });
-  }
-
   render() {
-    const { connectDropTarget, isLoading, sessionInfo } = this.props;
+    const { isLoading, sessionInfo } = this.props;
+    const { jsPlumbCanvasInstance } = this.state;
 
     console.log(sessionInfo);
     return (
-      <LoaderContainer isLoading={isLoading}>
+      <LoaderContainer isLoading={isLoading || !jsPlumbCanvasInstance}>
         <WorkbenchToolbar />
-        {connectDropTarget(
-          <div
-            style={{
-              position: "relative",
-              height: "400%",
-              width: "400%"
-            }}
-          >
-            <CanvasContainer
-              top={this.state.top}
-              left={this.state.left}
-              sessionInfo={sessionInfo}
-            />
-          </div>
-        )}
+        <Workbench
+          jsPlumbCanvasInstance={jsPlumbCanvasInstance}
+          sessionInfo={sessionInfo}
+        />
       </LoaderContainer>
     );
   }
@@ -83,8 +63,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  DropTarget("CANVAS", canvasTarget, (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget()
-  }))(WorkbenchContainer)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(WorkbenchContainer);
