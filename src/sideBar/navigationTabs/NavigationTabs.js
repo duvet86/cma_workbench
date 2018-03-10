@@ -17,13 +17,13 @@ const styles = theme => ({
       paddingRight: theme.spacing.unit * 2
     }
   },
-  rootPrimary: {
+  textColorPrimary: {
     color: "black"
   },
-  rootPrimarySelected: {
+  textColorPrimarySelected: {
     color: theme.palette.primary.main
   },
-  rootPrimaryDisabled: {
+  textColorPrimaryDisabled: {
     color: theme.palette.text.disabled
   }
 });
@@ -48,9 +48,9 @@ const NavigationTabs = ({
         classes={{
           root: classes.tabRoot,
           labelContainer: classes.labelContainer,
-          rootPrimary: classes.rootPrimary,
-          rootPrimarySelected: classes.rootPrimarySelected,
-          rootPrimaryDisabled: classes.rootPrimaryDisabled
+          textColorPrimary: classes.textColorPrimary,
+          textColorPrimarySelected: classes.textColorPrimarySelected,
+          textColorPrimaryDisabled: classes.textColorPrimaryDisabled
         }}
       />
     ))}

@@ -59,7 +59,7 @@ export const connectionConfig = {
 export const topEndPointConfig = {
   anchor: "Top",
   endpoint: ["Dot", { radius: 5, cssClass: "topendpoint" }],
-  isTarget: false,
+  isTarget: true,
   isSource: false,
   maxConnections: -1
 };
@@ -71,6 +71,6 @@ export const bottomEndPointConfig = {
     { width: 10, height: 10, cssClass: "bottomendpoint" }
   ],
   isTarget: false,
-  isSource: false,
+  isSource: true,
   maxConnections: -1
 };

@@ -11,6 +11,7 @@ export const itemType = {
 };
 
 export const elementType = {
+  NONE: "NONE",
   QUERY: "QUERY",
   FILTER: "FILTER"
 };

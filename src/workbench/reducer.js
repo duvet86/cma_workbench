@@ -17,9 +17,13 @@ function session(
       };
 
     case SESSION_SUCCESS:
+      const { InitialQueryGraph, ...rest } = action.sessionInfo;
       return {
         isLoading: false,
-        sessionInfo: action.sessionInfo
+        sessionInfo: {
+          ...rest,
+          QueryGraph: InitialQueryGraph
+        }
       };
 
     default:

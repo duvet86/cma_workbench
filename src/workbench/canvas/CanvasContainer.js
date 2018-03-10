@@ -28,19 +28,21 @@ import { elementType } from "sideBar/operators/operatorsData";
 
 import LoaderContainer from "common/LoaderContainer";
 import Canvas from "workbench/canvas/Canvas";
+import ConfigDrawerSwitch from "workbench/configDrawer/ConfigDrawerSwitch";
 
 const DROPPABLE_CANVAS_ID = "droppable-canvas";
 
 const operatorTarget = {
   drop(props, monitor, component) {
     const { type, operatorServiceId } = monitor.getItem();
-    const clientOffset = monitor.getClientOffset();
-    const containerCoordinates = findDOMNode(component).getBoundingClientRect();
+    // const clientOffset = monitor.getClientOffset();
+    // const containerCoordinates = findDOMNode(component).getBoundingClientRect();
 
-    const left = Math.round(clientOffset.x - containerCoordinates.x);
-    const top = Math.round(clientOffset.y - containerCoordinates.y);
+    // const left = Math.round(clientOffset.x - containerCoordinates.x);
+    // const top = Math.round(clientOffset.y - containerCoordinates.y);
 
-    component.dropOperatorFromSideBar(type, operatorServiceId, left, top);
+    component.openConfigDrawer(type);
+    //component.dropOperatorFromSideBar(type, operatorServiceId, left, top);
   }
 };
 
@@ -58,7 +60,8 @@ class CanvasContainer extends Component {
   };
 
   state = {
-    jsPlumbInstance: undefined
+    jsPlumbInstance: undefined,
+    configDrawerOpen: elementType.QUERY // SET IT TO NONE
   };
 
   componentDidMount() {
@@ -70,6 +73,18 @@ class CanvasContainer extends Component {
       this.setState({ jsPlumbInstance });
     });
   }
+
+  openConfigDrawer = type => {
+    this.setState({
+      configDrawerOpen: type
+    });
+  };
+
+  closeConfigDrawer = () => {
+    this.setState({
+      configDrawerOpen: elementType.NONE
+    });
+  };
 
   dropOperatorFromSideBar = (type, operatorServiceId, x, y) => {
     this.props.dispatchCanvasOperatorAdd(type, operatorServiceId, x, y);
@@ -93,10 +108,14 @@ class CanvasContainer extends Component {
 
   render() {
     const { connectDropTarget, queries, filters, connections } = this.props;
-    const { jsPlumbInstance } = this.state;
+    const { jsPlumbInstance, configDrawerOpen } = this.state;
 
     return (
       <LoaderContainer isLoading={this.props.isLoading || !jsPlumbInstance}>
+        <ConfigDrawerSwitch
+          configDrawerOpen={configDrawerOpen}
+          closeConfigDrawer={this.closeConfigDrawer}
+        />
         {connectDropTarget(
           <span>
             <Canvas

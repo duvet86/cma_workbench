@@ -16,11 +16,11 @@ function canvas(state, action) {
     case QUERY_ADD:
       return update(state, {
         sessionInfo: {
-          InitialQueryGraph: {
+          QueryGraph: {
             Queries: {
               $push: [
                 {
-                  ElementId: state.sessionInfo.InitialQueryGraph.NextElementId,
+                  ElementId: state.sessionInfo.QueryGraph.NextElementId,
                   LayoutX: action.x,
                   LayoutY: action.y
                 }
@@ -33,7 +33,7 @@ function canvas(state, action) {
     case QUERY_MOVE:
       return update(state, {
         sessionInfo: {
-          InitialQueryGraph: {
+          QueryGraph: {
             Queries: {
               [action.index]: {
                 $merge: { LayoutX: action.x, LayoutY: action.y }
@@ -46,7 +46,7 @@ function canvas(state, action) {
     case QUERY_REMOVE:
       return update(state, {
         sessionInfo: {
-          InitialQueryGraph: {
+          QueryGraph: {
             Queries: {
               $splice: [[action.index, 1]]
             }
@@ -57,11 +57,11 @@ function canvas(state, action) {
     case FILTER_ADD:
       return update(state, {
         sessionInfo: {
-          InitialQueryGraph: {
+          QueryGraph: {
             InteractiveFilters: {
               $push: [
                 {
-                  ElementId: state.sessionInfo.InitialQueryGraph.NextElementId,
+                  ElementId: state.sessionInfo.QueryGraph.NextElementId,
                   LayoutX: action.x,
                   LayoutY: action.y
                 }
@@ -74,7 +74,7 @@ function canvas(state, action) {
     case FILTER_MOVE:
       return update(state, {
         sessionInfo: {
-          InitialQueryGraph: {
+          QueryGraph: {
             InteractiveFilters: {
               [action.index]: {
                 $merge: { LayoutX: action.x, LayoutY: action.y }
@@ -87,7 +87,7 @@ function canvas(state, action) {
     case FILTER_REMOVE:
       return update(state, {
         sessionInfo: {
-          InitialQueryGraph: {
+          QueryGraph: {
             InteractiveFilters: {
               $splice: [[action.index, 1]]
             }
@@ -97,11 +97,11 @@ function canvas(state, action) {
 
     case CONNECTION_ADD:
       return update(state, {
-        InitialQueryGraph: {
+        QueryGraph: {
           Connections: {
             $push: [
               {
-                ElementId: state.sessionInfo.InitialQueryGraph.NextElementId,
+                ElementId: state.sessionInfo.QueryGraph.NextElementId,
                 LayoutX: action.x,
                 LayoutY: action.y
               }
@@ -113,7 +113,7 @@ function canvas(state, action) {
     case CONNECTION_REMOVE:
       return update(state, {
         sessionInfo: {
-          InitialQueryGraph: {
+          QueryGraph: {
             Connections: {
               $splice: [[action.index, 1]]
             }

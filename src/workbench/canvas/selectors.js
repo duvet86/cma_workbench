@@ -6,13 +6,12 @@ import { getElementId } from "workbench/utils";
 // The extra info are contained in operatorsExtraInfo obj.
 // 1 is the id I'd given to queries and 2 is the one for filters.
 
-const queriesSelector = sessionInfo => sessionInfo.InitialQueryGraph.Queries;
+const queriesSelector = sessionInfo => sessionInfo.QueryGraph.Queries;
 
 const filtersSelector = sessionInfo =>
-  sessionInfo.InitialQueryGraph.InteractiveFilters;
+  sessionInfo.QueryGraph.InteractiveFilters;
 
-const connectionsSelector = sessionInfo =>
-  sessionInfo.InitialQueryGraph.Connections;
+const connectionsSelector = sessionInfo => sessionInfo.QueryGraph.Connections;
 
 export const getGraphQueries = createSelector(queriesSelector, queries =>
   queries.map(({ ElementId, Label, Columns, LayoutX, LayoutY }) => ({
