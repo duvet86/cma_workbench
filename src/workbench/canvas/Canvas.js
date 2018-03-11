@@ -1,4 +1,4 @@
-import grid20 from "workbench/grid20.png";
+import grid20 from "workbench/canvas/grid20.png";
 
 import React from "react";
 import PropTypes from "prop-types";

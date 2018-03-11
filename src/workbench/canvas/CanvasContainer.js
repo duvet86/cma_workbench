@@ -28,7 +28,7 @@ import { elementType } from "sideBar/operators/operatorsData";
 
 import LoaderContainer from "common/LoaderContainer";
 import Canvas from "workbench/canvas/Canvas";
-import ConfigDrawerSwitch from "workbench/configDrawer/ConfigDrawerSwitch";
+import ConfigDrawerSwitch from "workbench/canvas/ConfigDrawerSwitch";
 
 const DROPPABLE_CANVAS_ID = "droppable-canvas";
 
