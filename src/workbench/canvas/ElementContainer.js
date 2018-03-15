@@ -8,10 +8,10 @@ import {
 } from "workbench/utils";
 import { elementType } from "sideBar/operators/operatorsData";
 
-import QueryElement from "workbench/elements/QueryElement";
-import FilterElement from "workbench/elements/FilterElement";
+import QueryElement from "workbench/query/QueryElement";
+import FilterElement from "workbench/filter/FilterElement";
 
-class ElementsContainer extends Component {
+class ElementContainer extends Component {
   static propTypes = {
     jsPlumbInstance: PropTypes.object.isRequired,
     moveOperatorInCanvas: PropTypes.func.isRequired,
@@ -99,4 +99,4 @@ class ElementsContainer extends Component {
   }
 }
 
-export default ElementsContainer;
+export default ElementContainer;

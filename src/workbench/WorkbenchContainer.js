@@ -39,6 +39,7 @@ class WorkbenchContainer extends Component {
     const { isLoading, sessionInfo } = this.props;
     const { jsPlumbCanvasInstance } = this.state;
 
+    console.log(sessionInfo);
     return (
       <LoaderContainer isLoading={isLoading || !jsPlumbCanvasInstance}>
         <WorkbenchToolbar />

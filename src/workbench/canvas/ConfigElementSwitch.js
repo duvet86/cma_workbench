@@ -8,7 +8,7 @@ import Grid from "material-ui/Grid";
 import Drawer from "material-ui/Drawer";
 import Button from "material-ui/Button";
 
-import QueryDrawer from "workbench/queryConfig/QueryDrawer";
+import QueryDrawerContainer from "workbench/query/QueryDrawerContainer";
 
 const styles = theme => ({
   form: {
@@ -30,10 +30,10 @@ const styles = theme => ({
   }
 });
 
-const drawerByType = type => {
+const drawerByType = (type, props) => {
   switch (type) {
     case elementType.QUERY:
-      return <QueryDrawer />;
+      return <QueryDrawerContainer {...props} />;
     case elementType.FILTER:
       return "FILTER";
     default:
@@ -41,10 +41,11 @@ const drawerByType = type => {
   }
 };
 
-const ConfigDrawerSwitch = ({
+const ConfigElementSwitch = ({
   classes,
   configDrawerOpen,
-  closeConfigDrawer
+  closeConfigDrawer,
+  ...props
 }) => (
   <Drawer
     classes={{ paper: classes.paper }}
@@ -54,7 +55,7 @@ const ConfigDrawerSwitch = ({
   >
     <form className={classes.form} noValidate autoComplete="off">
       <Grid container>
-        {drawerByType(configDrawerOpen)}
+        {drawerByType(configDrawerOpen, props)}
         <Grid item xs={12} className={classes.actionButtons}>
           <Button
             onClick={closeConfigDrawer}
@@ -77,10 +78,11 @@ const ConfigDrawerSwitch = ({
   </Drawer>
 );
 
-ConfigDrawerSwitch.propTypes = {
+ConfigElementSwitch.propTypes = {
   classes: PropTypes.object.isRequired,
   configDrawerOpen: PropTypes.string.isRequired,
-  closeConfigDrawer: PropTypes.func.isRequired
+  closeConfigDrawer: PropTypes.func.isRequired,
+  sessionInfo: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ConfigDrawerSwitch);
+export default withStyles(styles)(ConfigElementSwitch);

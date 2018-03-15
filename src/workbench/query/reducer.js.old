@@ -1,0 +1,59 @@
+import update from "immutability-helper";
+
+import {
+  GRAPH_SAVE_REQUEST,
+  GRAPH_SAVE_ERROR,
+  GRAPH_REQUEST,
+  GRAPH_SUCCESS,
+  GRAPH_ERROR
+} from "workbench/actions";
+
+function canvas(
+  state = {
+    error: undefined,
+    Type: "Partial",
+    Queries: [],
+    Connections: [],
+    Operators: [],
+    InteractiveFilters: [],
+    Aspects: [],
+    Limit: "Unspecified"
+  },
+  action
+) {
+  switch (action.type) {
+    case GRAPH_SAVE_REQUEST:
+      return { ...state };
+
+    case GRAPH_SAVE_ERROR:
+      return {
+        ...state,
+        error: action.error
+      };
+
+    case GRAPH_REQUEST:
+      return {
+        ...state
+      };
+
+    case GRAPH_SUCCESS:
+      return update(state, {
+        QueryGraph: {
+          Queries: {
+            $merge: { ...action.newGraph }
+          }
+        }
+      });
+
+    case GRAPH_ERROR:
+      return {
+        ...state,
+        error: action.error
+      };
+
+    default:
+      return state;
+  }
+}
+
+export default canvas;

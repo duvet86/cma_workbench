@@ -118,40 +118,6 @@ const styles = theme => ({
   }
 });
 
-// const OptionRenderer = ({
-//   focusedOption,
-//   focusedOptionIndex,
-//   focusOption,
-//   key,
-//   labelKey,
-//   option,
-//   options,
-//   selectValue,
-//   style,
-//   valueArray,
-//   valueKey
-// }) => {
-//   const handleClick = event => selectValue(option);
-//   const handleFocus = () => focusOption(option);
-
-//   const isSelected = valueArray.indexOf(option) >= 0;
-//   const isFocused = option === focusedOption;
-
-//   return (
-//     <div
-//       key={key}
-//       onClick={handleClick}
-//       onMouseEnter={handleFocus}
-//       style={style}
-//     >
-//       <ListItemIcon>
-//         <StorageIcon style={{ fill: "#003b86" }} />
-//       </ListItemIcon>
-//       {option.label}
-//     </div>
-//   );
-// };
-
 const OptionRenderer = classes => ({
   focusedOption,
   focusedOptionIndex,

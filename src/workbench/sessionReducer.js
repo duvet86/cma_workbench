@@ -22,7 +22,7 @@ function session(
         isLoading: false,
         sessionInfo: {
           ...rest,
-          QueryGraph: InitialQueryGraph
+          Graph: InitialQueryGraph
         }
       };
 

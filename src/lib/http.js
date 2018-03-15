@@ -14,6 +14,16 @@ const getJwtHeaders = token => ({
   Authorization: `Bearer ${token}`
 });
 
+const getHeader = () => {
+  const token = getJwtToken();
+
+  return {
+    section: "demo",
+    "Content-Type": "application/json",
+    ...getJwtHeaders(token)
+  };
+};
+
 const handleErrors = response => {
   if (!response.ok) {
     return response.text().then(error => {
@@ -34,25 +44,10 @@ export const postAsync = (url, data, headers = null) =>
   fetch(url, {
     method: "POST",
     headers: headers,
-    data
+    body: JSON.stringify(data)
   }).then(response => handleErrors(response));
 
-export const getWithJwtAsync = url => {
-  const token = getJwtToken();
-  const headers = {
-    section: "demo",
-    ...getJwtHeaders(token)
-  };
+export const getWithJwtAsync = url => getAsync(url, getHeader());
 
-  return getAsync(url, headers);
-};
-
-export const postWithJwtAsync = (url, data) => {
-  const token = getJwtToken();
-  const headers = {
-    section: "demo",
-    ...getJwtHeaders(token)
-  };
-
-  return postAsync(url, data, headers);
-};
+export const postWithJwtAsync = (url, data) =>
+  postAsync(url, data, getHeader());

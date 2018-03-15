@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "material-ui/styles";
 
 import Grid from "material-ui/Grid";
-import ElementsContainer from "workbench/elements/ElementsContainer";
+import ElementContainer from "workbench/canvas/ElementContainer";
 
 const styles = {
   container: {
@@ -24,30 +24,28 @@ const Canvas = ({
   containerId,
   jsPlumbInstance,
   moveOperatorInCanvas,
-  queries,
-  filters,
-  connections
+  sessionInfo: { Graph: { Queries, InteractiveFilters, Connections } }
 }) => (
   <Grid id={containerId} container className={classes.container}>
     <Grid item xs={12} className={classes.item}>
-      {queries.map((q, index) => (
-        <ElementsContainer
-          key={q.elementId}
+      {Queries.map((query, index) => (
+        <ElementContainer
+          key={query.elementId}
           jsPlumbInstance={jsPlumbInstance}
           moveOperatorInCanvas={moveOperatorInCanvas}
           index={index}
-          connections={connections}
-          {...q}
+          connections={Connections}
+          {...query}
         />
       ))}
-      {filters.map((f, index) => (
-        <ElementsContainer
-          key={f.elementId}
+      {InteractiveFilters.map((filter, index) => (
+        <ElementContainer
+          key={filter.elementId}
           jsPlumbInstance={jsPlumbInstance}
           moveOperatorInCanvas={moveOperatorInCanvas}
           index={index}
-          connections={connections}
-          {...f}
+          connections={Connections}
+          {...filter}
         />
       ))}
     </Grid>
@@ -59,9 +57,7 @@ Canvas.propTypes = {
   containerId: PropTypes.string.isRequired,
   jsPlumbInstance: PropTypes.object.isRequired,
   moveOperatorInCanvas: PropTypes.func.isRequired,
-  queries: PropTypes.array,
-  filters: PropTypes.array,
-  connections: PropTypes.array
+  sessionInfo: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Canvas);
