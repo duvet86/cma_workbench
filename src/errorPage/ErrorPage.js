@@ -14,9 +14,6 @@ const styles = {
   container: {
     padding: 25
   },
-  innerContainer: {
-    marginTop: "3%"
-  },
   cardActions: {
     justifyContent: "flex-end"
   },
@@ -36,8 +33,8 @@ const styles = {
 const ErrorPage = ({ error, classes }) => (
   <Grid container className={classes.container}>
     <Grid item xs={12}>
-      <Grid container justify="center" className={classes.innerContainer}>
-        <Grid item xs={6}>
+      <Grid container justify="center">
+        <Grid item xs={12}>
           <Card>
             <CardContent className={classes.cardContent}>
               <Warning className={classes.icon} />

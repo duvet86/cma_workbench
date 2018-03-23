@@ -24,14 +24,15 @@ const getHeader = () => {
   };
 };
 
-const handleErrors = response => {
+const handleErrors = async response => {
   if (!response.ok) {
     return response.text().then(error => {
       // eslint-disable-next-line no-throw-literal
       throw { status: response.status, error: error && JSON.parse(error) };
     });
   }
-  return response.json();
+
+  return response.text().then(res => (res && JSON.parse(res)) || {});
 };
 
 export const getAsync = (url, headers = null) =>

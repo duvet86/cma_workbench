@@ -1,16 +1,16 @@
 import { fromPromise } from "rxjs/observable/fromPromise";
-
 import { postWithJwtAsync, getWithJwtAsync } from "lib/http";
 
-export const getSessionInfoAsync = dataViewId => {
-  const param = dataViewId ? `?dataViewId=${dataViewId}` : "";
-
-  return fromPromise(
-    postWithJwtAsync(`http://desktop-ejm4rss/dev/api/qes/demo/sessions${param}`)
+export const getSessionInfoObs = dataViewId =>
+  fromPromise(
+    postWithJwtAsync(
+      `http://desktop-ejm4rss/dev/api/qes/demo/sessions${
+        dataViewId ? `?dataViewId=${dataViewId}` : ""
+      }`
+    )
   );
-};
 
-export const saveGraphAsync = (tenantId, sessionId, queryGraphId, graphData) =>
+export const saveGraphObs = (tenantId, sessionId, queryGraphId, graphData) =>
   fromPromise(
     postWithJwtAsync(
       `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes`,
@@ -18,7 +18,7 @@ export const saveGraphAsync = (tenantId, sessionId, queryGraphId, graphData) =>
     )
   );
 
-export const getGraphAsync = (
+export const getGraphObs = (
   tenantId,
   sessionId,
   queryGraphId,

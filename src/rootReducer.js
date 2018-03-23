@@ -8,13 +8,9 @@ import myItemsReducer from "sideBar/myItems/reducer";
 import navigationTabsReducer from "sideBar/navigationTabs/reducer";
 import operatorsReducer from "sideBar/operators/reducer";
 import appReducer from "app/reducer";
-import sessionReducer from "workbench/sessionReducer";
-//import canvasSliceReducer from "workbench/canvas/reducer";
-import graphReducer from "workbench/graphReducer";
-
-// Combining 2 reducers together. The sessioReducer feeds the canvas one.
-//const canvasReducer = (state, action) =>
-//canvasSliceReducer(sessionReducer(state, action), action);
+import sessionReducer from "workbench/reducer";
+import elementConfigReducer from "workbench/canvas/reducer";
+import queryConfigReducer from "workbench/query/reducer";
 
 export default combineReducers({
   routerReducer,
@@ -26,6 +22,6 @@ export default combineReducers({
   navigationTabsReducer,
   operatorsReducer,
   sessionReducer,
-  //canvasReducer,
-  graphReducer
+  elementConfigReducer,
+  queryConfigReducer
 });

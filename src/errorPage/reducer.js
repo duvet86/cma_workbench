@@ -1,10 +1,8 @@
 import { TRIGGER_ERROR } from "errorPage/actions";
 
-function profile(
+function errorPage(
   state = {
-    error: {
-      message: "You shoudn't see this message."
-    }
+    error: undefined
   },
   action
 ) {
@@ -19,4 +17,4 @@ function profile(
   }
 }
 
-export default profile;
+export default errorPage;

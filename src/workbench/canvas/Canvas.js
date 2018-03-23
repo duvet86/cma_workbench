@@ -24,27 +24,29 @@ const Canvas = ({
   containerId,
   jsPlumbInstance,
   moveOperatorInCanvas,
-  sessionInfo: { Graph: { Queries, InteractiveFilters, Connections } }
+  queries,
+  filters,
+  connections
 }) => (
   <Grid id={containerId} container className={classes.container}>
     <Grid item xs={12} className={classes.item}>
-      {Queries.map((query, index) => (
+      {queries && queries.map((query, index) => (
         <ElementContainer
           key={query.elementId}
           jsPlumbInstance={jsPlumbInstance}
           moveOperatorInCanvas={moveOperatorInCanvas}
           index={index}
-          connections={Connections}
+          connections={connections}
           {...query}
         />
       ))}
-      {InteractiveFilters.map((filter, index) => (
+      {filters && filters.map((filter, index) => (
         <ElementContainer
           key={filter.elementId}
           jsPlumbInstance={jsPlumbInstance}
           moveOperatorInCanvas={moveOperatorInCanvas}
           index={index}
-          connections={Connections}
+          connections={connections}
           {...filter}
         />
       ))}
@@ -56,8 +58,7 @@ Canvas.propTypes = {
   classes: PropTypes.object.isRequired,
   containerId: PropTypes.string.isRequired,
   jsPlumbInstance: PropTypes.object.isRequired,
-  moveOperatorInCanvas: PropTypes.func.isRequired,
-  sessionInfo: PropTypes.object.isRequired
+  moveOperatorInCanvas: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Canvas);

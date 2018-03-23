@@ -6,7 +6,12 @@ import { myItemsEpic } from "sideBar/myItems/epic";
 import { navigationTabsEpic } from "sideBar/navigationTabs/epic";
 import { operatorsEpic } from "sideBar/operators/epic";
 import { appEpic } from "app/epic";
-import { sessionEpic, saveGraphEpic, getGraphEpic } from "workbench/epic";
+import {
+  sessionEpic,
+  addQueryEpic,
+  updateQueryDataServiceEpic
+} from "workbench/epic";
+import { dataServicesEpic, serviceDescriptionEpic } from "workbench/query/epic";
 
 const epics = [
   loginEpic,
@@ -16,8 +21,10 @@ const epics = [
   navigationTabsEpic,
   operatorsEpic,
   sessionEpic,
-  saveGraphEpic,
-  getGraphEpic
+  addQueryEpic,
+  dataServicesEpic,
+  updateQueryDataServiceEpic,
+  serviceDescriptionEpic
 ];
 
 export default combineEpics(...epics);

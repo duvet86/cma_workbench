@@ -6,7 +6,7 @@ import { getElementId } from "workbench/utils";
 // The extra info are contained in operatorsExtraInfo obj.
 // 1 is the id I'd given to queries and 2 is the one for filters.
 
-const sessionInfoSelector = state => state.graphReducer.sessionInfo;
+const sessionInfoSelector = state => state.sessionReducer.sessionInfo;
 
 export const getSessionInfo = createSelector(
   sessionInfoSelector,
@@ -55,4 +55,22 @@ export const getSessionInfo = createSelector(
       )
     }
   })
+);
+
+const querySelector = state => state.sessionReducer.queries;
+const elementIdSelector = state => state.elementConfigReducer.elementId;
+
+export const getElementById = createSelector(
+  elementIdSelector,
+  querySelector,
+  (elementId, queries) => queries[elementId]
+);
+
+export const isDrawerOpen = createSelector(
+  elementIdSelector,
+  querySelector,
+  (elementId, queries) =>
+    Boolean(
+      queries[elementId] && queries[elementId].ElementType !== elementType.NONE
+    )
 );

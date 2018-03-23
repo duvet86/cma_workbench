@@ -4,20 +4,31 @@ import { connect } from "react-redux";
 import { jsPlumb } from "jsplumb";
 
 import { CANVAS_DRAGGABLE_CONTAINER_ID } from "workbench/utils";
-import { sessionRequest } from "workbench/actions";
+import { sessionRequest, addQuery } from "workbench/actions";
 
 import LoaderContainer from "common/LoaderContainer";
 import WorkbenchToolbar from "workbench/toolBar/WorkbenchToolbar";
 import Workbench from "workbench/Workbench";
+import ConfigElementSwitchContainer from "workbench/canvas/ConfigElementSwitchContainer";
+
+const DROPPABLE_CANVAS_ID = "droppable-canvas";
 
 class WorkbenchContainer extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    sessionInfo: PropTypes.object
+    dispatchSessionRequest: PropTypes.func.isRequired,
+    dispatchAddQuery: PropTypes.func.isRequired,
+    //dispatchCanvasOperatorMove: PropTypes.func.isRequired,
+    session: PropTypes.object.isRequired,
+    graph: PropTypes.object.isRequired,
+    queries: PropTypes.object.isRequired,
+    filters: PropTypes.object.isRequired,
+    connections: PropTypes.object.isRequired
   };
 
   state = {
-    jsPlumbCanvasInstance: undefined
+    jsPlumbCanvasInstance: undefined,
+    jsPlumbInstance: undefined
   };
 
   componentDidMount() {
@@ -26,7 +37,11 @@ class WorkbenchContainer extends Component {
         Container: CANVAS_DRAGGABLE_CONTAINER_ID
       });
 
-      this.setState({ jsPlumbCanvasInstance });
+      const jsPlumbInstance = jsPlumb.getInstance({
+        Container: DROPPABLE_CANVAS_ID
+      });
+
+      this.setState({ jsPlumbCanvasInstance, jsPlumbInstance });
     });
 
     const { match } = this.props;
@@ -35,32 +50,38 @@ class WorkbenchContainer extends Component {
     this.props.dispatchSessionRequest(dataViewId);
   }
 
-  render() {
-    const { isLoading, sessionInfo } = this.props;
-    const { jsPlumbCanvasInstance } = this.state;
+  moveOperatorInCanvas = (type, index, x, y) => {
+    //this.props.dispatchCanvasOperatorMove(type, index, x, y);
+  };
 
-    console.log(sessionInfo);
+  render() {
+    const { isLoading, dispatchAddQuery, session, graph } = this.props;
+    const { jsPlumbCanvasInstance, jsPlumbInstance } = this.state;
+
     return (
       <LoaderContainer isLoading={isLoading || !jsPlumbCanvasInstance}>
         <WorkbenchToolbar />
+        <ConfigElementSwitchContainer />
         <Workbench
           jsPlumbCanvasInstance={jsPlumbCanvasInstance}
-          sessionInfo={sessionInfo}
+          jsPlumbInstance={jsPlumbInstance}
+          dispatchAddQuery={dispatchAddQuery}
+          moveOperatorInCanvas={this.moveOperatorInCanvas}
+          session={session}
+          graph={graph}
         />
       </LoaderContainer>
     );
   }
 }
 
-const mapStateToProps = ({ sessionReducer: { isLoading, sessionInfo } }) => ({
-  isLoading,
-  sessionInfo
-});
+const mapStateToProps = ({ sessionReducer: { ...state } }) => state;
 
 const mapDispatchToProps = dispatch => ({
   dispatchSessionRequest: dataViewId => {
     dispatch(sessionRequest(dataViewId));
-  }
+  },
+  dispatchAddQuery: elementId => dispatch(addQuery(elementId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkbenchContainer);

@@ -18,10 +18,11 @@ export const errorPage = error => [
 ];
 
 export const handleException = response => {
+  console.error(response);
   switch (response.status) {
     case 401:
       return deleteTokenAndRedirectLogin();
     default:
-      return errorPage(response.error);
+      return errorPage(response.error || response.message);
   }
 };

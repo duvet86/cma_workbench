@@ -14,7 +14,7 @@ import configureTheme from "lib/configureTheme";
 import loadAsync from "lib/loadAsync";
 
 import { MuiThemeProvider } from "material-ui/styles";
-import Reboot from "material-ui/Reboot";
+import CssBaseline from "material-ui/CssBaseline";
 
 import AnonymousRoute from "routes/AnonymousRoute";
 import AuthenticatedRoute from "routes/AuthenticatedRoute";
@@ -26,7 +26,7 @@ render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <MuiThemeProvider theme={theme}>
-        <Reboot />
+        <CssBaseline />
         <Switch>
           <AnonymousRoute
             path="/login"
