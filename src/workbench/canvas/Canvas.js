@@ -30,26 +30,28 @@ const Canvas = ({
 }) => (
   <Grid id={containerId} container className={classes.container}>
     <Grid item xs={12} className={classes.item}>
-      {queries && queries.map((query, index) => (
-        <ElementContainer
-          key={query.elementId}
-          jsPlumbInstance={jsPlumbInstance}
-          moveOperatorInCanvas={moveOperatorInCanvas}
-          index={index}
-          connections={connections}
-          {...query}
-        />
-      ))}
-      {filters && filters.map((filter, index) => (
-        <ElementContainer
-          key={filter.elementId}
-          jsPlumbInstance={jsPlumbInstance}
-          moveOperatorInCanvas={moveOperatorInCanvas}
-          index={index}
-          connections={connections}
-          {...filter}
-        />
-      ))}
+      {queries &&
+        queries.map((query, index) => (
+          <ElementContainer
+            key={query.elementId}
+            jsPlumbInstance={jsPlumbInstance}
+            moveOperatorInCanvas={moveOperatorInCanvas}
+            index={index}
+            connections={connections}
+            {...query}
+          />
+        ))}
+      {filters &&
+        filters.map((filter, index) => (
+          <ElementContainer
+            key={filter.elementId}
+            jsPlumbInstance={jsPlumbInstance}
+            moveOperatorInCanvas={moveOperatorInCanvas}
+            index={index}
+            connections={connections}
+            {...filter}
+          />
+        ))}
     </Grid>
   </Grid>
 );

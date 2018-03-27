@@ -3,9 +3,10 @@ import update from "immutability-helper";
 import {
   SESSION_REQUEST,
   SESSION_SUCCESS,
-  CREATE_QUERY,
-  UPDATE_QUERY,
-  UPDATE_QUERY_DATASERVICE
+  ADD_QUERY,
+  UPDATE_QUERY_DATASERVICE,
+  ADD_QUERY_COLUMN,
+  REMOVE_QUERY_COLUMN
 } from "workbench/actions";
 
 function session(
@@ -34,7 +35,7 @@ function session(
         ...action.payload
       };
 
-    case CREATE_QUERY:
+    case ADD_QUERY:
       return update(state, {
         graph: { Queries: { $push: [action.elementId] } },
         queries: {
@@ -47,7 +48,6 @@ function session(
       });
 
     case UPDATE_QUERY_DATASERVICE:
-    case UPDATE_QUERY:
       return update(state, {
         queries: {
           [action.elementId]: {
@@ -55,6 +55,18 @@ function session(
           }
         }
       });
+
+    case ADD_QUERY_COLUMN:
+      return update(state, {
+        queries: {
+          [action.elementId]: {
+            Columns: { $push: [action.column] }
+          }
+        }
+      });
+
+    case REMOVE_QUERY_COLUMN:
+      return update(state, {});
 
     default:
       return state;

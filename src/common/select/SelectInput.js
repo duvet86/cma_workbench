@@ -181,18 +181,16 @@ SelectedValueComponent.propTypes = {
   children: PropTypes.string.isRequired
 };
 
-const SelectWrapped = ({ classes, ...rest }) => {
-  return (
-    <VirtualizedSelect
-      optionRenderer={OptionRenderer(classes)}
-      noResultsText={<Typography>{"No results found"}</Typography>}
-      arrowRenderer={ArrowRenderer}
-      clearRenderer={ClearRenderer}
-      valueComponent={SelectedValueComponent}
-      {...rest}
-    />
-  );
-};
+const SelectWrapped = ({ classes, ...rest }) => (
+  <VirtualizedSelect
+    optionRenderer={OptionRenderer(classes)}
+    noResultsText={<Typography>{"No results found"}</Typography>}
+    arrowRenderer={ArrowRenderer}
+    clearRenderer={ClearRenderer}
+    valueComponent={SelectedValueComponent}
+    {...rest}
+  />
+);
 
 SelectWrapped.propTypes = {
   classes: PropTypes.object.isRequired
@@ -212,7 +210,7 @@ const SelectInput = ({
     <Input
       fullWidth
       inputComponent={SelectWrapped}
-      value={value}
+      value={value || ""}
       onChange={handleChange}
       id="select-input"
       name="select-input"

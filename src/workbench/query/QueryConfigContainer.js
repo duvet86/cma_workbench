@@ -2,68 +2,70 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { updateQueryDataService } from "workbench/actions";
+import { updateQueryDataService, addQueryColumn } from "workbench/actions";
 import { dataServicesRequest } from "workbench/query/actions";
-import { getDataServices } from "workbench/query/selectors";
 
-import LoaderContainer from "common/LoaderContainer";
+import {
+  getQuery,
+  getDataServices,
+  getAvailableColumns,
+  getQueryColumns
+} from "workbench/query/selectors";
+
 import QueryConfig from "workbench/query/QueryConfig";
 
 class QueryConfigContainer extends Component {
   static propTypes = {
-    session: PropTypes.object.isRequired,
     elementConfig: PropTypes.object.isRequired,
+    dataServices: PropTypes.array.isRequired,
+    selectedColumns: PropTypes.array.isRequired,
     dispatchDataServicesRequest: PropTypes.func.isRequired,
-    dispatchUpdateQueryDataService: PropTypes.func.isRequired
+    dispatchDescribeQuery: PropTypes.func.isRequired,
+    dispatchAddQueryColumn: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    const { dispatchDataServicesRequest } = this.props;
-
-    dispatchDataServicesRequest();
+    this.props.dispatchDataServicesRequest();
   }
 
-  handleChange = selectedDataServiceId => {
-    const { elementConfig, dispatchUpdateQueryDataService } = this.props;
-
-    dispatchUpdateQueryDataService(elementConfig.ElementId, {
+  handleChangeDataService = selectedDataServiceId => {
+    const { elementConfig, dispatchDescribeQuery } = this.props;
+    dispatchDescribeQuery(elementConfig.ElementId, {
       TargetDataServiceId: selectedDataServiceId
     });
   };
 
+  handleAddQueryColumn = column => {
+    const { elementConfig, dispatchAddQueryColumn } = this.props;
+    dispatchAddQueryColumn(elementConfig.ElementId, column);
+  };
+
   render() {
-    const {
-      isLoading,
-      dataServices,
-      dataServiceDescription,
-      elementConfig
-    } = this.props;
-    console.log(this.props);
+    console.log({ ...this.props });
     return (
-      <LoaderContainer isLoading={isLoading}>
-        <QueryConfig
-          dataServices={dataServices}
-          dataServiceDescription={dataServiceDescription}
-          queryConfig={elementConfig}
-          handleChange={this.handleChange}
-        />
-      </LoaderContainer>
+      <QueryConfig
+        {...this.props}
+        handleChangeDataService={this.handleChangeDataService}
+        handleAddQueryColumn={this.handleAddQueryColumn}
+      />
     );
   }
 }
 
-const mapStateToProps = ({
-  queryConfigReducer: { isLoading, dataServices, dataServiceDescription }
-}) => ({
-  isLoading,
-  dataServices: getDataServices(dataServices),
-  dataServiceDescription
+const mapStateToProps = state => ({
+  ...state.queryConfigReducer,
+  elementConfig: getQuery(state),
+  dataServices: getDataServices(state),
+  availableColumns: getAvailableColumns(state),
+  selectedColumns: getQueryColumns(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatchDataServicesRequest: () => dispatch(dataServicesRequest()),
-  dispatchUpdateQueryDataService: (elementId, query) =>
-    dispatch(updateQueryDataService(elementId, query))
+  dispatchDescribeQuery: (elementId, query) =>
+    dispatch(updateQueryDataService(elementId, query)),
+  dispatchAddQueryColumn: (elementId, column) =>
+    dispatch(addQueryColumn(elementId, column))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

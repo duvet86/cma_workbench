@@ -1,10 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Fade from "material-ui/transitions/Fade";
-import { CircularProgress } from "material-ui/Progress";
+import { withStyles } from "material-ui/styles";
 
-const Loader = ({ error, isLoading, pastDelay, children }) => {
+import BaseLoader from "common/BaseLoader";
+
+const styles = {
+  loaderContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%"
+  }
+};
+
+const Loader = ({ classes, error, isLoading, pastDelay, children }) => {
   if (error) {
     // When the loader has errored.
     return <div>{JSON.stringify(error)}</div>;
@@ -13,15 +24,9 @@ const Loader = ({ error, isLoading, pastDelay, children }) => {
     if (pastDelay) {
       // When the loader has taken longer than the delay show a spinner.
       return (
-        <Fade
-          in={true}
-          style={{
-            transitionDelay: "800ms"
-          }}
-          unmountOnExit
-        >
-          <CircularProgress />
-        </Fade>
+        <div className={classes.loaderContainer}>
+          <BaseLoader />
+        </div>
       );
     } else {
       return null;
@@ -33,10 +38,11 @@ const Loader = ({ error, isLoading, pastDelay, children }) => {
 };
 
 Loader.propTypes = {
+  classes: PropTypes.object.isRequired,
   children: PropTypes.any.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   delay: PropTypes.number
 };
 
-export default Loader;
+export default withStyles(styles)(Loader);

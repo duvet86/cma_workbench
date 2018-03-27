@@ -1,4 +1,4 @@
-import React, { createElement, Fragment } from "react";
+import React, { createElement } from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
@@ -7,19 +7,10 @@ import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import Avatar from "material-ui/Avatar";
-import Paper from "material-ui/Paper";
-import List, {
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  ListItemIcon
-} from "material-ui/List";
-import Checkbox from "material-ui/Checkbox";
-import Divider from "material-ui/Divider";
 
-import SettingsIcon from "material-ui-icons/Settings";
-
+import LoaderContainer from "common/LoaderContainer";
 import SelectInput from "common/select/SelectInput";
+import ColumnSelector from "workbench/query/ColumnSelector";
 
 const styles = theme => ({
   formControl: {
@@ -33,13 +24,15 @@ const styles = theme => ({
     display: "flex",
     alignItems: "flex-end"
   },
-  availColumns: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16
-  }),
+  columnsTitle: {
+    padding: 15
+  },
   list: {
     height: 250,
     overflow: "auto"
+  },
+  listItem: {
+    paddingLeft: 15
   }
 });
 
@@ -47,11 +40,13 @@ const QueryConfig = ({
   classes,
   isLoading,
   dataServices,
-  dataServiceDescription: { Columns },
-  queryConfig,
-  handleChange
+  availableColumns,
+  selectedColumns,
+  elementConfig,
+  handleChangeDataService,
+  handleAddQueryColumn
 }) => (
-  <Fragment>
+  <LoaderContainer background isLoading={isLoading}>
     <Grid item xs={12} className={classes.titleContainer}>
       <Avatar className={classes.avatar}>
         {createElement(operatorsExtraInfo[1].IconComponent)}
@@ -64,52 +59,26 @@ const QueryConfig = ({
       <SelectInput
         inputLabel="Source"
         helperText="What is the source of this query?"
-        value={queryConfig.TargetDataServiceId}
+        value={elementConfig.TargetDataServiceId}
         options={dataServices}
-        handleChange={handleChange}
+        handleChange={handleChangeDataService}
       />
     </Grid>
-    <Grid item xs={6}>
-      <Paper className={classes.availColumns}>
-        <Typography variant="subheading">Available Columns</Typography>
-        <List className={classes.list}>
-          {Columns.map(({ ColumnName, Label }) => (
-            <Fragment key={ColumnName}>
-              <ListItem
-                disableGutters
-                dense
-                button
-                className={classes.listItem}
-              >
-                <ListItemIcon>
-                  <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary={Label} />
-                <ListItemSecondaryAction>
-                  <Checkbox />
-                </ListItemSecondaryAction>
-              </ListItem>
-              <Divider />
-            </Fragment>
-          ))}
-        </List>
-      </Paper>
-    </Grid>
-    <Grid item xs={6}>
-      <Paper className={classes.availColumns}>
-        <Typography variant="subheading">Selected Columns</Typography>
-        <List className={classes.list} />
-      </Paper>
-    </Grid>
-  </Fragment>
+    <ColumnSelector
+      availableColumns={availableColumns}
+      selectedColumns={selectedColumns}
+      handleAddColumn={handleAddQueryColumn}
+    />
+  </LoaderContainer>
 );
 
 QueryConfig.propTypes = {
   classes: PropTypes.object.isRequired,
   dataServices: PropTypes.array.isRequired,
-  dataServiceDescription: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  queryConfig: PropTypes.object.isRequired
+  availableColumns: PropTypes.array.isRequired,
+  elementConfig: PropTypes.object.isRequired,
+  handleChangeDataService: PropTypes.func.isRequired,
+  handleAddQueryColumn: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(QueryConfig);

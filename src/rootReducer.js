@@ -9,7 +9,7 @@ import navigationTabsReducer from "sideBar/navigationTabs/reducer";
 import operatorsReducer from "sideBar/operators/reducer";
 import appReducer from "app/reducer";
 import sessionReducer from "workbench/reducer";
-import elementConfigReducer from "workbench/canvas/reducer";
+import configSwitchReducer from "workbench/configSwitch/reducer";
 import queryConfigReducer from "workbench/query/reducer";
 
 export default combineReducers({
@@ -22,6 +22,6 @@ export default combineReducers({
   navigationTabsReducer,
   operatorsReducer,
   sessionReducer,
-  elementConfigReducer,
+  configSwitchReducer,
   queryConfigReducer
 });

@@ -56,21 +56,3 @@ export const getSessionInfo = createSelector(
     }
   })
 );
-
-const querySelector = state => state.sessionReducer.queries;
-const elementIdSelector = state => state.elementConfigReducer.elementId;
-
-export const getElementById = createSelector(
-  elementIdSelector,
-  querySelector,
-  (elementId, queries) => queries[elementId]
-);
-
-export const isDrawerOpen = createSelector(
-  elementIdSelector,
-  querySelector,
-  (elementId, queries) =>
-    Boolean(
-      queries[elementId] && queries[elementId].ElementType !== elementType.NONE
-    )
-);

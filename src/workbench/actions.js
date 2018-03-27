@@ -28,23 +28,6 @@ export const sessionError = error => ({
   error
 });
 
-export const QUERY_SAVE_DESCRIBE_REQUEST = "QUERY_SAVE_DESCRIBE_REQUEST";
-export const QUERY_SAVE_DESCRIBE_SUCCESS = "QUERY_SAVE_DESCRIBE_SUCCESS";
-export const QUERY_SAVE_DESCRIBE_ERROR = "QUERY_SAVE_DESCRIBE_ERROR";
-
-export const querySaveDescribeRequest = (
-  tenantId,
-  sessionId,
-  queryGraphId,
-  queryData
-) => ({
-  type: QUERY_SAVE_DESCRIBE_REQUEST,
-  tenantId,
-  sessionId,
-  queryGraphId,
-  queryData
-});
-
 export const GRAPH_SAVE_REQUEST = "GRAPH_SAVE_REQUEST";
 export const GRAPH_SAVE_SUCCESS = "GRAPH_SAVE_SUCCESS";
 export const GRAPH_SAVE_ERROR = "GRAPH_SAVE_ERROR";
@@ -76,31 +59,39 @@ export const graphError = error => ({
   error
 });
 
-export const CREATE_QUERY = "CREATE_QUERY";
-export const UPDATE_QUERY = "UPDATE_QUERY";
+export const ADD_QUERY = "ADD_QUERY";
+export const UPDATE_QUERY_DATASERVICE = "UPDATE_QUERY_DATASERVICE";
 
 export const addQuery = elementId => ({
-  type: CREATE_QUERY,
+  type: ADD_QUERY,
   elementId,
   query: {
     ElementId: elementId,
     IsConfigured: false,
     TargetDataServiceId: null,
     TargetDataViewId: null,
-    ElementType: "Query"
+    ElementType: "Query",
+    Columns: []
   }
 });
-
-export const updateQuery = (elementId, query) => ({
-  type: UPDATE_QUERY,
-  elementId,
-  query
-});
-
-export const UPDATE_QUERY_DATASERVICE = "UPDATE_QUERY_DATASERVICE";
 
 export const updateQueryDataService = (elementId, query) => ({
   type: UPDATE_QUERY_DATASERVICE,
   elementId,
   query
+});
+
+export const ADD_QUERY_COLUMN = "ADD_QUERY_COLUMN";
+export const REMOVE_QUERY_COLUMN = "REMOVE_QUERY_COLUMN";
+
+export const addQueryColumn = (elementId, column) => ({
+  type: ADD_QUERY_COLUMN,
+  elementId,
+  column
+});
+
+export const removeQueryColumn = (elementId, columnName) => ({
+  type: REMOVE_QUERY_COLUMN,
+  elementId,
+  columnName
 });

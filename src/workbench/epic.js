@@ -8,16 +8,14 @@ import {
   SESSION_REQUEST,
   GRAPH_SAVE_REQUEST,
   GRAPH_REQUEST,
-  CREATE_QUERY,
+  ADD_QUERY,
   UPDATE_QUERY_DATASERVICE,
   sessionSuccess,
   graphSaveChangesSuccess,
   graphSuccess
 } from "workbench/actions";
-import { queryDescribeRequest } from "workbench/query/actions";
-import { openConfig } from "workbench/canvas/actions";
+import { queryDescribeRequest, openQueryConfig } from "workbench/query/actions";
 import { getSessionInfoObs, saveGraphObs, getGraphObs } from "workbench/api";
-import { elementType } from "sideBar/operators/operatorsData";
 
 export const sessionEpic = action$ =>
   action$.pipe(
@@ -54,8 +52,8 @@ export const getGraphEpic = action$ =>
 
 export const addQueryEpic = action$ =>
   action$.pipe(
-    ofType(CREATE_QUERY),
-    map(({ elementId }) => openConfig(elementType.QUERY, elementId))
+    ofType(ADD_QUERY),
+    map(({ elementId }) => openQueryConfig(elementId))
   );
 
 export const updateQueryDataServiceEpic = (action$, store) =>
@@ -84,7 +82,7 @@ export const updateQueryDataServiceEpic = (action$, store) =>
         QueryGraphId,
         denormalizedGraph
       ).pipe(
-        map(() => queryDescribeRequest(elementId)),
+        map(() => queryDescribeRequest()),
         catchError(error => handleException(error))
       );
     })

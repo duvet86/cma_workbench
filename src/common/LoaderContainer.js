@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Loader from "common/Loader";
+import BackgroundLoader from "common/BackgroundLoader";
 
 class LoaderContainer extends Component {
   static propTypes = {
@@ -21,15 +22,27 @@ class LoaderContainer extends Component {
     }, this.props.delay || 200);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isLoading) {
+      this.setState({ pastDelay: false });
+    }
+  }
+
   componentWillUnmount() {
     clearTimeout(this._delay);
   }
 
   render() {
-    const { error, isLoading, children } = this.props;
+    const { error, isLoading, children, background } = this.props;
     const { pastDelay } = this.state;
 
-    return (
+    return background ? (
+      <BackgroundLoader
+        isLoading={isLoading}
+        pastDelay={pastDelay}
+        children={children}
+      />
+    ) : (
       <Loader
         error={error}
         isLoading={isLoading}

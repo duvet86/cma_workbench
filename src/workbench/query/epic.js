@@ -27,9 +27,10 @@ export const dataServicesEpic = action$ =>
 export const serviceDescriptionEpic = (action$, store) =>
   action$.pipe(
     ofType(QUERY_DESCRIBE_REQUEST),
-    mergeMap(({ elementId }) => {
+    mergeMap(() => {
       const {
-        sessionReducer: { session: { TenantId, SessionId, QueryGraphId } }
+        sessionReducer: { session: { TenantId, SessionId, QueryGraphId } },
+        queryConfigReducer: { elementId }
       } = store.getState();
 
       return getDataServiceDescriptionObs(

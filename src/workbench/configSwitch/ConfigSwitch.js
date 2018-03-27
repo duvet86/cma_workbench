@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
-import { elementType } from "sideBar/operators/operatorsData";
+import { elementType as ELEMENT_TYPE } from "sideBar/operators/operatorsData";
 
 import Grid from "material-ui/Grid";
 import Drawer from "material-ui/Drawer";
@@ -13,9 +13,9 @@ import QueryConfigContainer from "workbench/query/QueryConfigContainer";
 const styles = theme => ({
   form: {
     padding: 15,
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "center"
+    position: "relative",
+    height: "100%",
+    overflow: "hidden"
   },
   paper: {
     width: "85%",
@@ -30,43 +30,43 @@ const styles = theme => ({
   }
 });
 
-const drawerByType = props => {
-  switch (props.elementConfig.ElementType) {
-    case elementType.QUERY:
-      return <QueryConfigContainer {...props} />;
-    case elementType.FILTER:
+const drawerByType = elementType => {
+  switch (elementType) {
+    case ELEMENT_TYPE.QUERY:
+      return <QueryConfigContainer />;
+    case ELEMENT_TYPE.FILTER:
       return "FILTER";
     default:
       return null;
   }
 };
 
-const ConfigElementSwitch = ({
+const ConfigSwitch = ({
   classes,
+  elementType,
   isDrawerOpen,
-  dispatchCloseConfig,
-  ...props
+  dispatchCloseQueryConfig
 }) => (
   <Drawer
     classes={{ paper: classes.paper }}
     anchor="right"
     open={isDrawerOpen}
-    onClose={dispatchCloseConfig}
+    onClose={dispatchCloseQueryConfig}
   >
     {isDrawerOpen && (
       <form className={classes.form} noValidate autoComplete="off">
         <Grid container>
-          {drawerByType(props)}
+          {drawerByType(elementType)}
           <Grid item xs={12} className={classes.actionButtons}>
             <Button
-              onClick={dispatchCloseConfig}
+              onClick={dispatchCloseQueryConfig}
               variant="raised"
               className={classes.button}
             >
               Close
             </Button>
             <Button
-              onClick={dispatchCloseConfig}
+              onClick={dispatchCloseQueryConfig}
               variant="raised"
               color="secondary"
               className={classes.button}
@@ -80,12 +80,11 @@ const ConfigElementSwitch = ({
   </Drawer>
 );
 
-ConfigElementSwitch.propTypes = {
+ConfigSwitch.propTypes = {
   classes: PropTypes.object.isRequired,
-  dispatchCloseConfig: PropTypes.func.isRequired,
-  session: PropTypes.object.isRequired,
+  dispatchCloseQueryConfig: PropTypes.func.isRequired,
   isDrawerOpen: PropTypes.bool.isRequired,
-  elementConfig: PropTypes.object
+  elementType: PropTypes.string.isRequired
 };
 
-export default withStyles(styles)(ConfigElementSwitch);
+export default withStyles(styles)(ConfigSwitch);

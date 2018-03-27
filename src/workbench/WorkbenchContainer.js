@@ -9,7 +9,7 @@ import { sessionRequest, addQuery } from "workbench/actions";
 import LoaderContainer from "common/LoaderContainer";
 import WorkbenchToolbar from "workbench/toolBar/WorkbenchToolbar";
 import Workbench from "workbench/Workbench";
-import ConfigElementSwitchContainer from "workbench/canvas/ConfigElementSwitchContainer";
+import ConfigSwitchContainer from "workbench/configSwitch/ConfigSwitchContainer";
 
 const DROPPABLE_CANVAS_ID = "droppable-canvas";
 
@@ -58,10 +58,11 @@ class WorkbenchContainer extends Component {
     const { isLoading, dispatchAddQuery, session, graph } = this.props;
     const { jsPlumbCanvasInstance, jsPlumbInstance } = this.state;
 
+    console.log(this.props);
     return (
       <LoaderContainer isLoading={isLoading || !jsPlumbCanvasInstance}>
         <WorkbenchToolbar />
-        <ConfigElementSwitchContainer />
+        <ConfigSwitchContainer />
         <Workbench
           jsPlumbCanvasInstance={jsPlumbCanvasInstance}
           jsPlumbInstance={jsPlumbInstance}
