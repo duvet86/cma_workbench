@@ -1,11 +1,17 @@
 [ignore]
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/public/.*
+<PROJECT_ROOT>/node_modules/jss/.*
+<PROJECT_ROOT>/node_modules/material-ui/.*
+<PROJECT_ROOT>/node_modules/react-virtualized/.*
 
 [include]
 
 [libs]
+/flow-typed
 
 [lints]
 
 [options]
-
-[strict]
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src

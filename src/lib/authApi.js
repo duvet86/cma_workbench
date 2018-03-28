@@ -4,28 +4,18 @@ import { encode } from "base-64";
 import { push } from "react-router-redux";
 
 import constants from "lib/constants";
+import { clearToken, getToken } from "lib/sessionStorageApi";
 import { getAsync } from "lib/http";
 
-export const getTokenAsync = (userName, password) =>
+export const getTokenAsync = (
+  userName: string,
+  password: string
+): Promise<string> =>
   fromPromise(
     getAsync("http://desktop-ejm4rss/dev/api/token", {
       Authorization: `Basic ${encode(userName + ":" + password)}`
     })
   );
-
-export const storeToken = token =>
-  sessionStorage.setItem(
-    constants.TOKEN_KEY,
-    JSON.stringify({
-      token,
-      createdAt: Date.now()
-    })
-  );
-
-export const clearToken = () => sessionStorage.removeItem(constants.TOKEN_KEY);
-
-export const getToken = () =>
-  JSON.parse(sessionStorage.getItem(constants.TOKEN_KEY));
 
 export function deleteTokenAndRedirectLogin() {
   clearToken();
