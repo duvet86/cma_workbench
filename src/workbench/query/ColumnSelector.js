@@ -8,20 +8,16 @@ import { List as VirtualizedList, AutoSizer } from "react-virtualized";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import Paper from "material-ui/Paper";
-import List, {
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  ListItemIcon
-} from "material-ui/List";
-import Checkbox from "material-ui/Checkbox";
+import List, { ListItem, ListItemText, ListItemIcon } from "material-ui/List";
 import Divider from "material-ui/Divider";
 
 import SettingsIcon from "material-ui-icons/Settings";
 
 const styles = theme => ({
   columnsTitle: {
-    padding: 15
+    paddingTop: 15,
+    paddingLeft: 15,
+    paddingBottom: 5
   },
   list: {
     height: 250,
@@ -32,7 +28,7 @@ const styles = theme => ({
   }
 });
 
-const rowRenderer = (classes, columns, handleAddColumn) => ({
+const rowRenderer = (classes, columns, handleColumn) => ({
   index,
   isScrolling,
   isVisible,
@@ -41,7 +37,7 @@ const rowRenderer = (classes, columns, handleAddColumn) => ({
   style
 }) => {
   const queryColumn = columns[index];
-  const addQueryColumn = () => handleAddColumn(queryColumn);
+  const addQueryColumn = () => handleColumn(queryColumn);
 
   return (
     <div key={key} style={style}>
@@ -57,9 +53,6 @@ const rowRenderer = (classes, columns, handleAddColumn) => ({
           <SettingsIcon />
         </ListItemIcon>
         <ListItemText primary={queryColumn.Label} />
-        <ListItemSecondaryAction>
-          <Checkbox />
-        </ListItemSecondaryAction>
       </ListItem>
       <Divider />
     </div>
@@ -70,15 +63,17 @@ const ColumnSelector = ({
   classes,
   availableColumns,
   selectedColumns,
-  handleAddColumn
+  handleAddColumn,
+  handleRemoveColumn
 }) => (
   <Fragment>
     <Grid item xs={6}>
       <Paper>
         <Typography variant="subheading" className={classes.columnsTitle}>
-          Available Columns
+          Available Columns ({availableColumns.length})
         </Typography>
         <List className={classes.list} component="div">
+          <Divider />
           <AutoSizer>
             {({ height, width }) => (
               <VirtualizedList
@@ -100,30 +95,25 @@ const ColumnSelector = ({
     <Grid item xs={6}>
       <Paper className={classes.availColumns}>
         <Typography variant="subheading" className={classes.columnsTitle}>
-          Selected Columns
+          Selected Columns ({selectedColumns.length})
         </Typography>
         <List className={classes.list}>
-          {selectedColumns &&
-            selectedColumns.map(({ ColumnName, Label }) => (
-              <Fragment key={ColumnName}>
-                <ListItem
-                  disableGutters
-                  dense
-                  button
-                  className={classes.listItem}
-                  ContainerComponent="div"
-                >
-                  <ListItemIcon>
-                    <SettingsIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={Label} />
-                  <ListItemSecondaryAction>
-                    <Checkbox />
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <Divider />
-              </Fragment>
-            ))}
+          <Divider />
+          <AutoSizer>
+            {({ height, width }) => (
+              <VirtualizedList
+                width={width}
+                height={height}
+                rowCount={selectedColumns.length}
+                rowHeight={40}
+                rowRenderer={rowRenderer(
+                  classes,
+                  selectedColumns,
+                  handleRemoveColumn
+                )}
+              />
+            )}
+          </AutoSizer>
         </List>
       </Paper>
     </Grid>
@@ -133,6 +123,7 @@ const ColumnSelector = ({
 ColumnSelector.propTypes = {
   classes: PropTypes.object.isRequired,
   handleAddColumn: PropTypes.func.isRequired,
+  handleRemoveColumn: PropTypes.func.isRequired,
   availableColumns: PropTypes.array.isRequired,
   selectedColumns: PropTypes.array
 };

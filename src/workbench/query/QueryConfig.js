@@ -44,7 +44,8 @@ const QueryConfig = ({
   selectedColumns,
   elementConfig,
   handleChangeDataService,
-  handleAddQueryColumn
+  handleAddQueryColumn,
+  handleRemoveQueryColumn
 }) => (
   <LoaderContainer background isLoading={isLoading}>
     <Grid item xs={12} className={classes.titleContainer}>
@@ -68,6 +69,7 @@ const QueryConfig = ({
       availableColumns={availableColumns}
       selectedColumns={selectedColumns}
       handleAddColumn={handleAddQueryColumn}
+      handleRemoveColumn={handleRemoveQueryColumn}
     />
   </LoaderContainer>
 );
@@ -78,7 +80,8 @@ QueryConfig.propTypes = {
   availableColumns: PropTypes.array.isRequired,
   elementConfig: PropTypes.object.isRequired,
   handleChangeDataService: PropTypes.func.isRequired,
-  handleAddQueryColumn: PropTypes.func.isRequired
+  handleAddQueryColumn: PropTypes.func.isRequired,
+  handleRemoveQueryColumn: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(QueryConfig);

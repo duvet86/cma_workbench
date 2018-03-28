@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { updateQueryDataService, addQueryColumn } from "workbench/actions";
+import {
+  updateQueryDataService,
+  addQueryColumn,
+  removeQueryColumn
+} from "workbench/actions";
 import { dataServicesRequest } from "workbench/query/actions";
 
 import {
@@ -21,7 +25,8 @@ class QueryConfigContainer extends Component {
     selectedColumns: PropTypes.array.isRequired,
     dispatchDataServicesRequest: PropTypes.func.isRequired,
     dispatchDescribeQuery: PropTypes.func.isRequired,
-    dispatchAddQueryColumn: PropTypes.func.isRequired
+    dispatchAddQueryColumn: PropTypes.func.isRequired,
+    dispatchRemoveQueryColumn: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -40,6 +45,11 @@ class QueryConfigContainer extends Component {
     dispatchAddQueryColumn(elementConfig.ElementId, column);
   };
 
+  handleRemoveQueryColumn = ({ ColumnName }) => {
+    const { elementConfig, dispatchRemoveQueryColumn } = this.props;
+    dispatchRemoveQueryColumn(elementConfig.ElementId, ColumnName);
+  };
+
   render() {
     console.log({ ...this.props });
     return (
@@ -47,6 +57,7 @@ class QueryConfigContainer extends Component {
         {...this.props}
         handleChangeDataService={this.handleChangeDataService}
         handleAddQueryColumn={this.handleAddQueryColumn}
+        handleRemoveQueryColumn={this.handleRemoveQueryColumn}
       />
     );
   }
@@ -65,7 +76,9 @@ const mapDispatchToProps = dispatch => ({
   dispatchDescribeQuery: (elementId, query) =>
     dispatch(updateQueryDataService(elementId, query)),
   dispatchAddQueryColumn: (elementId, column) =>
-    dispatch(addQueryColumn(elementId, column))
+    dispatch(addQueryColumn(elementId, column)),
+  dispatchRemoveQueryColumn: (elementId, column) =>
+    dispatch(removeQueryColumn(elementId, column))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

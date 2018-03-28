@@ -37,6 +37,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "flow-bin": "^0.68.0",
     "redux-devtools": "^3.4.1"
   }
 }

@@ -66,7 +66,18 @@ function session(
       });
 
     case REMOVE_QUERY_COLUMN:
-      return update(state, {});
+      return update(state, {
+        queries: {
+          [action.elementId]: {
+            Columns: {
+              $apply: columns =>
+                columns.filter(
+                  ({ ColumnName }) => ColumnName !== action.columnName
+                )
+            }
+          }
+        }
+      });
 
     default:
       return state;
