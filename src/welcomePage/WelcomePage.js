@@ -16,7 +16,7 @@ const styles = {
 };
 
 const WelcomePage = ({ classes }) => (
-  <Grid container className={classes.container}>
+  <Grid container className={classes.container} spacing={16}>
     <Grid item xs={12}>
       <Typography variant="headline" gutterBottom>
         Welcome

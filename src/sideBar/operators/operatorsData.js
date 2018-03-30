@@ -5,6 +5,12 @@ import InsertChartIcon from "material-ui-icons/InsertChart";
 import ShareIcon from "material-ui-icons/Share";
 import SubdirectoryArrowRightIcon from "material-ui-icons/SubdirectoryArrowRight";
 import SubdirectoryArrowLeftIcon from "material-ui-icons/SubdirectoryArrowLeft";
+import DefaultIcon from "material-ui-icons/FiberNew";
+
+export const DEFAULTS = {
+  backgroundColor: "#000000",
+  IconComponent: DefaultIcon
+};
 
 export const itemType = {
   OPERATOR: "OPERATOR"

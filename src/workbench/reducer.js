@@ -1,5 +1,6 @@
 import update from "immutability-helper";
 
+import { QUERY_DESCRIBE_SUCCESS } from "workbench/query/actions";
 import {
   SESSION_REQUEST,
   SESSION_SUCCESS,
@@ -75,6 +76,15 @@ function session(
                   ({ ColumnName }) => ColumnName !== action.columnName
                 )
             }
+          }
+        }
+      });
+
+    case QUERY_DESCRIBE_SUCCESS:
+      return update(state, {
+        queries: {
+          [action.elementId]: {
+            Columns: { $set: [] }
           }
         }
       });

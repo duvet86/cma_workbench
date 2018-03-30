@@ -1,3 +1,5 @@
+// @flow
+
 import { createMuiTheme } from "material-ui/styles";
 
 import amber from "material-ui/colors/amber";
@@ -8,6 +10,15 @@ const configureTheme = () =>
     palette: {
       primary: amber,
       secondary: { light: blue[600], main: blue[900], dark: blue[900] }
+    },
+    overrides: {
+      MuiStepIcon: {
+        root: {
+          "&$completed": {
+            color: "green"
+          }
+        }
+      }
     }
   });
 

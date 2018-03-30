@@ -1,3 +1,9 @@
+export const QUERY_CONFIG_ERROR = "QUERY_CONFIG_ERROR";
+
+export const queryConfigError = () => ({
+  type: QUERY_CONFIG_ERROR
+});
+
 export const OPEN_QUERY_CONFIG = "OPEN_QUERY_CONFIG";
 export const CLOSE_QUERY_CONFIG = "CLOSE_QUERY_CONFIG";
 
@@ -36,9 +42,10 @@ export const queryDescribeRequest = () => ({
   type: QUERY_DESCRIBE_REQUEST
 });
 
-export const queryDescribeSuccess = serviceDescription => ({
+export const queryDescribeSuccess = (serviceDescription, elementId) => ({
   type: QUERY_DESCRIBE_SUCCESS,
-  availableColumns: serviceDescription.Columns
+  availableColumns: serviceDescription.Columns,
+  elementId
 });
 
 export const queryDescribeError = error => ({

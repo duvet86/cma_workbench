@@ -1,3 +1,5 @@
+// @flow
+
 import { fromPromise } from "rxjs/observable/fromPromise";
 import { of } from "rxjs/observable/of";
 import { encode } from "base-64";

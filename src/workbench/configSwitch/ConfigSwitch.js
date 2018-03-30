@@ -14,8 +14,7 @@ const styles = theme => ({
   form: {
     padding: 15,
     position: "relative",
-    height: "100%",
-    overflow: "hidden"
+    height: "100%"
   },
   paper: {
     width: "85%",
@@ -55,7 +54,7 @@ const ConfigSwitch = ({
   >
     {isDrawerOpen && (
       <form className={classes.form} noValidate autoComplete="off">
-        <Grid container>
+        <Grid container spacing={16}>
           {drawerByType(elementType)}
           <Grid item xs={12} className={classes.actionButtons}>
             <Button

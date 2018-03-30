@@ -16,10 +16,10 @@ export const storeToken = (token: string): void =>
 export const clearToken = (): void =>
   sessionStorage.removeItem(constants.TOKEN_KEY);
 
-export const getToken = (): Token => {
+export const getToken = (): ?Token => {
   const tokenKey = sessionStorage.getItem(constants.TOKEN_KEY);
   if (!tokenKey) {
-    throw new Error("Couldn't find token in session storage.");
+    return null;
   }
 
   return JSON.parse(tokenKey);

@@ -1,11 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
 
 import { List as VirtualizedList, AutoSizer } from "react-virtualized";
 
-import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import Paper from "material-ui/Paper";
 import List, { ListItem, ListItemText, ListItemIcon } from "material-ui/List";
@@ -20,15 +19,23 @@ const styles = theme => ({
     paddingBottom: 5
   },
   list: {
-    height: 250,
-    overflow: "auto"
+    height: 246
   },
   listItem: {
     paddingLeft: 15
+  },
+  listItemText: {
+    display: "flex"
+  },
+  listItemTextPrimary: {
+    marginRight: 15
+  },
+  iconColour: {
+    fill: "#003b86"
   }
 });
 
-const rowRenderer = (classes, columns, handleColumn) => ({
+const rowRenderer = (classes, columns, onColumnClick) => ({
   index,
   isScrolling,
   isVisible,
@@ -37,12 +44,12 @@ const rowRenderer = (classes, columns, handleColumn) => ({
   style
 }) => {
   const queryColumn = columns[index];
-  const addQueryColumn = () => handleColumn(queryColumn);
+  const handleClick = () => onColumnClick(queryColumn);
 
   return (
     <div key={key} style={style}>
       <ListItem
-        onClick={addQueryColumn}
+        onClick={handleClick}
         disableGutters
         dense
         button
@@ -50,82 +57,49 @@ const rowRenderer = (classes, columns, handleColumn) => ({
         ContainerComponent="div"
       >
         <ListItemIcon>
-          <SettingsIcon />
+          <SettingsIcon className={classes.iconColour} />
         </ListItemIcon>
-        <ListItemText primary={queryColumn.Label} />
+        <ListItemText
+          classes={{
+            primary: classes.listItemTextPrimary
+          }}
+          className={classes.listItemText}
+          primary={queryColumn.Label}
+          secondary={`(${queryColumn.DataType})`}
+        />
       </ListItem>
       <Divider />
     </div>
   );
 };
 
-const ColumnSelector = ({
-  classes,
-  availableColumns,
-  selectedColumns,
-  handleAddColumn,
-  handleRemoveColumn
-}) => (
-  <Fragment>
-    <Grid item xs={6}>
-      <Paper>
-        <Typography variant="subheading" className={classes.columnsTitle}>
-          Available Columns ({availableColumns.length})
-        </Typography>
-        <List className={classes.list} component="div">
-          <Divider />
-          <AutoSizer>
-            {({ height, width }) => (
-              <VirtualizedList
-                width={width}
-                height={height}
-                rowCount={availableColumns.length}
-                rowHeight={40}
-                rowRenderer={rowRenderer(
-                  classes,
-                  availableColumns,
-                  handleAddColumn
-                )}
-              />
-            )}
-          </AutoSizer>
-        </List>
-      </Paper>
-    </Grid>
-    <Grid item xs={6}>
-      <Paper className={classes.availColumns}>
-        <Typography variant="subheading" className={classes.columnsTitle}>
-          Selected Columns ({selectedColumns.length})
-        </Typography>
-        <List className={classes.list}>
-          <Divider />
-          <AutoSizer>
-            {({ height, width }) => (
-              <VirtualizedList
-                width={width}
-                height={height}
-                rowCount={selectedColumns.length}
-                rowHeight={40}
-                rowRenderer={rowRenderer(
-                  classes,
-                  selectedColumns,
-                  handleRemoveColumn
-                )}
-              />
-            )}
-          </AutoSizer>
-        </List>
-      </Paper>
-    </Grid>
-  </Fragment>
+const ColumnSelector = ({ classes, label, columns, onColumnClick }) => (
+  <Paper>
+    <Typography variant="subheading" className={classes.columnsTitle}>
+      {`${label} (${columns.length})`}
+    </Typography>
+    <List className={classes.list} component="div" disablePadding>
+      <Divider />
+      <AutoSizer>
+        {({ height, width }) => (
+          <VirtualizedList
+            width={width}
+            height={height}
+            rowCount={columns.length}
+            rowHeight={41}
+            rowRenderer={rowRenderer(classes, columns, onColumnClick)}
+          />
+        )}
+      </AutoSizer>
+    </List>
+  </Paper>
 );
 
 ColumnSelector.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleAddColumn: PropTypes.func.isRequired,
-  handleRemoveColumn: PropTypes.func.isRequired,
-  availableColumns: PropTypes.array.isRequired,
-  selectedColumns: PropTypes.array
+  label: PropTypes.string.isRequired,
+  columns: PropTypes.array.isRequired,
+  onColumnClick: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ColumnSelector);

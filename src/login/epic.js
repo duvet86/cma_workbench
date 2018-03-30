@@ -3,7 +3,8 @@ import { mergeMap, flatMap, catchError } from "rxjs/operators";
 import { push } from "react-router-redux";
 
 import { LOGIN_REQUEST, loginSuccess } from "login/actions";
-import { getTokenAsync, storeToken } from "lib/authApi";
+import { getTokenAsync } from "lib/authApi";
+import { storeToken } from "lib/sessionStorageApi";
 import { handleException } from "errorPage/epic";
 
 function storeTokenAndTriggerLogingSucces(token) {

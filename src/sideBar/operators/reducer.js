@@ -3,15 +3,10 @@ import {
   OPERATORS_SUCCESS
 } from "sideBar/operators/actions";
 
-import {
-  staticOperatorsList,
-  operatorsExtraInfo
-} from "sideBar/operators/operatorsData";
-
 function operators(
   state = {
     isLoading: true,
-    operators: undefined
+    operators: {}
   },
   action
 ) {
@@ -23,22 +18,9 @@ function operators(
       };
 
     case OPERATORS_SUCCESS:
-      const normalizedOperators = staticOperatorsList
-        .concat(action.operators)
-        .reduce((result, { OperatorServiceId, Description, Label }) => {
-          result[OperatorServiceId] = {
-            operatorServiceId: OperatorServiceId,
-            label: Label,
-            description: Description,
-            ...operatorsExtraInfo[OperatorServiceId]
-          };
-
-          return result;
-        }, {});
-
       return {
         isLoading: false,
-        operators: normalizedOperators
+        operators: action.operators
       };
 
     default:

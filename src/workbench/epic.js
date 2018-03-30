@@ -59,7 +59,11 @@ export const addQueryEpic = action$ =>
 export const updateQueryDataServiceEpic = (action$, store) =>
   action$.pipe(
     ofType(UPDATE_QUERY_DATASERVICE),
-    mergeMap(({ elementId }) => {
+    mergeMap(({ elementId, query: { TargetDataServiceId } }) => {
+      if (!TargetDataServiceId) {
+        return [openQueryConfig(elementId)];
+      }
+
       const {
         sessionReducer: {
           session: { TenantId, SessionId, QueryGraphId },

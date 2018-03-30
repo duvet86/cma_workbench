@@ -6,13 +6,13 @@ type AuthHeader = {
   Authorization: string
 };
 
-type FullHeader = {
+type SectionHeader = {
   Authorization: string,
   section: string,
   "Content-Type": string
 };
 
-type Header = AuthHeader | FullHeader;
+type Header = AuthHeader | SectionHeader;
 
 const getJwtToken = (): string => {
   const tokenInfo = getToken();
@@ -28,7 +28,7 @@ const getJwtHeaders = (token: string): AuthHeader => ({
   Authorization: `Bearer ${token}`
 });
 
-const getHeader = (): FullHeader => {
+const getHeader = (): SectionHeader => {
   const token = getJwtToken();
 
   return {

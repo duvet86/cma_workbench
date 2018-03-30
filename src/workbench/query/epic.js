@@ -5,6 +5,7 @@ import { handleException } from "errorPage/epic";
 import {
   DATASERVICES_REQUEST,
   QUERY_DESCRIBE_REQUEST,
+  queryConfigError,
   dataServicesSuccess,
   queryDescribeSuccess
 } from "workbench/query/actions";
@@ -19,7 +20,7 @@ export const dataServicesEpic = action$ =>
     mergeMap(({ tenantId, sessionId, queryGraphId, elementId }) =>
       getDataServicesObs(tenantId, sessionId, queryGraphId, elementId).pipe(
         map(dataServices => dataServicesSuccess(dataServices)),
-        catchError(error => handleException(error))
+        catchError(error => handleException(error, queryConfigError()))
       )
     )
   );
@@ -39,8 +40,10 @@ export const serviceDescriptionEpic = (action$, store) =>
         QueryGraphId,
         elementId
       ).pipe(
-        map(serviceDescription => queryDescribeSuccess(serviceDescription)),
-        catchError(error => handleException(error))
+        map(serviceDescription =>
+          queryDescribeSuccess(serviceDescription, elementId)
+        ),
+        catchError(error => handleException(error, queryConfigError()))
       );
     })
   );

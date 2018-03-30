@@ -1,5 +1,9 @@
 import { elementType } from "sideBar/operators/operatorsData";
-import { OPEN_QUERY_CONFIG, CLOSE_QUERY_CONFIG } from "workbench/query/actions";
+import {
+  OPEN_QUERY_CONFIG,
+  CLOSE_QUERY_CONFIG,
+  QUERY_CONFIG_ERROR
+} from "workbench/query/actions";
 
 function configSwitch(
   state = {
@@ -13,6 +17,7 @@ function configSwitch(
         elementType: elementType.QUERY
       };
 
+    case QUERY_CONFIG_ERROR:
     case CLOSE_QUERY_CONFIG:
       return {
         elementType: elementType.NONE

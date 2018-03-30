@@ -13,7 +13,8 @@ import {
   getQuery,
   getDataServices,
   getAvailableColumns,
-  getQueryColumns
+  getQueryColumns,
+  getCurrentStep
 } from "workbench/query/selectors";
 
 import QueryConfig from "workbench/query/QueryConfig";
@@ -68,7 +69,8 @@ const mapStateToProps = state => ({
   elementConfig: getQuery(state),
   dataServices: getDataServices(state),
   availableColumns: getAvailableColumns(state),
-  selectedColumns: getQueryColumns(state)
+  selectedColumns: getQueryColumns(state),
+  step: getCurrentStep(state)
 });
 
 const mapDispatchToProps = dispatch => ({

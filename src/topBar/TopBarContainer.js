@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
-import { clearToken } from "lib/authApi";
+import { clearToken } from "lib/sessionStorageApi";
 
 import TopBar from "topBar/TopBar";
 

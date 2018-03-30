@@ -22,6 +22,9 @@ const styles = theme => ({
   root: {
     padding: "0 0 0 10px"
   },
+  iconColour: {
+    fill: "#003b86"
+  },
   "@global": {
     ".Select-control": {
       display: "flex",
@@ -152,7 +155,7 @@ const OptionRenderer = classes => ({
       className={classes.root}
     >
       <ListItemIcon>
-        <StorageIcon style={{ fill: "#003b86" }} />
+        <StorageIcon className={classes.iconColour} />
       </ListItemIcon>
       {option.label}
     </MenuItem>
@@ -166,12 +169,13 @@ ArrowRenderer.propTypes = {
   isOpen: PropTypes.bool.isRequired
 };
 
+const NoClearRenderer = () => <span />;
 const ClearRenderer = () => <ClearIcon />;
 
-const SelectedValueComponent = ({ children }) => (
+const SelectedValueComponent = classes => ({ children }) => (
   <div className="Select-value">
     <ListItemIcon>
-      <StorageIcon style={{ fill: "#ffc107" }} />
+      <StorageIcon className={classes.iconColour} />
     </ListItemIcon>
     {children}
   </div>
@@ -181,13 +185,13 @@ SelectedValueComponent.propTypes = {
   children: PropTypes.string.isRequired
 };
 
-const SelectWrapped = ({ classes, ...rest }) => (
+const SelectWrapped = ({ classes, noClear, ...rest }) => (
   <VirtualizedSelect
     optionRenderer={OptionRenderer(classes)}
     noResultsText={<Typography>{"No results found"}</Typography>}
     arrowRenderer={ArrowRenderer}
-    clearRenderer={ClearRenderer}
-    valueComponent={SelectedValueComponent}
+    clearRenderer={noClear ? NoClearRenderer : ClearRenderer}
+    valueComponent={SelectedValueComponent(classes)}
     {...rest}
   />
 );
@@ -203,7 +207,8 @@ const SelectInput = ({
   options,
   handleChange,
   inputLabel,
-  helperText
+  helperText,
+  noClear
 }) => (
   <FormControl fullWidth>
     {inputLabel && <InputLabel htmlFor="select-input">{inputLabel}</InputLabel>}
@@ -217,6 +222,7 @@ const SelectInput = ({
       placeholder=""
       inputProps={{
         classes,
+        noClear,
         simpleValue: true,
         options
       }}

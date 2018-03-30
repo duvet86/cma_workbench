@@ -1,4 +1,5 @@
 import {
+  QUERY_CONFIG_ERROR,
   OPEN_QUERY_CONFIG,
   CLOSE_QUERY_CONFIG,
   DATASERVICES_REQUEST,
@@ -8,7 +9,6 @@ import {
 } from "workbench/query/actions";
 
 const initialState = {
-  isOpen: false,
   isLoading: true,
   elementId: 0,
   dataServices: [],
@@ -20,10 +20,10 @@ function queryConfig(state = { ...initialState }, action) {
     case OPEN_QUERY_CONFIG:
       return {
         ...state,
-        isOpen: true,
         elementId: action.elementId
       };
 
+    case QUERY_CONFIG_ERROR:
     case CLOSE_QUERY_CONFIG:
       return {
         ...initialState
