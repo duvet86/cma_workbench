@@ -11,7 +11,11 @@ import Typography from "material-ui/Typography";
 import Warning from "material-ui-icons/Warning";
 
 const styles = {
-  container: {
+  gridContainer: {
+    overflow: "auto",
+    height: "100%"
+  },
+  grid: {
     padding: 25
   },
   cardActions: {
@@ -30,31 +34,33 @@ const styles = {
   }
 };
 
-const ErrorPage = ({ error, classes }) => (
-  <Grid container className={classes.container}>
-    <Grid item xs={12}>
-      <Grid container justify="center">
-        <Grid item xs={12}>
-          <Card>
-            <CardContent className={classes.cardContent}>
-              <Warning className={classes.icon} />
-              <Typography variant="headline" component="h2">
-                OOOPS SOMETHING WENT WRONG
-              </Typography>
-            </CardContent>
-            <CardContent>
-              <Typography>{JSON.stringify(error)}</Typography>
-            </CardContent>
-            <CardActions className={classes.cardActions}>
-              <Button variant="raised" component={Link} to="/">
-                Back to the Home Page
-              </Button>
-            </CardActions>
-          </Card>
+const ErrorPage = ({ classes, error }) => (
+  <div className={classes.gridContainer}>
+    <Grid container className={classes.grid}>
+      <Grid item xs={12}>
+        <Grid container justify="center">
+          <Grid item xs={12}>
+            <Card>
+              <CardContent className={classes.cardContent}>
+                <Warning className={classes.icon} />
+                <Typography variant="headline" component="h2">
+                  OOOPS SOMETHING WENT WRONG
+                </Typography>
+              </CardContent>
+              <CardContent>
+                <Typography>{JSON.stringify(error)}</Typography>
+              </CardContent>
+              <CardActions className={classes.cardActions}>
+                <Button variant="raised" component={Link} to="/">
+                  Back to the Home Page
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
-  </Grid>
+  </div>
 );
 
 ErrorPage.propTypes = {

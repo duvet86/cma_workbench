@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import {
+  //graphSaveChangesRequest,
+  //graphPushRequest,
   updateQueryDataService,
   addQueryColumn,
   removeQueryColumn
@@ -14,6 +16,7 @@ import {
   getDataServices,
   getAvailableColumns,
   getQueryColumns,
+  getConstraintTargets,
   getCurrentStep
 } from "workbench/query/selectors";
 
@@ -31,13 +34,21 @@ class QueryConfigContainer extends Component {
   };
 
   componentDidMount() {
-    this.props.dispatchDataServicesRequest();
+    const {
+      //dispatchGraphPushRequest,
+      //dispatchGraphSaveChangesRequest,
+      dispatchDataServicesRequest
+    } = this.props;
+
+    //dispatchGraphSaveChangesRequest();
+    //dispatchGraphPushRequest();
+    dispatchDataServicesRequest();
   }
 
   handleChangeDataService = selectedDataServiceId => {
     const { elementConfig, dispatchDescribeQuery } = this.props;
     dispatchDescribeQuery(elementConfig.ElementId, {
-      TargetDataServiceId: selectedDataServiceId
+      TargetDataViewId: selectedDataServiceId
     });
   };
 
@@ -52,7 +63,6 @@ class QueryConfigContainer extends Component {
   };
 
   render() {
-    console.log({ ...this.props });
     return (
       <QueryConfig
         {...this.props}
@@ -70,10 +80,13 @@ const mapStateToProps = state => ({
   dataServices: getDataServices(state),
   availableColumns: getAvailableColumns(state),
   selectedColumns: getQueryColumns(state),
+  contraintTargets: getConstraintTargets(state),
   step: getCurrentStep(state)
 });
 
 const mapDispatchToProps = dispatch => ({
+  //dispatchGraphSaveChangesRequest: () => dispatch(graphSaveChangesRequest()),
+  //dispatchGraphPushRequest: () => dispatch(graphPushRequest()),
   dispatchDataServicesRequest: () => dispatch(dataServicesRequest()),
   dispatchDescribeQuery: (elementId, query) =>
     dispatch(updateQueryDataService(elementId, query)),

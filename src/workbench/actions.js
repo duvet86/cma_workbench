@@ -3,7 +3,6 @@ import { graphSchema } from "workbench/schema";
 
 export const SESSION_REQUEST = "SESSION_REQUEST";
 export const SESSION_SUCCESS = "SESSION_SUCCESS";
-export const SESSION_ERROR = "SESSION_ERROR";
 
 export const sessionRequest = dataViewId => ({
   type: SESSION_REQUEST,
@@ -23,27 +22,19 @@ export const sessionSuccess = ({ InitialQueryGraph, ...rest }) => {
   };
 };
 
-export const sessionError = error => ({
-  type: SESSION_ERROR,
-  error
-});
-
 export const GRAPH_SAVE_REQUEST = "GRAPH_SAVE_REQUEST";
 export const GRAPH_SAVE_SUCCESS = "GRAPH_SAVE_SUCCESS";
-export const GRAPH_SAVE_ERROR = "GRAPH_SAVE_ERROR";
+
+export const graphSaveChangesRequest = () => ({
+  type: GRAPH_SAVE_REQUEST
+});
 
 export const graphSaveChangesSuccess = () => ({
   type: GRAPH_SAVE_SUCCESS
 });
 
-export const graphSaveChangesError = error => ({
-  type: GRAPH_SAVE_ERROR,
-  error
-});
-
 export const GRAPH_REQUEST = "GRAPH_REQUEST";
 export const GRAPH_SUCCESS = "GRAPH_SUCCESS";
-export const GRAPH_ERROR = "GRAPH_ERROR";
 
 export const graphRequest = () => ({
   type: GRAPH_REQUEST
@@ -54,9 +45,26 @@ export const graphSuccess = graphData => ({
   graphData
 });
 
-export const graphError = error => ({
-  type: GRAPH_ERROR,
-  error
+export const GRAPH_PUSH_REQUEST = "GRAPH_PUSH_REQUEST";
+export const GRAPH_PUSH_SUCCESS = "GRAPH_PUSH_SUCCESS";
+
+export const graphPushRequest = () => ({
+  type: GRAPH_PUSH_REQUEST
+});
+
+export const graphPushSuccess = () => ({
+  type: GRAPH_PUSH_SUCCESS
+});
+
+export const GRAPH_POP_REQUEST = "GRAPH_POP_REQUEST";
+export const GRAPH_POP_SUCCESS = "GRAPH_POP_SUCCESS";
+
+export const graphPopRequest = () => ({
+  type: GRAPH_POP_REQUEST
+});
+
+export const graphPopSuccess = () => ({
+  type: GRAPH_POP_SUCCESS
 });
 
 export const ADD_QUERY = "ADD_QUERY";
@@ -71,7 +79,8 @@ export const addQuery = elementId => ({
     TargetDataServiceId: null,
     TargetDataViewId: null,
     ElementType: "Query",
-    Columns: []
+    Columns: [],
+    Constraints: []
   }
 });
 
@@ -94,4 +103,19 @@ export const removeQueryColumn = (elementId, columnName) => ({
   type: REMOVE_QUERY_COLUMN,
   elementId,
   columnName
+});
+
+export const ADD_QUERY_CONSTRAINT = "ADD_QUERY_CONSTRAINT";
+export const REMOVE_QUERY_CONSTRAINT = "REMOVE_QUERY_CONSTRAINT";
+
+export const addQueryConstraint = (elementId, constraint) => ({
+  type: ADD_QUERY_COLUMN,
+  elementId,
+  constraint
+});
+
+export const removeQueryConstraint = (elementId, constraintId) => ({
+  type: REMOVE_QUERY_COLUMN,
+  elementId,
+  constraintId
 });

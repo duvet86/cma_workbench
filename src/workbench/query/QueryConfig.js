@@ -1,4 +1,4 @@
-import React, { createElement } from "react";
+import React, { createElement, Fragment } from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
@@ -9,18 +9,16 @@ import Typography from "material-ui/Typography";
 import Stepper, { Step, StepLabel, StepContent } from "material-ui/Stepper";
 import Avatar from "material-ui/Avatar";
 
-import LoaderContainer from "common/LoaderContainer";
+import { BackgroundLoadingContainer } from "common/loading";
 import SelectInput from "common/select/SelectInput";
 import ColumnSelector from "workbench/query/ColumnSelector";
 
 import ExpansionPanel, {
   ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  ExpansionPanelActions
+  ExpansionPanelSummary
 } from "material-ui/ExpansionPanel";
+
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
-import Button from "material-ui/Button";
-import Divider from "material-ui/Divider";
 
 const styles = theme => ({
   formControl: {
@@ -39,9 +37,7 @@ const styles = theme => ({
   }
 });
 
-function getSteps() {
-  return ["Source", "Columns", "Constraints", "Preview"];
-}
+const steps = ["Source", "Columns", "Constraints", "Preview"];
 
 function getStepContent(step, classes, props) {
   switch (step) {
@@ -52,7 +48,7 @@ function getStepContent(step, classes, props) {
             noClear
             inputLabel="Select a source"
             helperText="What is the source of this query?"
-            value={props.elementConfig.TargetDataServiceId}
+            value={props.elementConfig.TargetDataViewId}
             options={props.dataServices}
             handleChange={props.handleChangeDataService}
           />
@@ -78,38 +74,18 @@ function getStepContent(step, classes, props) {
         </Grid>
       );
     case 2:
-      return (
-        <div className={classes.root}>
+      return props.elementConfig.Constraints.map(({ ConstraintId }) => (
+        <Fragment key={ConstraintId}>
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>
-                Expansion Panel 1
-              </Typography>
+              <Typography>Expansion Panel 1</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
+              <Typography>asd</Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>
-                Expansion Panel 2
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        </div>
-      );
+        </Fragment>
+      ));
     default:
       return "Unknown step";
   }
@@ -119,7 +95,7 @@ const QueryConfig = ({ classes, isLoading, step, ...props }) => {
   const renderStepperContent = props => props.children;
 
   return (
-    <LoaderContainer background isLoading={isLoading}>
+    <BackgroundLoadingContainer isLoading={isLoading}>
       <Grid item xs={12} className={classes.titleContainer}>
         <Avatar className={classes.avatar}>
           {createElement(operatorsExtraInfo[1].IconComponent)}
@@ -132,7 +108,7 @@ const QueryConfig = ({ classes, isLoading, step, ...props }) => {
           activeStep={step}
           orientation="vertical"
         >
-          {getSteps().map((label, index) => (
+          {steps.map((label, index) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
               <StepContent transition={renderStepperContent}>
@@ -142,15 +118,18 @@ const QueryConfig = ({ classes, isLoading, step, ...props }) => {
           ))}
         </Stepper>
       </Grid>
-    </LoaderContainer>
+    </BackgroundLoadingContainer>
   );
 };
 
 QueryConfig.propTypes = {
   classes: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  elementConfig: PropTypes.object.isRequired,
   dataServices: PropTypes.array.isRequired,
   availableColumns: PropTypes.array.isRequired,
-  elementConfig: PropTypes.object.isRequired,
+  selectedColumns: PropTypes.array.isRequired,
+  contraintTargets: PropTypes.array.isRequired,
   handleChangeDataService: PropTypes.func.isRequired,
   handleAddQueryColumn: PropTypes.func.isRequired,
   handleRemoveQueryColumn: PropTypes.func.isRequired

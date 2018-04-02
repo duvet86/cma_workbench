@@ -11,14 +11,15 @@ import Button from "material-ui/Button";
 import QueryConfigContainer from "workbench/query/QueryConfigContainer";
 
 const styles = theme => ({
-  form: {
-    padding: 15,
-    position: "relative",
-    height: "100%"
-  },
   paper: {
     width: "85%",
-    marginTop: 49
+    marginTop: 48
+  },
+  form: {
+    position: "relative",
+    padding: 15,
+    overflow: "auto",
+    marginBottom: 48
   },
   actionButtons: {
     display: "flex",

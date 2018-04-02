@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { operatorsRequest } from "sideBar/operators/actions";
 
-import LoaderContainer from "common/LoaderContainer";
+import { LoadingContainer } from "common/loading";
 import OperatorsList from "sideBar/operators/OperatorsList";
 
 class OperatorsListContainer extends Component {
@@ -24,9 +24,9 @@ class OperatorsListContainer extends Component {
     const { isLoading, ...props } = this.props;
 
     return (
-      <LoaderContainer isLoading={this.props.isLoading}>
+      <LoadingContainer isLoading={this.props.isLoading}>
         <OperatorsList {...props} />
-      </LoaderContainer>
+      </LoadingContainer>
     );
   }
 }

@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import { routerReducer } from "react-router-redux";
+import { loadingReducer } from "common/loading";
 import errorReducer from "errorPage/reducer";
 import loginReducer from "login/reducer";
 import profileReducer from "profile/reducer";
@@ -14,6 +15,7 @@ import queryConfigReducer from "workbench/query/reducer";
 
 export default combineReducers({
   routerReducer,
+  loadingReducer,
   errorReducer,
   loginReducer,
   appReducer,

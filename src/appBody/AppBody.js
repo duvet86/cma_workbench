@@ -1,13 +1,22 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
+
+import { withStyles } from "material-ui/styles";
 
 import Grid from "material-ui/Grid";
 
 import loadAsync from "lib/loadAsync";
 import NotFoundRoute from "routes/NotFoundRoute";
 
-const AppBody = () => (
-  <Grid container>
+const styles = {
+  gridContainer: {
+    marginBottom: 48
+  }
+};
+
+const AppBody = ({ classes }) => (
+  <Grid container className={classes.gridContainer}>
     <Grid item xs={12}>
       <Switch>
         <Route
@@ -41,4 +50,8 @@ const AppBody = () => (
   </Grid>
 );
 
-export default AppBody;
+AppBody.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(AppBody);

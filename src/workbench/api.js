@@ -10,10 +10,16 @@ export const getSessionInfoObs = dataViewId =>
     )
   );
 
-export const saveGraphObs = (tenantId, sessionId, queryGraphId, graphData) =>
+export const saveGraphObs = (
+  tenantId,
+  sessionId,
+  queryGraphId,
+  graphData,
+  isApplyOnly = false
+) =>
   fromPromise(
     postWithJwtAsync(
-      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes`,
+      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?applyOnly=${isApplyOnly}`,
       graphData
     )
   );
@@ -27,5 +33,19 @@ export const getGraphObs = (
   fromPromise(
     getWithJwtAsync(
       `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?nextChangeNumber=${nextChangeNumber}`
+    )
+  );
+
+export const pushGraphChangesObs = (tenantId, sessionId, queryGraphId) =>
+  fromPromise(
+    postWithJwtAsync(
+      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/push`
+    )
+  );
+
+export const popGraphChangesObs = (tenantId, sessionId, queryGraphId) =>
+  fromPromise(
+    postWithJwtAsync(
+      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/pop`
     )
   );

@@ -7,7 +7,9 @@ import {
   ADD_QUERY,
   UPDATE_QUERY_DATASERVICE,
   ADD_QUERY_COLUMN,
-  REMOVE_QUERY_COLUMN
+  REMOVE_QUERY_COLUMN,
+  ADD_QUERY_CONSTRAINT,
+  REMOVE_QUERY_CONSTRAINT
 } from "workbench/actions";
 
 function session(
@@ -84,7 +86,31 @@ function session(
       return update(state, {
         queries: {
           [action.elementId]: {
-            Columns: { $set: [] }
+            Columns: { $set: [] },
+            Constraints: { $set: [] }
+          }
+        }
+      });
+
+    case ADD_QUERY_CONSTRAINT:
+      return update(state, {
+        queries: {
+          [action.elementId]: {
+            Constraints: { $push: [action.constraint] }
+          }
+        }
+      });
+
+    case REMOVE_QUERY_CONSTRAINT:
+      return update(state, {
+        queries: {
+          [action.elementId]: {
+            Constraints: {
+              $apply: constraints =>
+                constraints.filter(
+                  ({ ConstraintId }) => ConstraintId !== action.constraintId
+                )
+            }
           }
         }
       });

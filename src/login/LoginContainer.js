@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { loginRequest } from "login/actions";
 
-import LoaderContainer from "common/LoaderContainer";
+import { LoadingContainer } from "common/loading";
 import Login from "login/Login";
 
 class LoginContainer extends Component {
@@ -24,9 +24,9 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <LoaderContainer isLoading={this.props.isLoading}>
+      <LoadingContainer isLoading={this.props.isLoading}>
         <Login {...this.props} />
-      </LoaderContainer>
+      </LoadingContainer>
     );
   }
 }

@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Fade from "material-ui/transitions/Fade";
-import { CircularProgress } from "material-ui/Progress";
+import BaseLoading from "common/loading/BaseLoading";
 
 const LoadingAsync = ({ error, pastDelay, timedOut }) => {
   if (error) {
@@ -15,17 +14,7 @@ const LoadingAsync = ({ error, pastDelay, timedOut }) => {
   }
   if (pastDelay) {
     // When the loader has taken longer than the delay or is loading
-    return (
-      <Fade
-        in={true}
-        style={{
-          transitionDelay: "800ms"
-        }}
-        unmountOnExit
-      >
-        <CircularProgress />
-      </Fade>
-    );
+    return <BaseLoading />;
   }
 
   // When the loader has just started

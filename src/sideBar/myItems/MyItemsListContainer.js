@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { myItemsRequest } from "sideBar/myItems/actions";
 
-import LoaderContainer from "common/LoaderContainer";
+import { LoadingContainer } from "common/loading";
 import MyItemsList from "sideBar/myItems/MyItemsList";
 
 class MyItemsListContainer extends Component {
@@ -22,9 +22,9 @@ class MyItemsListContainer extends Component {
 
   render() {
     return (
-      <LoaderContainer isLoading={this.props.isLoading}>
+      <LoadingContainer isLoading={this.props.isLoading}>
         <MyItemsList {...this.props} />
-      </LoaderContainer>
+      </LoadingContainer>
     );
   }
 }

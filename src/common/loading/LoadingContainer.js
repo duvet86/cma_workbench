@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import Loader from "common/Loader";
-import BackgroundLoader from "common/BackgroundLoader";
+import Loading from "common/loading/Loading";
 
-class LoaderContainer extends Component {
+class LoadingContainer extends Component {
   static propTypes = {
     children: PropTypes.any.isRequired,
     isLoading: PropTypes.bool.isRequired,
@@ -22,28 +21,16 @@ class LoaderContainer extends Component {
     }, this.props.delay || 200);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isLoading) {
-      this.setState({ pastDelay: false });
-    }
-  }
-
   componentWillUnmount() {
     clearTimeout(this._delay);
   }
 
   render() {
-    const { error, isLoading, children, background } = this.props;
+    const { error, isLoading, children } = this.props;
     const { pastDelay } = this.state;
 
-    return background ? (
-      <BackgroundLoader
-        isLoading={isLoading}
-        pastDelay={pastDelay}
-        children={children}
-      />
-    ) : (
-      <Loader
+    return (
+      <Loading
         error={error}
         isLoading={isLoading}
         pastDelay={pastDelay}
@@ -53,4 +40,4 @@ class LoaderContainer extends Component {
   }
 }
 
-export default LoaderContainer;
+export default LoadingContainer;

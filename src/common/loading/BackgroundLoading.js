@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
 
-import BaseLoader from "common/BaseLoader";
+import BaseLoading from "common/loading/BaseLoading";
 
 const styles = {
   container: {
@@ -14,20 +14,20 @@ const styles = {
     opacity: 0.7,
     zIndex: 1
   },
-  loader: {
+  loading: {
     position: "absolute",
     top: "30%",
     left: "48%"
   }
 };
 
-const BackgroundLoader = ({ classes, isLoading, pastDelay, children }) => (
+const BackgroundLoading = ({ classes, isLoading, pastDelay, children }) => (
   <Fragment>
     {isLoading &&
       pastDelay && (
         <div className={classes.container}>
-          <div className={classes.loader}>
-            <BaseLoader />
+          <div className={classes.loading}>
+            <BaseLoading />
           </div>
         </div>
       )}
@@ -35,11 +35,11 @@ const BackgroundLoader = ({ classes, isLoading, pastDelay, children }) => (
   </Fragment>
 );
 
-BackgroundLoader.propTypes = {
+BackgroundLoading.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.any.isRequired,
   isLoading: PropTypes.bool.isRequired,
   pastDelay: PropTypes.bool.isRequired
 };
 
-export default withStyles(styles)(BackgroundLoader);
+export default withStyles(styles)(BackgroundLoading);

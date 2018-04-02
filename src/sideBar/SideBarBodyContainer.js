@@ -6,14 +6,29 @@ import MyItemsListContainer from "sideBar/myItems/MyItemsListContainer";
 import OperatorsListContainer from "sideBar/operators/OperatorsListContainer";
 
 const SideBarBodyContainer = ({ visibleTab, ...props }) => {
+  let component = null;
   switch (visibleTab) {
     case 1:
-      return <div>Filters</div>;
+      component = <div>Filters</div>;
+      break;
     case 2:
-      return <OperatorsListContainer {...props} />;
+      component = <OperatorsListContainer {...props} />;
+      break;
     default:
-      return <MyItemsListContainer {...props} />;
+      component = <MyItemsListContainer {...props} />;
+      break;
   }
+
+  return (
+    <div
+      style={{
+        overflow: "auto",
+        marginBottom: 48
+      }}
+    >
+      {component}
+    </div>
+  );
 };
 
 SideBarBodyContainer.propTypes = {

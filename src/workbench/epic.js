@@ -6,16 +6,29 @@ import { graphSchema } from "workbench/schema";
 import { handleException } from "errorPage/epic";
 import {
   SESSION_REQUEST,
+  GRAPH_PUSH_REQUEST,
   GRAPH_SAVE_REQUEST,
   GRAPH_REQUEST,
   ADD_QUERY,
   UPDATE_QUERY_DATASERVICE,
   sessionSuccess,
+  graphPushSuccess,
+  graphPopSuccess,
   graphSaveChangesSuccess,
   graphSuccess
 } from "workbench/actions";
-import { queryDescribeRequest, openQueryConfig } from "workbench/query/actions";
-import { getSessionInfoObs, saveGraphObs, getGraphObs } from "workbench/api";
+import {
+  CLOSE_QUERY_CONFIG,
+  queryDescribeRequest,
+  openQueryConfig
+} from "workbench/query/actions";
+import {
+  getSessionInfoObs,
+  pushGraphChangesObs,
+  popGraphChangesObs,
+  saveGraphObs,
+  getGraphObs
+} from "workbench/api";
 
 export const sessionEpic = action$ =>
   action$.pipe(
@@ -28,15 +41,22 @@ export const sessionEpic = action$ =>
     )
   );
 
-export const saveGraphEpic = action$ =>
+export const saveGraphEpic = (action$, store) =>
   action$.pipe(
     ofType(GRAPH_SAVE_REQUEST),
-    mergeMap(({ tenantId, sessionId, queryGraphId, graphData }) =>
-      saveGraphObs(tenantId, sessionId, queryGraphId, graphData).pipe(
+    mergeMap(({ tenantId, sessionId, queryGraphId, graphData }) => {
+      const {
+        sessionReducer: {
+          session: { TenantId, SessionId, QueryGraphId },
+          graph
+        }
+      } = store.getState();
+
+      return saveGraphObs(TenantId, SessionId, QueryGraphId, graph, true).pipe(
         map(() => graphSaveChangesSuccess()),
         catchError(error => handleException(error))
-      )
-    )
+      );
+    })
   );
 
 export const getGraphEpic = action$ =>
@@ -50,6 +70,36 @@ export const getGraphEpic = action$ =>
     )
   );
 
+export const pushGraphChangesEpic = (action$, store) =>
+  action$.pipe(
+    ofType(GRAPH_PUSH_REQUEST),
+    mergeMap(() => {
+      const {
+        sessionReducer: { session: { TenantId, SessionId, QueryGraphId } }
+      } = store.getState();
+
+      return pushGraphChangesObs(TenantId, SessionId, QueryGraphId).pipe(
+        map(response => graphPushSuccess(response)),
+        catchError(error => handleException(error))
+      );
+    })
+  );
+
+export const popGraphChangesEpic = (action$, store) =>
+  action$.pipe(
+    ofType(CLOSE_QUERY_CONFIG),
+    mergeMap(() => {
+      const {
+        sessionReducer: { session: { TenantId, SessionId, QueryGraphId } }
+      } = store.getState();
+
+      return popGraphChangesObs(TenantId, SessionId, QueryGraphId).pipe(
+        map(response => graphPopSuccess(response)),
+        catchError(error => handleException(error))
+      );
+    })
+  );
+
 export const addQueryEpic = action$ =>
   action$.pipe(
     ofType(ADD_QUERY),
@@ -59,8 +109,8 @@ export const addQueryEpic = action$ =>
 export const updateQueryDataServiceEpic = (action$, store) =>
   action$.pipe(
     ofType(UPDATE_QUERY_DATASERVICE),
-    mergeMap(({ elementId, query: { TargetDataServiceId } }) => {
-      if (!TargetDataServiceId) {
+    mergeMap(({ elementId, query: { TargetDataViewId } }) => {
+      if (!TargetDataViewId) {
         return [openQueryConfig(elementId)];
       }
 
@@ -86,7 +136,17 @@ export const updateQueryDataServiceEpic = (action$, store) =>
         QueryGraphId,
         denormalizedGraph
       ).pipe(
-        map(() => queryDescribeRequest()),
+        mergeMap(() =>
+          getGraphObs(
+            TenantId,
+            SessionId,
+            QueryGraphId,
+            graph.NextChangeNumber
+          ).pipe(
+            map(() => queryDescribeRequest()),
+            catchError(error => handleException(error))
+          )
+        ),
         catchError(error => handleException(error))
       );
     })

@@ -6,7 +6,7 @@ import { jsPlumb } from "jsplumb";
 import { CANVAS_DRAGGABLE_CONTAINER_ID } from "workbench/utils";
 import { sessionRequest, addQuery } from "workbench/actions";
 
-import LoaderContainer from "common/LoaderContainer";
+import { LoadingContainer } from "common/loading";
 import WorkbenchToolbar from "workbench/toolBar/WorkbenchToolbar";
 import Workbench from "workbench/Workbench";
 import ConfigSwitchContainer from "workbench/configSwitch/ConfigSwitchContainer";
@@ -58,9 +58,8 @@ class WorkbenchContainer extends Component {
     const { isLoading, dispatchAddQuery, session, graph } = this.props;
     const { jsPlumbCanvasInstance, jsPlumbInstance } = this.state;
 
-    console.log(this.props);
     return (
-      <LoaderContainer isLoading={isLoading || !jsPlumbCanvasInstance}>
+      <LoadingContainer isLoading={isLoading || !jsPlumbCanvasInstance}>
         <WorkbenchToolbar />
         <ConfigSwitchContainer />
         <Workbench
@@ -71,7 +70,7 @@ class WorkbenchContainer extends Component {
           session={session}
           graph={graph}
         />
-      </LoaderContainer>
+      </LoadingContainer>
     );
   }
 }

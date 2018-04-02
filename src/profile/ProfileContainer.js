@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { profileRequest } from "profile/actions";
 
-import LoaderContainer from "common/LoaderContainer";
+import { LoadingContainer } from "common/loading";
 import Profile from "profile/Profile";
 
 class ProfileContainer extends Component {
@@ -20,9 +20,9 @@ class ProfileContainer extends Component {
 
   render() {
     return (
-      <LoaderContainer isLoading={this.props.isLoading}>
+      <LoadingContainer isLoading={this.props.isLoading}>
         <Profile {...this.props} />
-      </LoaderContainer>
+      </LoadingContainer>
     );
   }
 }

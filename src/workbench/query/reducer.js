@@ -12,7 +12,8 @@ const initialState = {
   isLoading: true,
   elementId: 0,
   dataServices: [],
-  availableColumns: []
+  availableColumns: [],
+  availableFilters: []
 };
 
 function queryConfig(state = { ...initialState }, action) {
@@ -46,10 +47,15 @@ function queryConfig(state = { ...initialState }, action) {
       return {
         ...state,
         isLoading: false,
-        availableColumns: action.availableColumns
+        availableColumns: action.availableColumns,
+        availableFilters: action.availableFilters
       };
 
     case DATASERVICES_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
     default:
       return state;
   }

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { qesEnabledRequest } from "app/actions";
 
-import LoaderContainer from "common/LoaderContainer";
+import { LoadingContainer } from "common/loading";
 import App from "app/App";
 
 class AppContainer extends Component {
@@ -29,13 +29,13 @@ class AppContainer extends Component {
 
   render() {
     return (
-      <LoaderContainer isLoading={this.props.isLoading}>
+      <LoadingContainer isLoading={this.props.isLoading}>
         <App
           {...this.props}
           open={this.state.open}
           handleDrawerOpen={this.handleDrawerOpen}
         />
-      </LoaderContainer>
+      </LoadingContainer>
     );
   }
 }

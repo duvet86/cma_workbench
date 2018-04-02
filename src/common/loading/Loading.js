@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
 
-import BaseLoader from "common/BaseLoader";
+import BaseLoading from "common/loading/BaseLoading";
 
 const styles = {
-  loaderContainer: {
+  loadingContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -15,7 +15,7 @@ const styles = {
   }
 };
 
-const Loader = ({ classes, error, isLoading, pastDelay, children }) => {
+const Loading = ({ classes, error, isLoading, pastDelay, children }) => {
   if (error) {
     // When the loader has errored.
     return <div>{JSON.stringify(error)}</div>;
@@ -24,8 +24,8 @@ const Loader = ({ classes, error, isLoading, pastDelay, children }) => {
     if (pastDelay) {
       // When the loader has taken longer than the delay show a spinner.
       return (
-        <div className={classes.loaderContainer}>
-          <BaseLoader />
+        <div className={classes.loadingContainer}>
+          <BaseLoading />
         </div>
       );
     } else {
@@ -37,7 +37,7 @@ const Loader = ({ classes, error, isLoading, pastDelay, children }) => {
   return children;
 };
 
-Loader.propTypes = {
+Loading.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.any.isRequired,
   isLoading: PropTypes.bool.isRequired,
@@ -45,4 +45,4 @@ Loader.propTypes = {
   delay: PropTypes.number
 };
 
-export default withStyles(styles)(Loader);
+export default withStyles(styles)(Loading);

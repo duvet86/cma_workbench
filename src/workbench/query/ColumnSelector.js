@@ -28,7 +28,7 @@ const styles = theme => ({
     display: "flex"
   },
   listItemTextPrimary: {
-    marginRight: 15
+    flexBasis: "35%"
   },
   iconColour: {
     fill: "#003b86"

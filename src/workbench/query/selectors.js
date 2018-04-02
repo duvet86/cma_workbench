@@ -2,12 +2,27 @@ import { createSelector } from "reselect";
 
 const dataServicesSelector = state => state.queryConfigReducer.dataServices;
 
+// export const getDataServices = createSelector(
+//   dataServicesSelector,
+//   dataServices =>
+//     dataServices
+//       .map(({ DataServiceId, Label }) => ({
+//         value: DataServiceId,
+//         label: Label
+//       }))
+//       .sort((a, b) => {
+//         if (a.label < b.label) return -1;
+//         if (a.label > b.label) return 1;
+//         return 0;
+//       })
+// );
+
 export const getDataServices = createSelector(
   dataServicesSelector,
   dataServices =>
     dataServices
-      .map(({ DataServiceId, Label }) => ({
-        value: DataServiceId,
+      .map(({ ItemId, Label }) => ({
+        value: ItemId,
         label: Label
       }))
       .sort((a, b) => {
@@ -51,10 +66,18 @@ export const getCurrentStep = createSelector(
     if (selectedQuery.Columns.length > 0) {
       return 2;
     }
-    if (selectedQuery.TargetDataServiceId) {
+    if (selectedQuery.TargetDataViewId) {
       return 1;
     }
 
     return 0;
   }
+);
+
+const availableFiltersSelector = state => state.sessionReducer.availableFilters;
+
+export const getConstraintTargets = createSelector(
+  availableColumnsSelector,
+  availableFiltersSelector,
+  (columns, filters) => [].concat(columns, filters)
 );
