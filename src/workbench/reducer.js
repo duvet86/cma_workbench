@@ -1,6 +1,6 @@
 import update from "immutability-helper";
 
-import { QUERY_DESCRIBE_SUCCESS } from "workbench/query/actions";
+//import { QUERY_DESCRIBE_SUCCESS } from "workbench/query/actions";
 import {
   SESSION_REQUEST,
   SESSION_SUCCESS,
@@ -54,7 +54,11 @@ function session(
       return update(state, {
         queries: {
           [action.elementId]: {
-            $merge: { ...action.query }
+            $merge: {
+              ...action.query,
+              Columns: [],
+              Constraints: []
+            }
           }
         }
       });
@@ -82,15 +86,15 @@ function session(
         }
       });
 
-    case QUERY_DESCRIBE_SUCCESS:
-      return update(state, {
-        queries: {
-          [action.elementId]: {
-            Columns: { $set: [] },
-            Constraints: { $set: [] }
-          }
-        }
-      });
+    // case QUERY_DESCRIBE_SUCCESS:
+    //   return update(state, {
+    //     queries: {
+    //       [action.elementId]: {
+    //         Columns: { $set: [] },
+    //         Constraints: { $set: [] }
+    //       }
+    //     }
+    //   });
 
     case ADD_QUERY_CONSTRAINT:
       return update(state, {

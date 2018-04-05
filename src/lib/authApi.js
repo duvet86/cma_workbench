@@ -9,6 +9,8 @@ import constants from "lib/constants";
 import { clearToken, getToken } from "lib/sessionStorageApi";
 import { getAsync } from "lib/http";
 
+import { logout } from "login/actions";
+
 export const getTokenAsync = (
   userName: string,
   password: string
@@ -21,7 +23,7 @@ export const getTokenAsync = (
 
 export function deleteTokenAndRedirectLogin() {
   clearToken();
-  return of(push("/login"));
+  return [logout(), of(push("/login"))];
 }
 
 export function isUserAuthenticated() {

@@ -1,4 +1,5 @@
 import { elementType } from "sideBar/operators/operatorsData";
+import { LOGOUT } from "login/actions";
 import {
   OPEN_QUERY_CONFIG,
   CLOSE_QUERY_CONFIG,
@@ -17,6 +18,7 @@ function configSwitch(
         elementType: elementType.QUERY
       };
 
+    case LOGOUT:
     case QUERY_CONFIG_ERROR:
     case CLOSE_QUERY_CONFIG:
       return {

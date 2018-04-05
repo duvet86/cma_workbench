@@ -17,7 +17,7 @@ const styles = theme => ({
   },
   form: {
     position: "relative",
-    padding: 15,
+    padding: theme.spacing.unit,
     overflow: "auto",
     marginBottom: 48
   },

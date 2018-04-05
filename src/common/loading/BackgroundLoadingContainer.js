@@ -13,6 +13,7 @@ class BackgroundLoadingContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     return <BackgroundLoading {...this.props} />;
   }
 }

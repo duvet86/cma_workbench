@@ -30,9 +30,15 @@ const styles = theme => ({
   },
   titleContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    position: "fixed",
+    width: "99%",
+    backgroundColor: "white",
+    zIndex: 2,
+    borderBottom: "1px solid #eee"
   },
   stepper: {
+    marginTop: 50,
     padding: theme.spacing.unit
   }
 });

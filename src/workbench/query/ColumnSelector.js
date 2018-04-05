@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
@@ -9,17 +9,19 @@ import Typography from "material-ui/Typography";
 import Paper from "material-ui/Paper";
 import List, { ListItem, ListItemText, ListItemIcon } from "material-ui/List";
 import Divider from "material-ui/Divider";
+import IconButton from "material-ui/IconButton";
+import Input, { InputLabel, InputAdornment } from "material-ui/Input";
+import { FormControl } from "material-ui/Form";
 
+import ClearIcon from "material-ui-icons/Clear";
 import SettingsIcon from "material-ui-icons/Settings";
 
 const styles = theme => ({
-  columnsTitle: {
-    paddingTop: 15,
-    paddingLeft: 15,
-    paddingBottom: 5
+  paper: {
+    padding: 10
   },
   list: {
-    height: 246
+    height: 295
   },
   listItem: {
     paddingLeft: 15
@@ -73,27 +75,81 @@ const rowRenderer = (classes, columns, onColumnClick) => ({
   );
 };
 
-const ColumnSelector = ({ classes, label, columns, onColumnClick }) => (
-  <Paper>
-    <Typography variant="subheading" className={classes.columnsTitle}>
-      {`${label} (${columns.length})`}
-    </Typography>
-    <List className={classes.list} component="div" disablePadding>
-      <Divider />
-      <AutoSizer>
-        {({ height, width }) => (
-          <VirtualizedList
-            width={width}
-            height={height}
-            rowCount={columns.length}
-            rowHeight={41}
-            rowRenderer={rowRenderer(classes, columns, onColumnClick)}
-          />
-        )}
-      </AutoSizer>
-    </List>
-  </Paper>
-);
+class ColumnSelector extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchString: "",
+      searchableColumns: props.columns
+    };
+  }
+
+  handleClickClearIcon = () => {
+    this.setState({
+      searchString: "",
+      searchableColumns: this.props.columns
+    });
+  };
+
+  handleChange = event => {
+    this.setState({
+      searchString: event.target.value,
+      searchableColumns: event.target.value
+        ? this.props.columns.filter(({ Label }) =>
+            Label.toLowerCase().includes(event.target.value.toLowerCase())
+          )
+        : this.props.columns
+    });
+  };
+
+  render() {
+    const { classes, label, columns, onColumnClick } = this.props;
+    const { searchableColumns } = this.state;
+
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="subheading">
+          {`${label} (${columns.length})`}
+        </Typography>
+        <List className={classes.list} component="div" disablePadding>
+          <FormControl fullWidth>
+            <InputLabel>Search</InputLabel>
+            <Input
+              value={this.state.searchString}
+              onChange={this.handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Clear"
+                    onClick={this.handleClickClearIcon}
+                    onMouseDown={this.handleClickClearIcon}
+                  >
+                    {this.state.searchString ? <ClearIcon /> : null}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <AutoSizer disableHeight>
+            {({ width }) => (
+              <VirtualizedList
+                width={width}
+                height={245}
+                rowCount={searchableColumns.length}
+                rowHeight={41}
+                rowRenderer={rowRenderer(
+                  classes,
+                  searchableColumns,
+                  onColumnClick
+                )}
+              />
+            )}
+          </AutoSizer>
+        </List>
+      </Paper>
+    );
+  }
+}
 
 ColumnSelector.propTypes = {
   classes: PropTypes.object.isRequired,

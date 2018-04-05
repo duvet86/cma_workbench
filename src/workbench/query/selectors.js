@@ -74,7 +74,8 @@ export const getCurrentStep = createSelector(
   }
 );
 
-const availableFiltersSelector = state => state.sessionReducer.availableFilters;
+const availableFiltersSelector = state =>
+  state.queryConfigReducer.availableFilters;
 
 export const getConstraintTargets = createSelector(
   availableColumnsSelector,

@@ -11,3 +11,7 @@ export const loginRequest = (username, password) => ({
 export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
 
 export const loginError = error => ({ type: LOGIN_ERROR, error });
+
+export const LOGOUT = "LOGOUT";
+
+export const logout = () => ({ type: LOGOUT });
