@@ -1,10 +1,17 @@
+// @flow
+
 import { TRIGGER_ERROR } from "errorPage/actions";
+import type { ErrorAction } from "errorPage/actions";
+
+type State = {
+  +error?: mixed
+};
 
 function errorPage(
-  state = {
+  state: State = {
     error: undefined
   },
-  action
+  action: ErrorAction
 ) {
   switch (action.type) {
     case TRIGGER_ERROR:

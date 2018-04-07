@@ -38,7 +38,7 @@ const getHeader = (): SectionHeader => {
   };
 };
 
-const handleErrors = async (response: Response): Promise<any> => {
+const handleErrors = async (response: Response): Promise<mixed> => {
   if (!response.ok) {
     return response.text().then(error => {
       // eslint-disable-next-line no-throw-literal
@@ -49,7 +49,7 @@ const handleErrors = async (response: Response): Promise<any> => {
   return response.text().then(res => (res && JSON.parse(res)) || {});
 };
 
-export const getAsync = (url: string, headers: Header): Promise<any> =>
+export const getAsync = (url: string, headers: Header): Promise<mixed> =>
   fetch(url, {
     method: "GET",
     headers: headers
@@ -57,17 +57,17 @@ export const getAsync = (url: string, headers: Header): Promise<any> =>
 
 export const postAsync = (
   url: string,
-  data: any,
+  data: mixed,
   headers: Header
-): Promise<any> =>
+): Promise<mixed> =>
   fetch(url, {
     method: "POST",
     headers: headers,
     body: JSON.stringify(data)
   }).then(response => handleErrors(response));
 
-export const getWithJwtAsync = (url: string): Promise<any> =>
+export const getWithJwtAsync = (url: string): Promise<mixed> =>
   getAsync(url, getHeader());
 
-export const postWithJwtAsync = (url: string, data: any): Promise<any> =>
+export const postWithJwtAsync = (url: string, data: mixed): Promise<mixed> =>
   postAsync(url, data, getHeader());

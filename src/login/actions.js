@@ -1,8 +1,24 @@
+// @flow
+
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 
-export const loginRequest = (username, password) => ({
+type LoginRequest = {
+  type: string,
+  username: string,
+  password: string
+};
+
+type LoginError = {
+  type: string,
+  error: string
+};
+
+export const loginRequest = (
+  username: string,
+  password: string
+): LoginRequest => ({
   type: LOGIN_REQUEST,
   username,
   password
@@ -10,7 +26,10 @@ export const loginRequest = (username, password) => ({
 
 export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
 
-export const loginError = error => ({ type: LOGIN_ERROR, error });
+export const loginError = (error: string): LoginError => ({
+  type: LOGIN_ERROR,
+  error
+});
 
 export const LOGOUT = "LOGOUT";
 

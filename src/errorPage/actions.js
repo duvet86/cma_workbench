@@ -1,3 +1,13 @@
+// @flow
+
 export const TRIGGER_ERROR = "TRIGGER_ERROR";
 
-export const triggerError = error => ({ type: TRIGGER_ERROR, error });
+export type ErrorAction = {
+  type: "TRIGGER_ERROR",
+  error: mixed
+};
+
+export const triggerError = (error: mixed): ErrorAction => ({
+  type: TRIGGER_ERROR,
+  error
+});

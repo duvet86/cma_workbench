@@ -9,7 +9,7 @@ export const storeToken = (token: string): void =>
     constants.TOKEN_KEY,
     JSON.stringify({
       token,
-      createdAt: Date.now()
+      createdAt: Math.floor(Date.now() / 1000)
     })
   );
 
