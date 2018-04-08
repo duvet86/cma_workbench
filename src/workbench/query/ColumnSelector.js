@@ -84,6 +84,15 @@ class ColumnSelector extends Component {
     };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.columns.length !== prevState.searchableColumns.length) {
+      return {
+        searchableColumns: nextProps.columns
+      };
+    }
+    return null;
+  }
+
   handleClickClearIcon = () => {
     this.setState({
       searchString: "",
@@ -117,6 +126,7 @@ class ColumnSelector extends Component {
             <Input
               value={this.state.searchString}
               onChange={this.handleChange}
+              disabled={searchableColumns.length === 0}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton

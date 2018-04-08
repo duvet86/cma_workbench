@@ -13,19 +13,13 @@ import {
   UPDATE_QUERY_DATASERVICE,
   sessionSuccess,
   graphPushSuccess,
-  graphPopSuccess,
   graphSaveChangesSuccess,
   graphSuccess
 } from "workbench/actions";
-import {
-  CLOSE_QUERY_CONFIG,
-  queryDescribeRequest,
-  openQueryConfig
-} from "workbench/query/actions";
+import { openQueryConfig, queryDescribeRequest } from "workbench/query/actions";
 import {
   getSessionInfoObs,
   pushGraphChangesObs,
-  popGraphChangesObs,
   saveGraphObs,
   getGraphObs
 } from "workbench/api";
@@ -85,20 +79,20 @@ export const pushGraphChangesEpic = (action$, store) =>
     })
   );
 
-export const popGraphChangesEpic = (action$, store) =>
-  action$.pipe(
-    ofType(CLOSE_QUERY_CONFIG),
-    mergeMap(() => {
-      const {
-        sessionReducer: { session: { TenantId, SessionId, QueryGraphId } }
-      } = store.getState();
+// export const popGraphChangesEpic = (action$, store) =>
+//   action$.pipe(
+//     ofType(CLOSE_QUERY_CONFIG),
+//     mergeMap(() => {
+//       const {
+//         sessionReducer: { session: { TenantId, SessionId, QueryGraphId } }
+//       } = store.getState();
 
-      return popGraphChangesObs(TenantId, SessionId, QueryGraphId).pipe(
-        map(response => graphPopSuccess(response)),
-        catchError(error => handleException(error))
-      );
-    })
-  );
+//       return popGraphChangesObs(TenantId, SessionId, QueryGraphId).pipe(
+//         map(response => graphPopSuccess(response)),
+//         catchError(error => handleException(error))
+//       );
+//     })
+//   );
 
 export const addQueryEpic = action$ =>
   action$.pipe(

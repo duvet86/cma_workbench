@@ -39,11 +39,14 @@ const styles = theme => ({
     zIndex: 2,
     borderBottom: "1px solid #eee"
   },
+  title: {
+    marginRight: 15
+  },
   stepper: {
     padding: 0,
-    width: "100%"
+    width: "86%"
   },
-  stpperContentHelper: {
+  stepTitle: {
     marginTop: 70
   },
   paper: {
@@ -82,7 +85,7 @@ function getStepHelperText(step, classes) {
   }
 
   return (
-    <Grid item xs={12} className={classes.stpperContentHelper}>
+    <Grid item xs={12}>
       <Card className={classes.card}>
         <CardHeader
           avatar={
@@ -168,7 +171,9 @@ const QueryConfig = ({
         <Avatar className={classes.avatar}>
           {createElement(operatorsExtraInfo[1].IconComponent)}
         </Avatar>
-        <Typography variant="title">Configure Query</Typography>
+        <Typography variant="title" className={classes.title}>
+          Configure Query
+        </Typography>
         <Stepper
           classes={{ root: classes.stepper }}
           nonLinear
@@ -188,6 +193,9 @@ const QueryConfig = ({
             );
           })}
         </Stepper>
+      </Grid>
+      <Grid item xs={12} className={classes.stepTitle}>
+        <Typography variant="headline">{stepLabels[currentStep]}</Typography>
       </Grid>
       {getStepHelperText(currentStep, classes)}
       <Grid item xs={12}>

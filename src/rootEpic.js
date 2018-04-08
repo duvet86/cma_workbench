@@ -11,7 +11,6 @@ import {
   sessionEpic,
   saveGraphEpic,
   pushGraphChangesEpic,
-  popGraphChangesEpic,
   addQueryEpic,
   updateQueryDataServiceEpic
 } from "workbench/epic";
@@ -28,7 +27,6 @@ const epics = [
   sessionEpic,
   saveGraphEpic,
   pushGraphChangesEpic,
-  popGraphChangesEpic,
   addQueryEpic,
   dataServicesEpic,
   updateQueryDataServiceEpic,
