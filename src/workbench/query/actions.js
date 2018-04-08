@@ -12,8 +12,15 @@ export const openQueryConfig = elementId => ({
   elementId
 });
 
-export const closeQueryConfig = elementType => ({
+export const closeQueryConfig = () => ({
   type: CLOSE_QUERY_CONFIG
+});
+
+export const GO_TO_STEP = "GO_TO_STEP";
+
+export const goToStep = step => ({
+  type: GO_TO_STEP,
+  step
 });
 
 export const DATASERVICES_REQUEST = "DATASERVICES_REQUEST";

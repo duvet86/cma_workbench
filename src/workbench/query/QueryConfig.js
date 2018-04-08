@@ -6,19 +6,21 @@ import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
 
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
-import Stepper, { Step, StepLabel, StepContent } from "material-ui/Stepper";
+import Stepper, { Step, StepButton } from "material-ui/Stepper";
 import Avatar from "material-ui/Avatar";
-
-import { BackgroundLoadingContainer } from "common/loading";
-import SelectInput from "common/select/SelectInput";
-import ColumnSelector from "workbench/query/ColumnSelector";
-
 import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary
 } from "material-ui/ExpansionPanel";
+import Card, { CardHeader } from "material-ui/Card";
+import Button from "material-ui/Button";
 
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
+import InfoIcon from "material-ui-icons/InfoOutline";
+
+import { BackgroundLoadingContainer } from "common/loading";
+import SelectInput from "common/select/SelectInput";
+import ColumnSelector from "workbench/query/ColumnSelector";
 
 const styles = theme => ({
   formControl: {
@@ -38,12 +40,63 @@ const styles = theme => ({
     borderBottom: "1px solid #eee"
   },
   stepper: {
-    marginTop: 50,
-    padding: theme.spacing.unit
+    padding: 0,
+    width: "100%"
+  },
+  stpperContentHelper: {
+    marginTop: 70
+  },
+  paper: {
+    display: "flex",
+    alignItems: "center",
+    padding: 10
+  },
+  actionButtons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    margin: theme.spacing.unit
   }
 });
 
-const steps = ["Source", "Columns", "Constraints", "Preview"];
+const stepLabels = ["Source", "Columns", "Constraints", "Summary"];
+
+function getStepHelperText(step, classes) {
+  let title = "";
+  let text = "";
+
+  switch (step) {
+    case 0:
+      title = "Query source";
+      text =
+        "Select from the drop down the source of your query. It can be a data source or an existing query. Once you are done go to the next step clicking on the next button.";
+      break;
+    case 1:
+      title = "Query columns";
+      text =
+        "Each source presents a list of available columns. You can search for a particular column using the search input. Click on a column on the available list to move it to the selected list. To remove a column from the selected list click on it again.";
+      break;
+    default:
+      return null;
+  }
+
+  return (
+    <Grid item xs={12} className={classes.stpperContentHelper}>
+      <Card className={classes.card}>
+        <CardHeader
+          avatar={
+            <Avatar>
+              <InfoIcon />
+            </Avatar>
+          }
+          title={title}
+          subheader={text}
+        />
+      </Card>
+    </Grid>
+  );
+}
 
 function getStepContent(step, classes, props) {
   switch (step) {
@@ -52,8 +105,7 @@ function getStepContent(step, classes, props) {
         <Grid item xs={12}>
           <SelectInput
             noClear
-            inputLabel="Select a source"
-            helperText="What is the source of this query?"
+            inputLabel="Source"
             value={props.elementConfig.TargetDataViewId}
             options={props.dataServices}
             handleChange={props.handleChangeDataService}
@@ -97,8 +149,18 @@ function getStepContent(step, classes, props) {
   }
 }
 
-const QueryConfig = ({ classes, isLoading, step, ...props }) => {
-  const renderStepperContent = props => props.children;
+const QueryConfig = ({
+  classes,
+  isLoading,
+  currentStep,
+  completedSteps,
+  dispatchCloseQueryConfig,
+  dispatchGoToStep,
+  ...props
+}) => {
+  const handleStep = stepIndex => () => {
+    return dispatchGoToStep(stepIndex);
+  };
 
   return (
     <BackgroundLoadingContainer isLoading={isLoading}>
@@ -107,22 +169,56 @@ const QueryConfig = ({ classes, isLoading, step, ...props }) => {
           {createElement(operatorsExtraInfo[1].IconComponent)}
         </Avatar>
         <Typography variant="title">Configure Query</Typography>
-      </Grid>
-      <Grid item xs={12}>
         <Stepper
           classes={{ root: classes.stepper }}
-          activeStep={step}
-          orientation="vertical"
+          nonLinear
+          activeStep={currentStep}
         >
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-              <StepContent transition={renderStepperContent}>
-                {getStepContent(index, classes, props)}
-              </StepContent>
-            </Step>
-          ))}
+          {stepLabels.map((label, index) => {
+            return (
+              <Step key={label}>
+                <StepButton
+                  onClick={handleStep(index)}
+                  disabled={completedSteps[index] == null}
+                  completed={completedSteps[index]}
+                >
+                  {label}
+                </StepButton>
+              </Step>
+            );
+          })}
         </Stepper>
+      </Grid>
+      {getStepHelperText(currentStep, classes)}
+      <Grid item xs={12}>
+        {getStepContent(currentStep, classes, props)}
+      </Grid>
+      <Grid item xs={12} className={classes.actionButtons}>
+        <Button
+          onClick={dispatchCloseQueryConfig}
+          variant="raised"
+          className={classes.button}
+        >
+          Close
+        </Button>
+        <Button
+          disabled={currentStep === 0}
+          onClick={handleStep(currentStep - 1)}
+          variant="raised"
+          color="secondary"
+          className={classes.button}
+        >
+          Back
+        </Button>
+        <Button
+          disabled={!completedSteps[currentStep]}
+          onClick={handleStep(currentStep + 1)}
+          variant="raised"
+          color="secondary"
+          className={classes.button}
+        >
+          Next
+        </Button>
       </Grid>
     </BackgroundLoadingContainer>
   );
@@ -136,6 +232,7 @@ QueryConfig.propTypes = {
   availableColumns: PropTypes.array.isRequired,
   selectedColumns: PropTypes.array.isRequired,
   contraintTargets: PropTypes.array.isRequired,
+  dispatchGoToStep: PropTypes.func.isRequired,
   handleChangeDataService: PropTypes.func.isRequired,
   handleAddQueryColumn: PropTypes.func.isRequired,
   handleRemoveQueryColumn: PropTypes.func.isRequired

@@ -2,6 +2,7 @@ import {
   QUERY_CONFIG_ERROR,
   OPEN_QUERY_CONFIG,
   CLOSE_QUERY_CONFIG,
+  GO_TO_STEP,
   DATASERVICES_REQUEST,
   DATASERVICES_SUCCESS,
   QUERY_DESCRIBE_REQUEST,
@@ -9,6 +10,7 @@ import {
 } from "workbench/query/actions";
 
 const initialState = {
+  currentStep: 0,
   isLoading: true,
   elementId: 0,
   dataServices: [],
@@ -30,6 +32,18 @@ function queryConfig(state = { ...initialState }, action) {
         ...initialState
       };
 
+    case GO_TO_STEP:
+      return {
+        ...state,
+        currentStep: action.step
+      };
+
+    case DATASERVICES_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+
     case DATASERVICES_SUCCESS:
       return {
         ...state,
@@ -49,12 +63,6 @@ function queryConfig(state = { ...initialState }, action) {
         isLoading: false,
         availableColumns: action.availableColumns,
         availableFilters: action.availableFilters
-      };
-
-    case DATASERVICES_REQUEST:
-      return {
-        ...state,
-        isLoading: true
       };
 
     default:

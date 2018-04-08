@@ -9,7 +9,11 @@ import {
   addQueryColumn,
   removeQueryColumn
 } from "workbench/actions";
-import { dataServicesRequest } from "workbench/query/actions";
+import {
+  closeQueryConfig,
+  goToStep,
+  dataServicesRequest
+} from "workbench/query/actions";
 
 import {
   getQuery,
@@ -17,7 +21,7 @@ import {
   getAvailableColumns,
   getQueryColumns,
   getConstraintTargets,
-  getCurrentStep
+  getCompletedSteps
 } from "workbench/query/selectors";
 
 import QueryConfig from "workbench/query/QueryConfig";
@@ -27,6 +31,7 @@ class QueryConfigContainer extends Component {
     elementConfig: PropTypes.object.isRequired,
     dataServices: PropTypes.array.isRequired,
     selectedColumns: PropTypes.array.isRequired,
+    dispatchGoToStep: PropTypes.func.isRequired,
     dispatchDataServicesRequest: PropTypes.func.isRequired,
     dispatchDescribeQuery: PropTypes.func.isRequired,
     dispatchAddQueryColumn: PropTypes.func.isRequired,
@@ -81,12 +86,14 @@ const mapStateToProps = state => ({
   availableColumns: getAvailableColumns(state),
   selectedColumns: getQueryColumns(state),
   contraintTargets: getConstraintTargets(state),
-  step: getCurrentStep(state)
+  completedSteps: getCompletedSteps(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   //dispatchGraphSaveChangesRequest: () => dispatch(graphSaveChangesRequest()),
   //dispatchGraphPushRequest: () => dispatch(graphPushRequest()),
+  dispatchGoToStep: step => dispatch(goToStep(step)),
+  dispatchCloseQueryConfig: () => dispatch(closeQueryConfig()),
   dispatchDataServicesRequest: () => dispatch(dataServicesRequest()),
   dispatchDescribeQuery: (elementId, query) =>
     dispatch(updateQueryDataService(elementId, query)),

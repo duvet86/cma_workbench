@@ -57,20 +57,20 @@ export const getQueryColumns = createSelector(
   (elementId, queries) => queries[elementId].Columns
 );
 
-export const getCurrentStep = createSelector(
+export const getCompletedSteps = createSelector(
   elementIdSelector,
   querySelector,
   (elementId, queries) => {
     const selectedQuery = queries[elementId];
 
     if (selectedQuery.Columns.length > 0) {
-      return 2;
+      return [true, true, false];
     }
     if (selectedQuery.TargetDataViewId) {
-      return 1;
+      return [true, false];
     }
 
-    return 0;
+    return [false];
   }
 );
 
