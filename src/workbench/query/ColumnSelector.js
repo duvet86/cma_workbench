@@ -21,7 +21,7 @@ const styles = theme => ({
     padding: 10
   },
   list: {
-    height: 295
+    height: "100%"
   },
   listItem: {
     paddingLeft: 15

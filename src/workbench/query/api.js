@@ -1,14 +1,12 @@
 import { fromPromise } from "rxjs/observable/fromPromise";
 
-import constants from "lib/constants";
+import { BASE_URL } from "lib/constants";
 import { getWithJwtAsync } from "lib/http";
 
 //http://desktop-ejm4rss/dev/api/qes/systemdataviews/demo
 //http://desktop-ejm4rss/dev/api/qes/demo/dataservices
 export const getDataServicesObs = () =>
-  fromPromise(
-    getWithJwtAsync(`${constants.BASE_URL}/api/qes/systemdataviews/demo`)
-  );
+  fromPromise(getWithJwtAsync(`${BASE_URL}/api/qes/systemdataviews/demo`));
 
 export const getDataServiceDescriptionObs = (
   tenantId,
@@ -18,8 +16,6 @@ export const getDataServiceDescriptionObs = (
 ) =>
   fromPromise(
     getWithJwtAsync(
-      `${
-        constants.BASE_URL
-      }/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/queries/${elementId}/describe`
+      `${BASE_URL}/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/queries/${elementId}/describe`
     )
   );

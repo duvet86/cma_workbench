@@ -4,7 +4,7 @@ import { fromPromise } from "rxjs/observable/fromPromise";
 import { encode } from "base-64";
 import { push } from "react-router-redux";
 
-import constants from "lib/constants";
+import { BASE_URL, TIME_TO_LIVE } from "lib/constants";
 import { clearToken, getToken } from "lib/sessionStorageApi";
 import { getAsync } from "lib/http";
 
@@ -15,7 +15,7 @@ export const getTokenAsync = (
   password: string
 ): Promise<string> =>
   fromPromise(
-    getAsync(`${constants.BASE_URL}/api/token`, {
+    getAsync(`${BASE_URL}/api/token`, {
       Authorization: `Basic ${encode(userName + ":" + password)}`
     })
   );
@@ -33,7 +33,7 @@ export function isUserAuthenticated() {
   if (jwtToken) {
     // compare the total seconds of the created
     // time of the token vs the ttl (time to live) seconds
-    const expiry = jwtToken.createdAt + constants.TIME_TO_LIVE;
+    const expiry = jwtToken.createdAt + TIME_TO_LIVE;
 
     // if the token has expired return false
     if (jwtToken.createdAt > expiry) {

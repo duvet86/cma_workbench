@@ -38,7 +38,7 @@ const ConfigSwitch = ({ classes, elementType, isDrawerOpen }) => (
   <Drawer classes={{ paper: classes.paper }} anchor="right" open={isDrawerOpen}>
     {isDrawerOpen && (
       <form className={classes.form} noValidate autoComplete="off">
-        <Grid container spacing={16}>
+        <Grid container spacing={16} alignContent="stretch">
           {drawerByType(elementType)}
         </Grid>
       </form>

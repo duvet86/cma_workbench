@@ -1,8 +1,7 @@
-import React, { createElement, Fragment } from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
-import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
 
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
@@ -26,28 +25,27 @@ const styles = theme => ({
   formControl: {
     width: "100%"
   },
-  avatar: {
-    backgroundColor: operatorsExtraInfo[1].backgroundColor,
-    marginRight: 10
-  },
-  titleContainer: {
-    display: "flex",
-    alignItems: "center",
+  gridTitle: {
     position: "fixed",
     width: "99%",
     backgroundColor: "white",
     zIndex: 2,
     borderBottom: "1px solid #eee"
   },
+  titleContainer: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: 15
+  },
   title: {
     marginRight: 15
   },
   stepper: {
     padding: 0,
-    width: "86%"
+    width: "100%"
   },
   stepTitle: {
-    marginTop: 70
+    marginTop: 85
   },
   paper: {
     display: "flex",
@@ -56,7 +54,10 @@ const styles = theme => ({
   },
   actionButtons: {
     display: "flex",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    position: "fixed",
+    bottom: 48,
+    right: 0
   },
   button: {
     margin: theme.spacing.unit
@@ -167,13 +168,12 @@ const QueryConfig = ({
 
   return (
     <BackgroundLoadingContainer isLoading={isLoading}>
-      <Grid item xs={12} className={classes.titleContainer}>
-        <Avatar className={classes.avatar}>
-          {createElement(operatorsExtraInfo[1].IconComponent)}
-        </Avatar>
-        <Typography variant="title" className={classes.title}>
-          Configure Query
-        </Typography>
+      <Grid item xs={12} className={classes.gridTitle}>
+        <div className={classes.titleContainer}>
+          <Typography variant="title" className={classes.title}>
+            Configure Query
+          </Typography>
+        </div>
         <Stepper
           classes={{ root: classes.stepper }}
           nonLinear

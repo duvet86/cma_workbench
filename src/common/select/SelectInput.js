@@ -17,6 +17,7 @@ import StorageIcon from "material-ui-icons/Storage";
 import VirtualizedSelect from "react-virtualized-select";
 
 const ITEM_HEIGHT = 48;
+const HEIGHT_MULTIPLIER = 8;
 
 const styles = theme => ({
   root: {
@@ -90,13 +91,13 @@ const styles = theme => ({
       top: `calc(100% + ${theme.spacing.unit}px)`,
       width: "100%",
       zIndex: 2,
-      maxHeight: ITEM_HEIGHT * 4.5
+      maxHeight: ITEM_HEIGHT * HEIGHT_MULTIPLIER
     },
     ".Select.is-focused:not(.is-open) > .Select-control": {
       boxShadow: "none"
     },
     ".Select-menu": {
-      maxHeight: ITEM_HEIGHT * 4.5,
+      maxHeight: ITEM_HEIGHT * HEIGHT_MULTIPLIER,
       overflowY: "auto"
     },
     ".Select-menu div": {
@@ -187,6 +188,7 @@ SelectedValueComponent.propTypes = {
 
 const SelectWrapped = ({ classes, noClear, ...rest }) => (
   <VirtualizedSelect
+    maxHeight={ITEM_HEIGHT * HEIGHT_MULTIPLIER}
     optionRenderer={OptionRenderer(classes)}
     noResultsText={<Typography>{"No results found"}</Typography>}
     arrowRenderer={ArrowRenderer}
