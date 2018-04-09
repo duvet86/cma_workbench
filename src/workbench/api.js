@@ -1,10 +1,12 @@
 import { fromPromise } from "rxjs/observable/fromPromise";
+
+import constants from "lib/constants";
 import { postWithJwtAsync, getWithJwtAsync } from "lib/http";
 
 export const getSessionInfoObs = dataViewId =>
   fromPromise(
     postWithJwtAsync(
-      `http://desktop-ejm4rss/dev/api/qes/demo/sessions${
+      `${constants.BASE_URL}/api/qes/demo/sessions${
         dataViewId ? `?dataViewId=${dataViewId}` : ""
       }`
     )
@@ -19,7 +21,9 @@ export const saveGraphObs = (
 ) =>
   fromPromise(
     postWithJwtAsync(
-      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?applyOnly=${isApplyOnly}`,
+      `${
+        constants.BASE_URL
+      }/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?applyOnly=${isApplyOnly}`,
       graphData
     )
   );
@@ -32,20 +36,26 @@ export const getGraphObs = (
 ) =>
   fromPromise(
     getWithJwtAsync(
-      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?nextChangeNumber=${nextChangeNumber}`
+      `${
+        constants.BASE_URL
+      }/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?nextChangeNumber=${nextChangeNumber}`
     )
   );
 
 export const pushGraphChangesObs = (tenantId, sessionId, queryGraphId) =>
   fromPromise(
     postWithJwtAsync(
-      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/push`
+      `${
+        constants.BASE_URL
+      }/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/push`
     )
   );
 
 export const popGraphChangesObs = (tenantId, sessionId, queryGraphId) =>
   fromPromise(
     postWithJwtAsync(
-      `http://desktop-ejm4rss/dev/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/pop`
+      `${
+        constants.BASE_URL
+      }/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/pop`
     )
   );

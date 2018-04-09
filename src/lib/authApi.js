@@ -15,7 +15,7 @@ export const getTokenAsync = (
   password: string
 ): Promise<string> =>
   fromPromise(
-    getAsync("http://desktop-ejm4rss/dev/api/token", {
+    getAsync(`${constants.BASE_URL}/api/token`, {
       Authorization: `Basic ${encode(userName + ":" + password)}`
     })
   );

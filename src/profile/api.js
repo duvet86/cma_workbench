@@ -1,8 +1,9 @@
 import { fromPromise } from "rxjs/observable/fromPromise";
 
+import constants from "lib/constants";
 import { getWithJwtAsync } from "lib/http";
 
 export const getUserInfoAsync = () =>
   fromPromise(
-    getWithJwtAsync("http://desktop-ejm4rss/dev/api/platform/myprofile")
+    getWithJwtAsync(`${constants.BASE_URL}/api/platform/myprofile`)
   );
