@@ -1,3 +1,4 @@
+import { UPDATE_QUERY_DATASERVICE } from "workbench/actions";
 import {
   QUERY_CONFIG_ERROR,
   OPEN_QUERY_CONFIG,
@@ -5,7 +6,6 @@ import {
   GO_TO_STEP,
   DATASERVICES_REQUEST,
   DATASERVICES_SUCCESS,
-  QUERY_DESCRIBE_REQUEST,
   QUERY_DESCRIBE_SUCCESS
 } from "workbench/query/actions";
 
@@ -51,7 +51,8 @@ function queryConfig(state = { ...initialState }, action) {
         dataServices: action.dataServices
       };
 
-    case QUERY_DESCRIBE_REQUEST:
+    // It throws QUERY_DESCRIBE_REQUEST.
+    case UPDATE_QUERY_DATASERVICE:
       return {
         ...state,
         isLoading: true
