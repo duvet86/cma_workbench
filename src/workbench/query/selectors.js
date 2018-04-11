@@ -2,21 +2,6 @@ import { createSelector } from "reselect";
 
 const dataServicesSelector = state => state.queryConfigReducer.dataServices;
 
-// export const getDataServices = createSelector(
-//   dataServicesSelector,
-//   dataServices =>
-//     dataServices
-//       .map(({ DataServiceId, Label }) => ({
-//         value: DataServiceId,
-//         label: Label
-//       }))
-//       .sort((a, b) => {
-//         if (a.label < b.label) return -1;
-//         if (a.label > b.label) return 1;
-//         return 0;
-//       })
-// );
-
 export const getDataServices = createSelector(
   dataServicesSelector,
   dataServices =>

@@ -31,6 +31,7 @@ class QueryConfigContainer extends Component {
     elementConfig: PropTypes.object.isRequired,
     dataServices: PropTypes.array.isRequired,
     selectedColumns: PropTypes.array.isRequired,
+    contraintTargets: PropTypes.array.isRequired,
     dispatchGoToStep: PropTypes.func.isRequired,
     dispatchDataServicesRequest: PropTypes.func.isRequired,
     dispatchDescribeQuery: PropTypes.func.isRequired,

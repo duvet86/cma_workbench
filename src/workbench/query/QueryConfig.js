@@ -16,6 +16,7 @@ import Button from "material-ui/Button";
 
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import InfoIcon from "material-ui-icons/InfoOutline";
+import AddIcon from "material-ui-icons/Add";
 
 import { BackgroundLoadingContainer } from "common/loading";
 import SelectInput from "common/select/SelectInput";
@@ -81,6 +82,11 @@ function getStepHelperText(step, classes) {
       text =
         "Each source presents a list of available columns. You can search for a particular column using the search input. Click on a column on the available list to move it to the selected list. To remove a column from the selected list click on it again.";
       break;
+    case 2:
+      title = "Query Constraints";
+      text =
+        "Narrow down your data with constraints. Constraints are part of the query you are creating and are not visible outside of it.";
+      break;
     default:
       return null;
   }
@@ -136,18 +142,25 @@ function getStepContent(step, classes, props) {
         </Grid>
       );
     case 2:
-      return props.elementConfig.Constraints.map(({ ConstraintId }) => (
-        <Fragment key={ConstraintId}>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>Expansion Panel 1</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Typography>asd</Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        </Fragment>
-      ));
+      return (
+        <div>
+          {props.elementConfig.Constraints.map(({ ConstraintId }) => (
+            <Fragment key={ConstraintId}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>Expansion Panel 1</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                  <Typography>asd</Typography>
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+            </Fragment>
+          ))}
+          <Button mini variant="fab" color="secondary" aria-label="add">
+            <AddIcon />
+          </Button>
+        </div>
+      );
     default:
       return "Unknown step";
   }
@@ -179,23 +192,23 @@ const QueryConfig = ({
           nonLinear
           activeStep={currentStep}
         >
-          {stepLabels.map((label, index) => {
-            return (
-              <Step key={label}>
-                <StepButton
-                  onClick={handleStep(index)}
-                  disabled={completedSteps[index] == null}
-                  completed={completedSteps[index]}
-                >
-                  {label}
-                </StepButton>
-              </Step>
-            );
-          })}
+          {stepLabels.map((label, index) => (
+            <Step key={label}>
+              <StepButton
+                onClick={handleStep(index)}
+                disabled={completedSteps[index] == null}
+                completed={completedSteps[index]}
+              >
+                {label}
+              </StepButton>
+            </Step>
+          ))}
         </Stepper>
       </Grid>
       <Grid item xs={12} className={classes.stepTitle}>
-        <Typography variant="headline">{stepLabels[currentStep]}</Typography>
+        <Typography variant="headline">
+          {`${currentStep + 1} ${stepLabels[currentStep]}`}
+        </Typography>
       </Grid>
       {getStepHelperText(currentStep, classes)}
       <Grid item xs={12}>
