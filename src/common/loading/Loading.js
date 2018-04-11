@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
+import Typography from "material-ui/Typography";
 
 import BaseLoading from "common/loading/BaseLoading";
 
 const styles = {
-  loadingContainer: {
+  container: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -18,13 +19,17 @@ const styles = {
 const Loading = ({ classes, error, isLoading, pastDelay, children }) => {
   if (error) {
     // When the loader has errored.
-    return <div>{JSON.stringify(error)}</div>;
+    return (
+      <div className={classes.container}>
+        <Typography variant="headline">{JSON.stringify(error)}</Typography>
+      </div>
+    );
   }
   if (isLoading) {
     if (pastDelay) {
       // When the loader has taken longer than the delay show a spinner.
       return (
-        <div className={classes.loadingContainer}>
+        <div className={classes.container}>
           <BaseLoading />
         </div>
       );

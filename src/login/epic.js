@@ -1,11 +1,11 @@
 import { ofType } from "redux-observable";
+import { of } from "rxjs/observable/of";
 import { mergeMap, flatMap, catchError } from "rxjs/operators";
 import { push } from "react-router-redux";
 
-import { LOGIN_REQUEST, loginSuccess } from "login/actions";
+import { LOGIN_REQUEST, loginSuccess, loginError } from "login/actions";
 import { getTokenAsync } from "lib/authApi";
 import { storeToken } from "lib/sessionStorageApi";
-import { handleException } from "errorPage/epic";
 
 function storeTokenAndTriggerLogingSucces(token) {
   storeToken(token);
@@ -22,7 +22,7 @@ export const loginEpic = action$ =>
           storeTokenAndTriggerLogingSucces(token),
           push("/")
         ]),
-        catchError(error => handleException(error))
+        catchError(error => of(loginError(error)))
       )
     )
   );

@@ -40,31 +40,51 @@ const getHeader = (): SectionHeader => {
 
 const handleErrors = async (response: Response): Promise<mixed> => {
   if (!response.ok) {
-    return response.text().then(error => {
-      // eslint-disable-next-line no-throw-literal
-      throw { status: response.status, error: error && JSON.parse(error) };
-    });
+    const error = await response.text();
+    // eslint-disable-next-line no-throw-literal
+    throw { status: response.status, error: error && JSON.parse(error) };
   }
 
-  return response.text().then(res => (res && JSON.parse(res)) || {});
+  const res = await response.text();
+
+  try {
+    return (res && JSON.parse(res)) || {};
+  } catch (e) {
+    console.error(e);
+    // eslint-disable-next-line no-throw-literal
+    throw {
+      status: "javascript error",
+      error: e.toString(),
+      tip: "Have you changed the BASE_URL in the constants file?"
+    };
+  }
 };
 
-export const getAsync = (url: string, headers: Header): Promise<mixed> =>
-  fetch(url, {
+export const getAsync = async (
+  url: string,
+  headers: Header
+): Promise<mixed> => {
+  const response = await fetch(url, {
     method: "GET",
     headers: headers
-  }).then(response => handleErrors(response));
+  });
 
-export const postAsync = (
+  return handleErrors(response);
+};
+
+export const postAsync = async (
   url: string,
   data: mixed,
   headers: Header
-): Promise<mixed> =>
-  fetch(url, {
+): Promise<mixed> => {
+  const response = await fetch(url, {
     method: "POST",
     headers: headers,
     body: JSON.stringify(data)
-  }).then(response => handleErrors(response));
+  });
+
+  return handleErrors(response);
+};
 
 export const getWithJwtAsync = (url: string): Promise<mixed> =>
   getAsync(url, getHeader());

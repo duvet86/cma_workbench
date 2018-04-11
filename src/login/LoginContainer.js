@@ -23,9 +23,11 @@ class LoginContainer extends Component {
   }
 
   render() {
+    const { isLoading, error, ...props } = this.props;
+    
     return (
-      <LoadingContainer isLoading={this.props.isLoading}>
-        <Login {...this.props} />
+      <LoadingContainer isLoading={isLoading} error={error}>
+        <Login {...props} />
       </LoadingContainer>
     );
   }

@@ -12,7 +12,7 @@ type LoginRequest = {
 
 type LoginError = {
   type: string,
-  error: string
+  error: mixed
 };
 
 export const loginRequest = (
@@ -26,7 +26,7 @@ export const loginRequest = (
 
 export const loginSuccess = () => ({ type: LOGIN_SUCCESS });
 
-export const loginError = (error: string): LoginError => ({
+export const loginError = (error: mixed): LoginError => ({
   type: LOGIN_ERROR,
   error
 });
