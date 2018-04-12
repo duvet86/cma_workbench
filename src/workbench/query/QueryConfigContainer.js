@@ -70,15 +70,16 @@ class QueryConfigContainer extends Component {
     dispatchRemoveQueryColumn(elementConfig.ElementId, ColumnName);
   };
 
-  handledAddQueryConstraint = () => {
+  handledAddQueryConstraint = selectedConstraintTarget => {
     const { elementConfig, dispatchAddQueryConstraint } = this.props;
     dispatchAddQueryConstraint(
       elementConfig.ElementId,
-      elementConfig.Constraints.length
+      elementConfig.Constraints.length,
+      selectedConstraintTarget
     );
   };
 
-  handleChangeContraintTarget = () => {};
+  handleChangeContraintTarget = selectedConstraintTarget => {};
 
   render() {
     return (

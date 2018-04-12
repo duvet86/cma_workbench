@@ -9,10 +9,12 @@ import Stepper, { Step, StepButton } from "material-ui/Stepper";
 import Avatar from "material-ui/Avatar";
 import ExpansionPanel, {
   ExpansionPanelDetails,
-  ExpansionPanelSummary
+  ExpansionPanelSummary,
+  ExpansionPanelActions
 } from "material-ui/ExpansionPanel";
 import Card, { CardHeader } from "material-ui/Card";
 import Button from "material-ui/Button";
+import Divider from "material-ui/Divider";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import InfoIcon from "@material-ui/icons/InfoOutline";
@@ -63,8 +65,8 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit
   },
-  constraintsContainer: {
-    marginBottom: 15
+  constraintTargetSelect: {
+    marginBottom: 30
   }
 });
 
@@ -145,29 +147,30 @@ function getStepContent(step, classes, props) {
     case 2:
       return (
         <Fragment>
-          <div className={classes.constraintsContainer}>
-            {props.elementConfig.Constraints.map(({ ConstraintId }) => (
-              <Fragment key={ConstraintId}>
-                <ExpansionPanel>
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>Expansion Panel 1</Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <Typography>asd</Typography>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
-              </Fragment>
-            ))}
+          <div className={classes.constraintTargetSelect}>
+            <SelectInput
+              inputLabel="Contraint on..."
+              options={props.contraintTargets}
+              handleChange={props.handledAddQueryConstraint}
+            />
           </div>
-          <Button
-            mini
-            variant="fab"
-            color="secondary"
-            aria-label="add"
-            onClick={props.handledAddQueryConstraint}
-          >
-            <AddIcon />
-          </Button>
+          {props.elementConfig.Constraints.map(({ ConstraintId, DataType }) => (
+            <Fragment key={ConstraintId}>
+              <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>{DataType}</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>Test Test</ExpansionPanelDetails>
+                <Divider />
+                <ExpansionPanelActions>
+                  <Button size="small">Cancel</Button>
+                  <Button size="small" color="primary">
+                    Save
+                  </Button>
+                </ExpansionPanelActions>
+              </ExpansionPanel>
+            </Fragment>
+          ))}
         </Fragment>
       );
     default:
@@ -216,7 +219,7 @@ const QueryConfig = ({
       </Grid>
       <Grid item xs={12} className={classes.stepTitle}>
         <Typography variant="headline">
-          {`${currentStep + 1} ${stepLabels[currentStep]}`}
+          {`Step ${currentStep + 1}: ${stepLabels[currentStep]}`}
         </Typography>
       </Grid>
       {getStepHelperText(currentStep, classes)}

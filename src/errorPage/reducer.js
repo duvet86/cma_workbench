@@ -1,6 +1,6 @@
 // @flow
 
-import { TRIGGER_ERROR } from "errorPage/actions";
+import { ERROR_TRIGGER } from "errorPage/actions";
 import type { ErrorAction } from "errorPage/actions";
 
 type State = {
@@ -14,7 +14,7 @@ function errorPage(
   action: ErrorAction
 ) {
   switch (action.type) {
-    case TRIGGER_ERROR:
+    case ERROR_TRIGGER:
       return {
         error: action.error
       };

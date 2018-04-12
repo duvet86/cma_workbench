@@ -1,4 +1,4 @@
-import { START_DELAY, END_DELAY } from "common/loading/actions";
+import { DELAY_START, DELAY_END } from "common/loading/actions";
 
 function loading(
   state = {
@@ -7,12 +7,12 @@ function loading(
   action
 ) {
   switch (action.type) {
-    case START_DELAY:
+    case DELAY_START:
       return {
         pastDelay: false
       };
 
-    case END_DELAY:
+    case DELAY_END:
       return {
         pastDelay: true
       };

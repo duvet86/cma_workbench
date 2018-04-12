@@ -69,9 +69,8 @@ export const getConstraintTargets = createSelector(
     const columnsSelect = columns
       .map(({ Label, ColumnName, DataType }) => ({
         value: {
-          type: "CONSTRAINT",
-          value: ColumnName,
-          dataType: DataType
+          ColumnName,
+          DataType
         },
         label: Label
       }))
@@ -84,9 +83,8 @@ export const getConstraintTargets = createSelector(
     const filtersSelect = filters
       .map(({ Label, FilterName, DataType }) => ({
         value: {
-          type: "FILTER_CONSTRAINT",
-          value: FilterName,
-          dataType: DataType
+          FilterName,
+          DataType
         },
         label: Label
       }))

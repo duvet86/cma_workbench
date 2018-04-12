@@ -1,10 +1,10 @@
-export const START_DELAY = "START_DELAY";
-export const END_DELAY = "END_DELAY";
+export const DELAY_START = "DELAY_START";
+export const DELAY_END = "DELAY_END";
 
 export const startDelay = () => ({
-  type: START_DELAY
+  type: DELAY_START
 });
 
 export const endDelay = () => ({
-  type: END_DELAY
+  type: DELAY_END
 });
