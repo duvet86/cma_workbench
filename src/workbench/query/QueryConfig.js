@@ -18,7 +18,6 @@ import Divider from "material-ui/Divider";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import InfoIcon from "@material-ui/icons/InfoOutline";
-import AddIcon from "@material-ui/icons/Add";
 
 import { BackgroundLoadingContainer } from "common/loading";
 import SelectInput from "common/select/SelectInput";
