@@ -1,9 +1,9 @@
-import Work from "material-ui-icons/Work";
-import Dashboard from "material-ui-icons/Dashboard";
-import Build from "material-ui-icons/Build";
-import Person from "material-ui-icons/Person";
-import ContactPhone from "material-ui-icons/ContactPhone";
-import Info from "material-ui-icons/Info";
+import Work from "@material-ui/icons/Work";
+import Dashboard from "@material-ui/icons/Dashboard";
+import Build from "@material-ui/icons/Build";
+import Person from "@material-ui/icons/Person";
+import ContactPhone from "@material-ui/icons/ContactPhone";
+import Info from "@material-ui/icons/Info";
 
 const linksList = [
   {

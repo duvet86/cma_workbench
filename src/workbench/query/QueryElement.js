@@ -9,7 +9,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from "material-ui/List";
 import Divider from "material-ui/Divider";
 import Typography from "material-ui/Typography";
 
-import Settings from "material-ui-icons/Settings";
+import Settings from "@material-ui/icons/Settings";
 
 const styles = theme => ({
   operatorContainer: {

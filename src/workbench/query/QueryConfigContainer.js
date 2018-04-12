@@ -7,7 +7,8 @@ import {
   //graphPushRequest,
   updateQueryDataService,
   addQueryColumn,
-  removeQueryColumn
+  removeQueryColumn,
+  addQueryConstraint
 } from "workbench/actions";
 import {
   closeQueryConfig,
@@ -36,7 +37,8 @@ class QueryConfigContainer extends Component {
     dispatchDataServicesRequest: PropTypes.func.isRequired,
     dispatchDescribeQuery: PropTypes.func.isRequired,
     dispatchAddQueryColumn: PropTypes.func.isRequired,
-    dispatchRemoveQueryColumn: PropTypes.func.isRequired
+    dispatchRemoveQueryColumn: PropTypes.func.isRequired,
+    dispatchAddQueryConstraint: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -68,6 +70,16 @@ class QueryConfigContainer extends Component {
     dispatchRemoveQueryColumn(elementConfig.ElementId, ColumnName);
   };
 
+  handledAddQueryConstraint = () => {
+    const { elementConfig, dispatchAddQueryConstraint } = this.props;
+    dispatchAddQueryConstraint(
+      elementConfig.ElementId,
+      elementConfig.Constraints.length
+    );
+  };
+
+  handleChangeContraintTarget = () => {};
+
   render() {
     return (
       <QueryConfig
@@ -75,6 +87,8 @@ class QueryConfigContainer extends Component {
         handleChangeDataService={this.handleChangeDataService}
         handleAddQueryColumn={this.handleAddQueryColumn}
         handleRemoveQueryColumn={this.handleRemoveQueryColumn}
+        handledAddQueryConstraint={this.handledAddQueryConstraint}
+        handleChangeContraintTarget={this.handleChangeContraintTarget}
       />
     );
   }
@@ -101,7 +115,9 @@ const mapDispatchToProps = dispatch => ({
   dispatchAddQueryColumn: (elementId, column) =>
     dispatch(addQueryColumn(elementId, column)),
   dispatchRemoveQueryColumn: (elementId, column) =>
-    dispatch(removeQueryColumn(elementId, column))
+    dispatch(removeQueryColumn(elementId, column)),
+  dispatchAddQueryConstraint: (elementId, constraintId) =>
+    dispatch(addQueryConstraint(elementId, constraintId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

@@ -3,12 +3,12 @@ import update from "immutability-helper";
 import {
   SESSION_REQUEST,
   SESSION_SUCCESS,
-  ADD_QUERY,
-  UPDATE_QUERY_DATASERVICE,
-  ADD_QUERY_COLUMN,
-  REMOVE_QUERY_COLUMN,
-  ADD_QUERY_CONSTRAINT,
-  REMOVE_QUERY_CONSTRAINT
+  QUERY_ADD,
+  QUERY_DATASERVICE_UPDATE,
+  QUERY_COLUMN_ADD,
+  QUERY_COLUMN_REMOVE,
+  QUERY_CONSTRAINT_ADD,
+  QUERY_CONSTRAINT_REMOVE
 } from "workbench/actions";
 
 function session(
@@ -37,7 +37,7 @@ function session(
         ...action.payload
       };
 
-    case ADD_QUERY:
+    case QUERY_ADD:
       return update(state, {
         graph: { Queries: { $push: [action.elementId] } },
         queries: {
@@ -49,7 +49,7 @@ function session(
         }
       });
 
-    case UPDATE_QUERY_DATASERVICE:
+    case QUERY_DATASERVICE_UPDATE:
       return update(state, {
         queries: {
           [action.elementId]: {
@@ -62,7 +62,7 @@ function session(
         }
       });
 
-    case ADD_QUERY_COLUMN:
+    case QUERY_COLUMN_ADD:
       return update(state, {
         queries: {
           [action.elementId]: {
@@ -71,7 +71,7 @@ function session(
         }
       });
 
-    case REMOVE_QUERY_COLUMN:
+    case QUERY_COLUMN_REMOVE:
       return update(state, {
         queries: {
           [action.elementId]: {
@@ -85,7 +85,7 @@ function session(
         }
       });
 
-    case ADD_QUERY_CONSTRAINT:
+    case QUERY_CONSTRAINT_ADD:
       return update(state, {
         queries: {
           [action.elementId]: {
@@ -94,7 +94,7 @@ function session(
         }
       });
 
-    case REMOVE_QUERY_CONSTRAINT:
+    case QUERY_CONSTRAINT_REMOVE:
       return update(state, {
         queries: {
           [action.elementId]: {

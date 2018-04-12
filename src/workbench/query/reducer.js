@@ -1,8 +1,8 @@
-import { UPDATE_QUERY_DATASERVICE } from "workbench/actions";
+import { QUERY_DATASERVICE_UPDATE } from "workbench/actions";
 import {
   QUERY_CONFIG_ERROR,
-  OPEN_QUERY_CONFIG,
-  CLOSE_QUERY_CONFIG,
+  QUERY_CONFIG_OPEN,
+  QUERY_CONFIG_CLOSE,
   GO_TO_STEP,
   DATASERVICES_REQUEST,
   DATASERVICES_SUCCESS,
@@ -20,14 +20,14 @@ const initialState = {
 
 function queryConfig(state = { ...initialState }, action) {
   switch (action.type) {
-    case OPEN_QUERY_CONFIG:
+    case QUERY_CONFIG_OPEN:
       return {
         ...state,
         elementId: action.elementId
       };
 
     case QUERY_CONFIG_ERROR:
-    case CLOSE_QUERY_CONFIG:
+    case QUERY_CONFIG_CLOSE:
       return {
         ...initialState
       };
@@ -52,7 +52,7 @@ function queryConfig(state = { ...initialState }, action) {
       };
 
     // It throws QUERY_DESCRIBE_REQUEST.
-    case UPDATE_QUERY_DATASERVICE:
+    case QUERY_DATASERVICE_UPDATE:
       return {
         ...state,
         isLoading: true

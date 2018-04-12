@@ -14,9 +14,9 @@ import ExpansionPanel, {
 import Card, { CardHeader } from "material-ui/Card";
 import Button from "material-ui/Button";
 
-import ExpandMoreIcon from "material-ui-icons/ExpandMore";
-import InfoIcon from "material-ui-icons/InfoOutline";
-import AddIcon from "material-ui-icons/Add";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import InfoIcon from "@material-ui/icons/InfoOutline";
+import AddIcon from "@material-ui/icons/Add";
 
 import { BackgroundLoadingContainer } from "common/loading";
 import SelectInput from "common/select/SelectInput";
@@ -62,6 +62,9 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit
+  },
+  constraintsContainer: {
+    marginBottom: 15
   }
 });
 
@@ -112,15 +115,13 @@ function getStepContent(step, classes, props) {
   switch (step) {
     case 0:
       return (
-        <Grid item xs={12}>
-          <SelectInput
-            noClear
-            inputLabel="Source"
-            value={props.elementConfig.TargetDataViewId}
-            options={props.dataServices}
-            handleChange={props.handleChangeDataService}
-          />
-        </Grid>
+        <SelectInput
+          noClear
+          inputLabel="Select a source..."
+          value={props.elementConfig.TargetDataViewId}
+          options={props.dataServices}
+          handleChange={props.handleChangeDataService}
+        />
       );
     case 1:
       return (
@@ -143,23 +144,31 @@ function getStepContent(step, classes, props) {
       );
     case 2:
       return (
-        <div>
-          {props.elementConfig.Constraints.map(({ ConstraintId }) => (
-            <Fragment key={ConstraintId}>
-              <ExpansionPanel>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>Expansion Panel 1</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <Typography>asd</Typography>
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            </Fragment>
-          ))}
-          <Button mini variant="fab" color="secondary" aria-label="add">
+        <Fragment>
+          <div className={classes.constraintsContainer}>
+            {props.elementConfig.Constraints.map(({ ConstraintId }) => (
+              <Fragment key={ConstraintId}>
+                <ExpansionPanel>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography>Expansion Panel 1</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>asd</Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              </Fragment>
+            ))}
+          </div>
+          <Button
+            mini
+            variant="fab"
+            color="secondary"
+            aria-label="add"
+            onClick={props.handledAddQueryConstraint}
+          >
             <AddIcon />
           </Button>
-        </div>
+        </Fragment>
       );
     default:
       return "Unknown step";
@@ -256,7 +265,9 @@ QueryConfig.propTypes = {
   dispatchGoToStep: PropTypes.func.isRequired,
   handleChangeDataService: PropTypes.func.isRequired,
   handleAddQueryColumn: PropTypes.func.isRequired,
-  handleRemoveQueryColumn: PropTypes.func.isRequired
+  handleRemoveQueryColumn: PropTypes.func.isRequired,
+  handledAddQueryConstraint: PropTypes.func.isRequired,
+  handleChangeContraintTarget: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(QueryConfig);

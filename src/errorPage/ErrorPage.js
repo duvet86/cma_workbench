@@ -8,7 +8,7 @@ import Card, { CardActions, CardContent } from "material-ui/Card";
 import Button from "material-ui/Button";
 import Typography from "material-ui/Typography";
 
-import Warning from "material-ui-icons/Warning";
+import Warning from "@material-ui/icons/Warning";
 
 const styles = {
   gridContainer: {

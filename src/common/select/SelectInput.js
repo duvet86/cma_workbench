@@ -9,10 +9,10 @@ import { MenuItem } from "material-ui/Menu";
 import Typography from "material-ui/Typography";
 import { ListItemIcon } from "material-ui/List";
 
-import ArrowDropDownIcon from "material-ui-icons/ArrowDropDown";
-import ArrowDropUpIcon from "material-ui-icons/ArrowDropUp";
-import ClearIcon from "material-ui-icons/Clear";
-import StorageIcon from "material-ui-icons/Storage";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import ClearIcon from "@material-ui/icons/Clear";
+import StorageIcon from "@material-ui/icons/Storage";
 
 import VirtualizedSelect from "react-virtualized-select";
 

@@ -45,11 +45,11 @@ export const getQueryColumns = createSelector(
 export const getCompletedSteps = createSelector(
   elementIdSelector,
   querySelector,
-  (elementId, queries) => {
+  (elementId, queries, currentStep) => {
     const selectedQuery = queries[elementId];
 
     if (selectedQuery.Columns.length > 0) {
-      return [true, true, false];
+      return [true, true, true, false];
     }
     if (selectedQuery.TargetDataViewId) {
       return [true, false];
@@ -65,5 +65,37 @@ const availableFiltersSelector = state =>
 export const getConstraintTargets = createSelector(
   availableColumnsSelector,
   availableFiltersSelector,
-  (columns, filters) => [].concat(columns, filters)
+  (columns, filters) => {
+    const columnsSelect = columns
+      .map(({ Label, ColumnName, DataType }) => ({
+        value: {
+          type: "CONSTRAINT",
+          value: ColumnName,
+          dataType: DataType
+        },
+        label: Label
+      }))
+      .sort((a, b) => {
+        if (a.label < b.label) return -1;
+        if (a.label > b.label) return 1;
+        return 0;
+      });
+
+    const filtersSelect = filters
+      .map(({ Label, FilterName, DataType }) => ({
+        value: {
+          type: "FILTER_CONSTRAINT",
+          value: FilterName,
+          dataType: DataType
+        },
+        label: Label
+      }))
+      .sort((a, b) => {
+        if (a.label < b.label) return -1;
+        if (a.label > b.label) return 1;
+        return 0;
+      });
+
+    return [].concat(columnsSelect, filtersSelect);
+  }
 );

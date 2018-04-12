@@ -13,8 +13,8 @@ import IconButton from "material-ui/IconButton";
 import Input, { InputLabel, InputAdornment } from "material-ui/Input";
 import { FormControl } from "material-ui/Form";
 
-import ClearIcon from "material-ui-icons/Clear";
-import SettingsIcon from "material-ui-icons/Settings";
+import ClearIcon from "@material-ui/icons/Clear";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 const styles = theme => ({
   paper: {

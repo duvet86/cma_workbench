@@ -6,7 +6,7 @@ import { withStyles } from "material-ui/styles";
 import { ListItem, ListItemText } from "material-ui/List";
 import Divider from "material-ui/Divider";
 
-import Dashboard from "material-ui-icons/Dashboard";
+import Dashboard from "@material-ui/icons/Dashboard";
 
 const styles = theme => ({
   listItemOpen: {

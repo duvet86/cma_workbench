@@ -12,8 +12,9 @@ import Button from "material-ui/Button";
 import { FormControl } from "material-ui/Form";
 import Input, { InputLabel, InputAdornment } from "material-ui/Input";
 import IconButton from "material-ui/IconButton";
-import Visibility from "material-ui-icons/Visibility";
-import VisibilityOff from "material-ui-icons/VisibilityOff";
+
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const styles = theme => ({
   "@keyframes appLogoSpin": {

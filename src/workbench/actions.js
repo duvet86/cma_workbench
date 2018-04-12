@@ -67,11 +67,11 @@ export const graphPopSuccess = () => ({
   type: GRAPH_POP_SUCCESS
 });
 
-export const ADD_QUERY = "ADD_QUERY";
-export const UPDATE_QUERY_DATASERVICE = "UPDATE_QUERY_DATASERVICE";
+export const QUERY_ADD = "QUERY_ADD";
+export const QUERY_DATASERVICE_UPDATE = "QUERY_DATASERVICE_UPDATE";
 
 export const addQuery = elementId => ({
-  type: ADD_QUERY,
+  type: QUERY_ADD,
   elementId,
   query: {
     ElementId: elementId,
@@ -85,37 +85,45 @@ export const addQuery = elementId => ({
 });
 
 export const updateQueryDataService = (elementId, query) => ({
-  type: UPDATE_QUERY_DATASERVICE,
+  type: QUERY_DATASERVICE_UPDATE,
   elementId,
   query
 });
 
-export const ADD_QUERY_COLUMN = "ADD_QUERY_COLUMN";
-export const REMOVE_QUERY_COLUMN = "REMOVE_QUERY_COLUMN";
+export const QUERY_COLUMN_ADD = "QUERY_COLUMN_ADD";
+export const QUERY_COLUMN_REMOVE = "QUERY_COLUMN_REMOVE";
 
 export const addQueryColumn = (elementId, column) => ({
-  type: ADD_QUERY_COLUMN,
+  type: QUERY_COLUMN_ADD,
   elementId,
   column
 });
 
 export const removeQueryColumn = (elementId, columnName) => ({
-  type: REMOVE_QUERY_COLUMN,
+  type: QUERY_COLUMN_REMOVE,
   elementId,
   columnName
 });
 
-export const ADD_QUERY_CONSTRAINT = "ADD_QUERY_CONSTRAINT";
-export const REMOVE_QUERY_CONSTRAINT = "REMOVE_QUERY_CONSTRAINT";
+export const QUERY_CONSTRAINT_ADD = "QUERY_CONSTRAINT_ADD";
+export const QUERY_CONSTRAINT_REMOVE = "QUERY_CONSTRAINT_REMOVE";
 
-export const addQueryConstraint = (elementId, constraint) => ({
-  type: ADD_QUERY_COLUMN,
+export const addQueryConstraint = (elementId, constraintId) => ({
+  type: QUERY_CONSTRAINT_ADD,
   elementId,
-  constraint
+  constraint: {
+    ConstraintId: constraintId,
+    ColumnName: undefined,
+    FilterName: undefined,
+    FilterType: "Equal",
+    DataType: undefined,
+    Values: [],
+    ValuesHint: "NoHint"
+  }
 });
 
 export const removeQueryConstraint = (elementId, constraintId) => ({
-  type: REMOVE_QUERY_COLUMN,
+  type: QUERY_CONSTRAINT_REMOVE,
   elementId,
   constraintId
 });

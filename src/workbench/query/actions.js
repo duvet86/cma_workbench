@@ -4,16 +4,16 @@ export const queryConfigError = () => ({
   type: QUERY_CONFIG_ERROR
 });
 
-export const OPEN_QUERY_CONFIG = "OPEN_QUERY_CONFIG";
-export const CLOSE_QUERY_CONFIG = "CLOSE_QUERY_CONFIG";
+export const QUERY_CONFIG_OPEN = "QUERY_CONFIG_OPEN";
+export const QUERY_CONFIG_CLOSE = "QUERY_CONFIG_CLOSE";
 
 export const openQueryConfig = elementId => ({
-  type: OPEN_QUERY_CONFIG,
+  type: QUERY_CONFIG_OPEN,
   elementId
 });
 
 export const closeQueryConfig = () => ({
-  type: CLOSE_QUERY_CONFIG
+  type: QUERY_CONFIG_CLOSE
 });
 
 export const GO_TO_STEP = "GO_TO_STEP";

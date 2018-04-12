@@ -9,8 +9,8 @@ import {
   GRAPH_PUSH_REQUEST,
   GRAPH_SAVE_REQUEST,
   GRAPH_REQUEST,
-  ADD_QUERY,
-  UPDATE_QUERY_DATASERVICE,
+  QUERY_ADD,
+  QUERY_DATASERVICE_UPDATE,
   sessionSuccess,
   graphPushSuccess,
   graphSaveChangesSuccess,
@@ -96,13 +96,13 @@ export const pushGraphChangesEpic = (action$, store) =>
 
 export const addQueryEpic = action$ =>
   action$.pipe(
-    ofType(ADD_QUERY),
+    ofType(QUERY_ADD),
     map(({ elementId }) => openQueryConfig(elementId))
   );
 
 export const updateQueryDataServiceEpic = (action$, store) =>
   action$.pipe(
-    ofType(UPDATE_QUERY_DATASERVICE),
+    ofType(QUERY_DATASERVICE_UPDATE),
     mergeMap(({ elementId, query: { TargetDataViewId } }) => {
       if (!TargetDataViewId) {
         return [openQueryConfig(elementId)];

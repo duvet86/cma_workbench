@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 import { withStyles } from "material-ui/styles";
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
-import MenuIcon from "material-ui-icons/Menu";
 import Toolbar from "material-ui/Toolbar";
 import Button from "material-ui/Button";
 import Menu, { MenuItem } from "material-ui/Menu";
 import Typography from "material-ui/Typography";
 
-import Person from "material-ui-icons/Person";
+import MenuIcon from "@material-ui/icons/Menu";
+import Person from "@material-ui/icons/Person";
 
 const styles = theme => ({
   appBar: {

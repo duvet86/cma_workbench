@@ -6,8 +6,8 @@ import List, { ListItem, ListItemText } from "material-ui/List";
 import Collapse from "material-ui/transitions/Collapse";
 import Divider from "material-ui/Divider";
 
-import FolderIcon from "material-ui-icons/Folder";
-import FolderOpenIcon from "material-ui-icons/FolderOpen";
+import FolderIcon from "@material-ui/icons/Folder";
+import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 
 import Item from "sideBar/myItems/Item";
 
