@@ -72,7 +72,7 @@ function getStepContent(step, classes, props) {
           noClear
           OptionsIcon={StorageIcon}
           iconClassName={classes.sourceSelectIconColour}
-          inputLabel="Select a source..."
+          inputLabel="Click here to select a source..."
           value={props.elementConfig.TargetDataViewId}
           options={props.dataServices}
           handleChange={props.handleChangeDataService}

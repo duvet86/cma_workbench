@@ -219,16 +219,11 @@ SelectWrapped.propTypes = {
 };
 
 const SelectInput = ({
-  classes,
   value,
-  isFocused,
-  options,
-  handleChange,
   inputLabel,
   helperText,
-  noClear,
-  OptionsIcon,
-  iconClassName
+  handleChange,
+  ...props
 }) => (
   <FormControl fullWidth>
     {inputLabel && <InputLabel htmlFor="select-input">{inputLabel}</InputLabel>}
@@ -241,12 +236,8 @@ const SelectInput = ({
       name="select-input"
       placeholder=""
       inputProps={{
-        classes,
-        noClear,
         simpleValue: true,
-        options,
-        OptionsIcon,
-        iconClassName
+        ...props
       }}
     />
     {helperText && <FormHelperText>{helperText}</FormHelperText>}
