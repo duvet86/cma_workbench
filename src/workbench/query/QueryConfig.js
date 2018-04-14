@@ -100,9 +100,16 @@ function getStepContent(step, classes, props) {
     case 2:
       return (
         <ConstraintSelector
+          filterCapabilities={props.filterCapabilities}
           contraintTargets={props.contraintTargets}
           handledAddQueryConstraint={props.handledAddQueryConstraint}
-          constraints={props.elementConfig.Constraints}
+          queryConstraints={props.elementConfig.Constraints}
+          handledUpdateQueryConstraintType={
+            props.handledUpdateQueryConstraintType
+          }
+          handledUpdateQueryConstraintValues={
+            props.handledUpdateQueryConstraintValues
+          }
         />
       );
     default:
@@ -202,7 +209,8 @@ QueryConfig.propTypes = {
   handleAddQueryColumn: PropTypes.func.isRequired,
   handleRemoveQueryColumn: PropTypes.func.isRequired,
   handledAddQueryConstraint: PropTypes.func.isRequired,
-  handleChangeContraintTarget: PropTypes.func.isRequired
+  handledUpdateQueryConstraintType: PropTypes.func.isRequired,
+  handledUpdateQueryConstraintValues: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(QueryConfig);

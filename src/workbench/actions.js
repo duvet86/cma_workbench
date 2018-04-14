@@ -106,6 +106,8 @@ export const removeQueryColumn = (elementId, columnName) => ({
 });
 
 export const QUERY_CONSTRAINT_ADD = "QUERY_CONSTRAINT_ADD";
+export const QUERY_CONSTRAINT_TYPE = "QUERY_CONSTRAINT_TYPE";
+export const QUERY_CONSTRAINT_VALUES = "QUERY_CONSTRAINT_VALUES";
 export const QUERY_CONSTRAINT_REMOVE = "QUERY_CONSTRAINT_REMOVE";
 
 export const addQueryConstraint = (
@@ -117,14 +119,32 @@ export const addQueryConstraint = (
   elementId,
   constraint: {
     ConstraintId: constraintId,
-    ColumnName: undefined,
-    FilterName: undefined,
-    FilterType: "Equal",
-    DataType: undefined,
     Values: [],
     ValuesHint: "NoHint",
     ...contraintTarget
   }
+});
+
+export const updateQueryConstraintType = (
+  elementId,
+  constraintId,
+  constraintType
+) => ({
+  type: QUERY_CONSTRAINT_TYPE,
+  elementId,
+  constraintId,
+  constraintType
+});
+
+export const updateQueryConstraintValues = (
+  elementId,
+  constraintId,
+  constraintValues
+) => ({
+  type: QUERY_CONSTRAINT_VALUES,
+  elementId,
+  constraintId,
+  constraintValues
 });
 
 export const removeQueryConstraint = (elementId, constraintId) => ({

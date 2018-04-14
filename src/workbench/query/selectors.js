@@ -62,6 +62,9 @@ export const getCompletedSteps = createSelector(
 const availableFiltersSelector = state =>
   state.queryConfigReducer.availableFilters;
 
+const noteSupportedDataTypes = ["DateTimeValue", "DateValue", "TimeValue"];
+
+// NOTE: date types are not supported yet.
 export const getConstraintTargets = createSelector(
   availableColumnsSelector,
   availableFiltersSelector,
@@ -80,6 +83,7 @@ export const getConstraintTargets = createSelector(
     );
 
     const columnsSelect = columns
+      .filter(({ DataType }) => !noteSupportedDataTypes.includes(DataType))
       .filter(
         ({ ColumnName }) =>
           !filters.some(

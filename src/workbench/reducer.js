@@ -8,6 +8,8 @@ import {
   QUERY_COLUMN_ADD,
   QUERY_COLUMN_REMOVE,
   QUERY_CONSTRAINT_ADD,
+  QUERY_CONSTRAINT_TYPE,
+  QUERY_CONSTRAINT_VALUES,
   QUERY_CONSTRAINT_REMOVE
 } from "workbench/actions";
 
@@ -90,6 +92,36 @@ function session(
         queries: {
           [action.elementId]: {
             Constraints: { $push: [action.constraint] }
+          }
+        }
+      });
+
+    case QUERY_CONSTRAINT_TYPE:
+      return update(state, {
+        queries: {
+          [action.elementId]: {
+            Constraints: {
+              [action.constraintId]: {
+                $merge: {
+                  FilterType: action.constraintType
+                }
+              }
+            }
+          }
+        }
+      });
+
+    case QUERY_CONSTRAINT_VALUES:
+      return update(state, {
+        queries: {
+          [action.elementId]: {
+            Constraints: {
+              [action.constraintId]: {
+                $merge: {
+                  Values: action.constraintValues
+                }
+              }
+            }
           }
         }
       });

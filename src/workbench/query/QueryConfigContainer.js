@@ -6,7 +6,9 @@ import {
   updateQueryDataService,
   addQueryColumn,
   removeQueryColumn,
-  addQueryConstraint
+  addQueryConstraint,
+  updateQueryConstraintType,
+  updateQueryConstraintValues
 } from "workbench/actions";
 import {
   closeQueryConfig,
@@ -38,7 +40,9 @@ class QueryConfigContainer extends Component {
     dispatchDescribeQuery: PropTypes.func.isRequired,
     dispatchAddQueryColumn: PropTypes.func.isRequired,
     dispatchRemoveQueryColumn: PropTypes.func.isRequired,
-    dispatchAddQueryConstraint: PropTypes.func.isRequired
+    dispatchAddQueryConstraint: PropTypes.func.isRequired,
+    dispatchUpdateQueryConstraintType: PropTypes.func.isRequired,
+    dispatchUpdateQueryConstraintValues: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -69,15 +73,44 @@ class QueryConfigContainer extends Component {
   };
 
   handledAddQueryConstraint = selectedConstraintTarget => {
-    const { elementConfig, dispatchAddQueryConstraint } = this.props;
+    const {
+      elementConfig,
+      dispatchAddQueryConstraint,
+      filterCapabilities
+    } = this.props;
+    // For a new constraint default the filterType to the first value
+    // of filter capabilities for the selected dataType.
+    const constraintTarget = {
+      ...selectedConstraintTarget,
+      FilterType: filterCapabilities[selectedConstraintTarget.DataType][0].Type
+    };
+
     dispatchAddQueryConstraint(
       elementConfig.ElementId,
       elementConfig.Constraints.length,
-      selectedConstraintTarget
+      constraintTarget
     );
   };
 
-  handleChangeContraintTarget = selectedConstraintTarget => {};
+  handledUpdateQueryConstraintType = (constraintId, constraintType) => {
+    const { elementConfig, dispatchUpdateQueryConstraintType } = this.props;
+
+    dispatchUpdateQueryConstraintType(
+      elementConfig.ElementId,
+      constraintId,
+      constraintType
+    );
+  };
+
+  handledUpdateQueryConstraintValues = (constraintId, constraintValues) => {
+    const { elementConfig, dispatchUpdateQueryConstraintValues } = this.props;
+    
+    dispatchUpdateQueryConstraintValues(
+      elementConfig.ElementId,
+      constraintId,
+      constraintValues
+    );
+  };
 
   render() {
     return (
@@ -87,7 +120,10 @@ class QueryConfigContainer extends Component {
         handleAddQueryColumn={this.handleAddQueryColumn}
         handleRemoveQueryColumn={this.handleRemoveQueryColumn}
         handledAddQueryConstraint={this.handledAddQueryConstraint}
-        handleChangeContraintTarget={this.handleChangeContraintTarget}
+        handledUpdateQueryConstraintType={this.handledUpdateQueryConstraintType}
+        handledUpdateQueryConstraintValues={
+          this.handledUpdateQueryConstraintValues
+        }
       />
     );
   }
@@ -116,7 +152,23 @@ const mapDispatchToProps = dispatch => ({
   dispatchRemoveQueryColumn: (elementId, column) =>
     dispatch(removeQueryColumn(elementId, column)),
   dispatchAddQueryConstraint: (elementId, constraintId, constraintTarget) =>
-    dispatch(addQueryConstraint(elementId, constraintId, constraintTarget))
+    dispatch(addQueryConstraint(elementId, constraintId, constraintTarget)),
+  dispatchUpdateQueryConstraintType: (
+    elementId,
+    constraintId,
+    constraintType
+  ) =>
+    dispatch(
+      updateQueryConstraintType(elementId, constraintId, constraintType)
+    ),
+  dispatchUpdateQueryConstraintValues: (
+    elementId,
+    constraintId,
+    constraintValues
+  ) =>
+    dispatch(
+      updateQueryConstraintValues(elementId, constraintId, constraintValues)
+    )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
