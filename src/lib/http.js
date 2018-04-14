@@ -1,5 +1,6 @@
 // @flow
 
+import { TENANT_ID } from "lib/constants";
 import { getToken } from "lib/sessionStorageApi";
 
 type AuthHeader = {
@@ -32,7 +33,7 @@ const getHeader = (): SectionHeader => {
   const token = getJwtToken();
 
   return {
-    section: "demo",
+    section: TENANT_ID,
     "Content-Type": "application/json",
     ...getJwtHeaders(token)
   };

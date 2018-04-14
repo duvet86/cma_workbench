@@ -1,12 +1,12 @@
 import { fromPromise } from "rxjs/observable/fromPromise";
 
-import { BASE_URL } from "lib/constants";
+import { BASE_URL, TENANT_ID } from "lib/constants";
 import { postWithJwtAsync, getWithJwtAsync } from "lib/http";
 
 export const getSessionInfoObs = dataViewId =>
   fromPromise(
     postWithJwtAsync(
-      `${BASE_URL}/api/qes/demo/sessions${
+      `${BASE_URL}/api/qes/${TENANT_ID}/sessions${
         dataViewId ? `?dataViewId=${dataViewId}` : ""
       }`
     )
