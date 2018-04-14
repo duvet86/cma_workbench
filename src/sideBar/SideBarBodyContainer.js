@@ -23,7 +23,8 @@ const SideBarBodyContainer = ({ visibleTab, ...props }) => {
     <div
       style={{
         overflow: "auto",
-        marginBottom: 48
+        marginBottom: 48,
+        height: "100%"
       }}
     >
       {component}

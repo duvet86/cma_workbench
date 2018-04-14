@@ -14,7 +14,11 @@ import {
   addQueryEpic,
   updateQueryDataServiceEpic
 } from "workbench/epic";
-import { dataServicesEpic, serviceDescriptionEpic } from "workbench/query/epic";
+import {
+  dataServicesEpic,
+  filterCapabilitiesEpic,
+  serviceDescriptionEpic
+} from "workbench/query/epic";
 
 const epics = [
   loadingEpic,
@@ -29,6 +33,7 @@ const epics = [
   pushGraphChangesEpic,
   addQueryEpic,
   dataServicesEpic,
+  filterCapabilitiesEpic,
   updateQueryDataServiceEpic,
   serviceDescriptionEpic
 ];

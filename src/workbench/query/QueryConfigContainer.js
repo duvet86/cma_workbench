@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import {
-  //graphSaveChangesRequest,
-  //graphPushRequest,
   updateQueryDataService,
   addQueryColumn,
   removeQueryColumn,
@@ -13,7 +11,8 @@ import {
 import {
   closeQueryConfig,
   goToStep,
-  dataServicesRequest
+  dataServicesRequest,
+  filterCapabilitiesRequest
 } from "workbench/query/actions";
 
 import {
@@ -35,6 +34,7 @@ class QueryConfigContainer extends Component {
     contraintTargets: PropTypes.array.isRequired,
     dispatchGoToStep: PropTypes.func.isRequired,
     dispatchDataServicesRequest: PropTypes.func.isRequired,
+    dispatchFilterCapabilitiesRequest: PropTypes.func.isRequired,
     dispatchDescribeQuery: PropTypes.func.isRequired,
     dispatchAddQueryColumn: PropTypes.func.isRequired,
     dispatchRemoveQueryColumn: PropTypes.func.isRequired,
@@ -43,14 +43,12 @@ class QueryConfigContainer extends Component {
 
   componentDidMount() {
     const {
-      //dispatchGraphPushRequest,
-      //dispatchGraphSaveChangesRequest,
-      dispatchDataServicesRequest
+      dispatchDataServicesRequest,
+      dispatchFilterCapabilitiesRequest
     } = this.props;
 
-    //dispatchGraphSaveChangesRequest();
-    //dispatchGraphPushRequest();
     dispatchDataServicesRequest();
+    dispatchFilterCapabilitiesRequest();
   }
 
   handleChangeDataService = selectedDataServiceId => {
@@ -106,19 +104,19 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  //dispatchGraphSaveChangesRequest: () => dispatch(graphSaveChangesRequest()),
-  //dispatchGraphPushRequest: () => dispatch(graphPushRequest()),
   dispatchGoToStep: step => dispatch(goToStep(step)),
   dispatchCloseQueryConfig: () => dispatch(closeQueryConfig()),
   dispatchDataServicesRequest: () => dispatch(dataServicesRequest()),
+  dispatchFilterCapabilitiesRequest: () =>
+    dispatch(filterCapabilitiesRequest()),
   dispatchDescribeQuery: (elementId, query) =>
     dispatch(updateQueryDataService(elementId, query)),
   dispatchAddQueryColumn: (elementId, column) =>
     dispatch(addQueryColumn(elementId, column)),
   dispatchRemoveQueryColumn: (elementId, column) =>
     dispatch(removeQueryColumn(elementId, column)),
-  dispatchAddQueryConstraint: (elementId, constraintId) =>
-    dispatch(addQueryConstraint(elementId, constraintId))
+  dispatchAddQueryConstraint: (elementId, constraintId, constraintTarget) =>
+    dispatch(addQueryConstraint(elementId, constraintId, constraintTarget))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

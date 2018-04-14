@@ -12,7 +12,6 @@ import { ListItemIcon } from "material-ui/List";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ClearIcon from "@material-ui/icons/Clear";
-import StorageIcon from "@material-ui/icons/Storage";
 
 import VirtualizedSelect from "react-virtualized-select";
 
@@ -22,9 +21,6 @@ const HEIGHT_MULTIPLIER = 8;
 const styles = theme => ({
   root: {
     padding: "0 0 0 10px"
-  },
-  iconColour: {
-    fill: "#003b86"
   },
   "@global": {
     ".Select-control": {
@@ -122,7 +118,7 @@ const styles = theme => ({
   }
 });
 
-const OptionRenderer = classes => ({
+const OptionRenderer = (classes, OptionsIcon, iconClassName) => ({
   focusedOption,
   focusedOptionIndex,
   focusOption,
@@ -155,10 +151,20 @@ const OptionRenderer = classes => ({
       }}
       className={classes.root}
     >
-      <ListItemIcon>
-        <StorageIcon className={classes.iconColour} />
-      </ListItemIcon>
-      {option.label}
+      {OptionsIcon && (
+        <ListItemIcon>
+          <OptionsIcon className={iconClassName} />
+        </ListItemIcon>
+      )}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center"
+        }}
+      >
+        <div style={{ marginRight: 15 }}>{option.label}</div>
+        <Typography variant="caption">{option.secondaryLabel}</Typography>
+      </div>
     </MenuItem>
   );
 };
@@ -173,11 +179,15 @@ ArrowRenderer.propTypes = {
 const NoClearRenderer = () => <span />;
 const ClearRenderer = () => <ClearIcon />;
 
-const SelectedValueComponent = classes => ({ children }) => (
+const SelectedValueComponent = (classes, OptionsIcon, iconClassName) => ({
+  children
+}) => (
   <div className="Select-value">
-    <ListItemIcon>
-      <StorageIcon className={classes.iconColour} />
-    </ListItemIcon>
+    {OptionsIcon && (
+      <ListItemIcon>
+        <OptionsIcon className={iconClassName} />
+      </ListItemIcon>
+    )}
     {children}
   </div>
 );
@@ -186,14 +196,20 @@ SelectedValueComponent.propTypes = {
   children: PropTypes.string.isRequired
 };
 
-const SelectWrapped = ({ classes, noClear, ...rest }) => (
+const SelectWrapped = ({
+  classes,
+  noClear,
+  OptionsIcon,
+  iconClassName,
+  ...rest
+}) => (
   <VirtualizedSelect
     maxHeight={ITEM_HEIGHT * HEIGHT_MULTIPLIER}
-    optionRenderer={OptionRenderer(classes)}
+    optionRenderer={OptionRenderer(classes, OptionsIcon, iconClassName)}
     noResultsText={<Typography>{"No results found"}</Typography>}
     arrowRenderer={ArrowRenderer}
     clearRenderer={noClear ? NoClearRenderer : ClearRenderer}
-    valueComponent={SelectedValueComponent(classes)}
+    valueComponent={SelectedValueComponent(classes, OptionsIcon, iconClassName)}
     {...rest}
   />
 );
@@ -210,7 +226,9 @@ const SelectInput = ({
   handleChange,
   inputLabel,
   helperText,
-  noClear
+  noClear,
+  OptionsIcon,
+  iconClassName
 }) => (
   <FormControl fullWidth>
     {inputLabel && <InputLabel htmlFor="select-input">{inputLabel}</InputLabel>}
@@ -226,7 +244,9 @@ const SelectInput = ({
         classes,
         noClear,
         simpleValue: true,
-        options
+        options,
+        OptionsIcon,
+        iconClassName
       }}
     />
     {helperText && <FormHelperText>{helperText}</FormHelperText>}
@@ -237,7 +257,9 @@ SelectInput.propTypes = {
   classes: PropTypes.object.isRequired,
   options: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
-  value: PropTypes.string
+  value: PropTypes.string,
+  OptionsIcon: PropTypes.func,
+  iconClassName: PropTypes.string
 };
 
 export default withStyles(styles)(SelectInput);

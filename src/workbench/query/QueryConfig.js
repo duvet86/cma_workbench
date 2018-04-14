@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { withStyles } from "material-ui/styles";
@@ -6,22 +6,15 @@ import { withStyles } from "material-ui/styles";
 import Grid from "material-ui/Grid";
 import Typography from "material-ui/Typography";
 import Stepper, { Step, StepButton } from "material-ui/Stepper";
-import Avatar from "material-ui/Avatar";
-import ExpansionPanel, {
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  ExpansionPanelActions
-} from "material-ui/ExpansionPanel";
-import Card, { CardHeader } from "material-ui/Card";
 import Button from "material-ui/Button";
-import Divider from "material-ui/Divider";
 
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import InfoIcon from "@material-ui/icons/InfoOutline";
+import StorageIcon from "@material-ui/icons/Storage";
 
 import { BackgroundLoadingContainer } from "common/loading";
 import SelectInput from "common/select/SelectInput";
 import ColumnSelector from "workbench/query/ColumnSelector";
+import StepHelperText from "workbench/query/StepHelperText";
+import ConstraintSelector from "workbench/query/ConstraintSelector";
 
 const styles = theme => ({
   formControl: {
@@ -64,53 +57,12 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit
   },
-  constraintTargetSelect: {
-    marginBottom: 30
+  sourceSelectIconColour: {
+    fill: "#003b86"
   }
 });
 
 const stepLabels = ["Source", "Columns", "Constraints", "Summary"];
-
-function getStepHelperText(step, classes) {
-  let title = "";
-  let text = "";
-
-  switch (step) {
-    case 0:
-      title = "Query source";
-      text =
-        "Select from the drop down the source of your query. It can be a data source or an existing query. Once you are done go to the next step clicking on the next button.";
-      break;
-    case 1:
-      title = "Query columns";
-      text =
-        "Each source presents a list of available columns. You can search for a particular column using the search input. Click on a column on the available list to move it to the selected list. To remove a column from the selected list click on it again.";
-      break;
-    case 2:
-      title = "Query Constraints";
-      text =
-        "Narrow down your data with constraints. Constraints are part of the query you are creating and are not visible outside of it.";
-      break;
-    default:
-      return null;
-  }
-
-  return (
-    <Grid item xs={12}>
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar>
-              <InfoIcon />
-            </Avatar>
-          }
-          title={title}
-          subheader={text}
-        />
-      </Card>
-    </Grid>
-  );
-}
 
 function getStepContent(step, classes, props) {
   switch (step) {
@@ -118,6 +70,8 @@ function getStepContent(step, classes, props) {
       return (
         <SelectInput
           noClear
+          OptionsIcon={StorageIcon}
+          iconClassName={classes.sourceSelectIconColour}
           inputLabel="Select a source..."
           value={props.elementConfig.TargetDataViewId}
           options={props.dataServices}
@@ -145,32 +99,11 @@ function getStepContent(step, classes, props) {
       );
     case 2:
       return (
-        <Fragment>
-          <div className={classes.constraintTargetSelect}>
-            <SelectInput
-              inputLabel="Contraint on..."
-              options={props.contraintTargets}
-              handleChange={props.handledAddQueryConstraint}
-            />
-          </div>
-          {props.elementConfig.Constraints.map(({ ConstraintId, DataType }) => (
-            <Fragment key={ConstraintId}>
-              <ExpansionPanel>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{DataType}</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>Test Test</ExpansionPanelDetails>
-                <Divider />
-                <ExpansionPanelActions>
-                  <Button size="small">Cancel</Button>
-                  <Button size="small" color="primary">
-                    Save
-                  </Button>
-                </ExpansionPanelActions>
-              </ExpansionPanel>
-            </Fragment>
-          ))}
-        </Fragment>
+        <ConstraintSelector
+          contraintTargets={props.contraintTargets}
+          handledAddQueryConstraint={props.handledAddQueryConstraint}
+          constraints={props.elementConfig.Constraints}
+        />
       );
     default:
       return "Unknown step";
@@ -221,7 +154,7 @@ const QueryConfig = ({
           {`Step ${currentStep + 1}: ${stepLabels[currentStep]}`}
         </Typography>
       </Grid>
-      {getStepHelperText(currentStep, classes)}
+      <StepHelperText currentStep={currentStep} />
       <Grid item xs={12}>
         {getStepContent(currentStep, classes, props)}
       </Grid>

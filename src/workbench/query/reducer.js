@@ -6,6 +6,7 @@ import {
   GO_TO_STEP,
   DATASERVICES_REQUEST,
   DATASERVICES_SUCCESS,
+  FILTER_CAPABILITIES_SUCCESS,
   QUERY_DESCRIBE_SUCCESS
 } from "workbench/query/actions";
 
@@ -15,7 +16,8 @@ const initialState = {
   elementId: 0,
   dataServices: [],
   availableColumns: [],
-  availableFilters: []
+  availableFilters: [],
+  filterCapabilities: []
 };
 
 function queryConfig(state = { ...initialState }, action) {
@@ -51,7 +53,14 @@ function queryConfig(state = { ...initialState }, action) {
         dataServices: action.dataServices
       };
 
-    // It throws QUERY_DESCRIBE_REQUEST.
+    case FILTER_CAPABILITIES_SUCCESS:
+      return {
+        ...state,
+        filterCapabilities: action.filterCapabilities
+      };
+
+    // It dispatches QUERY_DESCRIBE_REQUEST.
+    // Starts the loading spinner when waiting for columns.
     case QUERY_DATASERVICE_UPDATE:
       return {
         ...state,

@@ -35,6 +35,18 @@ export const dataServicesSuccess = dataServices => ({
   dataServices
 });
 
+export const FILTER_CAPABILITIES_REQUEST = "FILTER_CAPABILITIES_REQUEST";
+export const FILTER_CAPABILITIES_SUCCESS = "FILTER_CAPABILITIES_SUCCESS";
+
+export const filterCapabilitiesRequest = () => ({
+  type: FILTER_CAPABILITIES_REQUEST
+});
+
+export const filterCapabilitiesSuccess = filterCapabilities => ({
+  type: FILTER_CAPABILITIES_SUCCESS,
+  filterCapabilities
+});
+
 export const QUERY_DESCRIBE_REQUEST = "QUERY_DESCRIBE_REQUEST";
 export const QUERY_DESCRIBE_SUCCESS = "QUERY_DESCRIBE_SUCCESS";
 

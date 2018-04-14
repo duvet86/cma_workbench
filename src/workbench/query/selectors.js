@@ -66,34 +66,37 @@ export const getConstraintTargets = createSelector(
   availableColumnsSelector,
   availableFiltersSelector,
   (columns, filters) => {
-    const columnsSelect = columns
-      .map(({ Label, ColumnName, DataType }) => ({
+    const filtersSelect = filters.map(
+      ({ Label, FilterName, DataType, ToColumnName }) => ({
+        ToColumnName,
         value: {
-          ColumnName,
-          DataType
-        },
-        label: Label
-      }))
-      .sort((a, b) => {
-        if (a.label < b.label) return -1;
-        if (a.label > b.label) return 1;
-        return 0;
-      });
-
-    const filtersSelect = filters
-      .map(({ Label, FilterName, DataType }) => ({
-        value: {
+          label: Label,
           FilterName,
           DataType
         },
-        label: Label
-      }))
-      .sort((a, b) => {
-        if (a.label < b.label) return -1;
-        if (a.label > b.label) return 1;
-        return 0;
-      });
+        label: Label + " (F)",
+        secondaryLabel: `(${DataType})`
+      })
+    );
 
-    return [].concat(columnsSelect, filtersSelect);
+    const columnsSelect = columns
+      .filter(
+        ({ ColumnName }) =>
+          !filters.some(
+            ({ ToColumnName }) => ToColumnName && ToColumnName === ColumnName
+          )
+      )
+      .map(({ Label, ColumnName, DataType }) => ({
+        ColumnName,
+        value: {
+          label: Label,
+          ColumnName,
+          DataType
+        },
+        label: Label,
+        secondaryLabel: `(${DataType})`
+      }));
+
+    return [].concat(filtersSelect, columnsSelect);
   }
 );

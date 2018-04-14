@@ -8,6 +8,11 @@ import { getWithJwtAsync } from "lib/http";
 export const getDataServicesObs = () =>
   fromPromise(getWithJwtAsync(`${BASE_URL}/api/qes/systemdataviews/demo`));
 
+export const getFilterCapabilitiesObs = () =>
+  fromPromise(
+    getWithJwtAsync(`${BASE_URL}/api/qes/capabilities/aggregationdic`)
+  );
+
 export const getDataServiceDescriptionObs = (
   tenantId,
   sessionId,

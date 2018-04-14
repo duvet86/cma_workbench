@@ -4,13 +4,16 @@ import { mergeMap, map, catchError } from "rxjs/operators";
 import { handleException } from "errorPage/epic";
 import {
   DATASERVICES_REQUEST,
+  FILTER_CAPABILITIES_REQUEST,
   QUERY_DESCRIBE_REQUEST,
   queryConfigError,
+  filterCapabilitiesSuccess,
   dataServicesSuccess,
   queryDescribeSuccess
 } from "workbench/query/actions";
 import {
   getDataServicesObs,
+  getFilterCapabilitiesObs,
   getDataServiceDescriptionObs
 } from "workbench/query/api";
 
@@ -20,6 +23,19 @@ export const dataServicesEpic = action$ =>
     mergeMap(({ tenantId, sessionId, queryGraphId, elementId }) =>
       getDataServicesObs(tenantId, sessionId, queryGraphId, elementId).pipe(
         map(dataServices => dataServicesSuccess(dataServices)),
+        catchError(error => handleException(error, queryConfigError()))
+      )
+    )
+  );
+
+export const filterCapabilitiesEpic = action$ =>
+  action$.pipe(
+    ofType(FILTER_CAPABILITIES_REQUEST),
+    mergeMap(() =>
+      getFilterCapabilitiesObs().pipe(
+        map(filterCapabilities =>
+          filterCapabilitiesSuccess(filterCapabilities)
+        ),
         catchError(error => handleException(error, queryConfigError()))
       )
     )

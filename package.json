@@ -27,7 +27,7 @@
     "redux": "^3.7.2",
     "redux-observable": "^0.18.0",
     "reselect": "^3.0.1",
-    "rxjs": "^5.5.9",
+    "rxjs": "^5.5.10",
     "typeface-roboto": "^0.0.54"
   },
   "scripts": {
