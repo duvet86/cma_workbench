@@ -1,18 +1,18 @@
-export const SHOW_MYITEMS = "SHOW_MYITEMS";
-export const SHOW_FILTERS = "SHOW_FILTERS";
-export const SHOW_TOOLS = "SHOW_TOOLS";
+export const MYITEMS_SHOW = "MYITEMS_SHOW";
+export const FILTERS_SHOW = "FILTERS_SHOW";
+export const TOOLS_SHOW = "TOOLS_SHOW";
 
-export const showMyItems = disabledTabs => ({
-  type: SHOW_MYITEMS,
-  disabledTabs
+export const showMyItems = tabsState => ({
+  type: MYITEMS_SHOW,
+  tabsState
 });
 
-export const showFilters = disabledTabs => ({
-  type: SHOW_FILTERS,
-  disabledTabs
+export const showFilters = tabsState => ({
+  type: FILTERS_SHOW,
+  tabsState
 });
 
-export const showTools = disabledTabs => ({
-  type: SHOW_TOOLS,
-  disabledTabs
+export const showTools = tabsState => ({
+  type: TOOLS_SHOW,
+  tabsState
 });

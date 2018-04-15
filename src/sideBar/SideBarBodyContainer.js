@@ -6,9 +6,9 @@ import MyItemsListContainer from "sideBar/myItems/MyItemsListContainer";
 import OperatorsListContainer from "sideBar/operators/OperatorsListContainer";
 import SideBarBody from "sideBar/SideBarBody";
 
-const SideBarBodyContainer = ({ visibleTab, ...props }) => {
+const SideBarBodyContainer = ({ selectedTab, ...props }) => {
   let component = null;
-  switch (visibleTab) {
+  switch (selectedTab) {
     case 1:
       component = <div>Filters</div>;
       break;
@@ -21,16 +21,16 @@ const SideBarBodyContainer = ({ visibleTab, ...props }) => {
   }
   const renderer = () => component;
 
-  return <SideBarBody renderer={renderer} />;
+  return <SideBarBody tabRenderer={renderer} />;
 };
 
 SideBarBodyContainer.propTypes = {
-  visibleTab: PropTypes.number.isRequired,
+  selectedTab: PropTypes.number.isRequired,
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ navigationTabsReducer: { visibleTab } }) => ({
-  visibleTab
+const mapStateToProps = ({ navigationTabsReducer: { selectedTab } }) => ({
+  selectedTab
 });
 
 export default connect(mapStateToProps)(SideBarBodyContainer);

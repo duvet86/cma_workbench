@@ -28,21 +28,16 @@ const styles = theme => ({
   }
 });
 
-const NavigationTabs = ({
-  classes,
-  visibleTab,
-  disabledTabs,
-  handleChange
-}) => (
+const NavigationTabs = ({ classes, selectedTab, tabsState, handleChange }) => (
   <Tabs
     fullWidth
-    value={visibleTab}
+    value={selectedTab}
     onChange={handleChange}
     indicatorColor="primary"
     textColor="primary"
   >
     {tabButtons
-      .filter(({ disabled }, index) => !disabledTabs[index])
+      .filter(({ disabled }, index) => !tabsState[index])
       .map(({ id, label }, index) => (
         <Tab
           key={id}
@@ -62,8 +57,8 @@ const NavigationTabs = ({
 
 NavigationTabs.propTypes = {
   classes: PropTypes.object.isRequired,
-  visibleTab: PropTypes.number.isRequired,
-  disabledTabs: PropTypes.array.isRequired,
+  selectedTab: PropTypes.number.isRequired,
+  tabsState: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired
 };
 

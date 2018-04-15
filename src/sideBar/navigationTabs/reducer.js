@@ -1,36 +1,36 @@
 import {
-  SHOW_MYITEMS,
-  SHOW_FILTERS,
-  SHOW_TOOLS
+  MYITEMS_SHOW,
+  FILTERS_SHOW,
+  TOOLS_SHOW
 } from "sideBar/navigationTabs/actions";
 
 function navigationTabs(
   // Only myItems enabled at the beginning.
   // Suppose we are on "/".
   state = {
-    visibleTab: 0,
-    disabledTabs: [false, true, true]
+    selectedTab: 0,
+    tabsState: [false, true, true]
   },
   action
 ) {
-  const disabledTabs = action.disabledTabs || state.disabledTabs;
+  const tabsState = action.tabsState || state.tabsState;
 
   switch (action.type) {
-    case SHOW_MYITEMS:
+    case MYITEMS_SHOW:
       return {
-        visibleTab: 0,
-        disabledTabs
+        selectedTab: 0,
+        tabsState
       };
 
-    case SHOW_FILTERS:
+    case FILTERS_SHOW:
       return {
-        visibleTab: 1,
-        disabledTabs
+        selectedTab: 1,
+        tabsState
       };
-    case SHOW_TOOLS:
+    case TOOLS_SHOW:
       return {
-        visibleTab: 2,
-        disabledTabs
+        selectedTab: 2,
+        tabsState
       };
 
     default:

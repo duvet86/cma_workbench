@@ -11,13 +11,13 @@ const styles = {
   }
 };
 
-const SideBarBody = ({ classes, renderer }) => (
-  <div className={classes.bodyContainer}>{renderer()}</div>
+const SideBarBody = ({ classes, tabRenderer }) => (
+  <div className={classes.bodyContainer}>{tabRenderer()}</div>
 );
 
 SideBarBody.propTypes = {
   classes: PropTypes.object.isRequired,
-  renderer: PropTypes.func.isRequired
+  tabRenderer: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SideBarBody);

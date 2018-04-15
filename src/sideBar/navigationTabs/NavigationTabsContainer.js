@@ -48,12 +48,12 @@ class NavigationTabsContainer extends Component {
   };
 
   render() {
-    const { visibleTab, disabledTabs } = this.props;
+    const { selectedTab, tabsState } = this.props;
 
     return (
       <NavigationTabs
-        visibleTab={visibleTab}
-        disabledTabs={disabledTabs}
+        selectedTab={selectedTab}
+        tabsState={tabsState}
         handleChange={this.handleChange}
       />
     );
@@ -62,29 +62,29 @@ class NavigationTabsContainer extends Component {
 
 NavigationTabsContainer.propTypes = {
   location: PropTypes.object.isRequired,
-  visibleTab: PropTypes.number.isRequired,
-  disabledTabs: PropTypes.array.isRequired,
+  selectedTab: PropTypes.number.isRequired,
+  tabsState: PropTypes.array.isRequired,
   dispatchShowMyItems: PropTypes.func.isRequired,
   dispatchShowFilters: PropTypes.func.isRequired,
   dispatchShowMyTools: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({
-  navigationTabsReducer: { visibleTab, disabledTabs }
+  navigationTabsReducer: { selectedTab, tabsState }
 }) => ({
-  visibleTab,
-  disabledTabs
+  selectedTab,
+  tabsState
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatchShowMyItems: disabledTabs => {
-    dispatch(showMyItems(disabledTabs));
+  dispatchShowMyItems: tabsState => {
+    dispatch(showMyItems(tabsState));
   },
-  dispatchShowFilters: disabledTabs => {
-    dispatch(showFilters(disabledTabs));
+  dispatchShowFilters: tabsState => {
+    dispatch(showFilters(tabsState));
   },
-  dispatchShowMyTools: disabledTabs => {
-    dispatch(showTools(disabledTabs));
+  dispatchShowMyTools: tabsState => {
+    dispatch(showTools(tabsState));
   }
 });
 
