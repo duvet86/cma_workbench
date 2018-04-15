@@ -30,7 +30,7 @@ const App = ({ classes, handleDrawerOpen, open, isQesEnabled, ...props }) =>
       </Fragment>
     </DragDropContextProvider>
   ) : (
-    <div>Error Message.</div>
+    <div>Workbench features are not enabled.</div>
   );
 
 App.propTypes = {

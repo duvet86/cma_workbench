@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import MyItemsListContainer from "sideBar/myItems/MyItemsListContainer";
 import OperatorsListContainer from "sideBar/operators/OperatorsListContainer";
+import SideBarBody from "sideBar/SideBarBody";
 
 const SideBarBodyContainer = ({ visibleTab, ...props }) => {
   let component = null;
@@ -18,18 +19,9 @@ const SideBarBodyContainer = ({ visibleTab, ...props }) => {
       component = <MyItemsListContainer {...props} />;
       break;
   }
+  const renderer = () => component;
 
-  return (
-    <div
-      style={{
-        overflow: "auto",
-        marginBottom: 48,
-        height: "100%"
-      }}
-    >
-      {component}
-    </div>
-  );
+  return <SideBarBody renderer={renderer} />;
 };
 
 SideBarBodyContainer.propTypes = {

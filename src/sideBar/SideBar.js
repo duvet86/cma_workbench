@@ -12,11 +12,11 @@ const drawerPaperStyles = {
 };
 
 const styles = {
-  drawerPaperOpen: {
+  drawerOpen: {
     ...drawerPaperStyles,
     width: 300
   },
-  drawerPaperClosed: {
+  drawerClosed: {
     ...drawerPaperStyles,
     width: 0
   }
@@ -25,7 +25,7 @@ const styles = {
 const SideBar = ({ classes, open, ...props }) => (
   <Drawer
     classes={{
-      paper: open ? classes.drawerPaperOpen : classes.drawerPaperClosed
+      paper: open ? classes.drawerOpen : classes.drawerClosed
     }}
     variant="persistent"
     open={open}

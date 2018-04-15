@@ -9,7 +9,7 @@ import tabButtons from "sideBar/navigationTabs/tabsData";
 const styles = theme => ({
   tabRoot: {
     minWidth: 0,
-    flex: "auto"
+    maxWidth: "100%"
   },
   labelContainer: {
     [theme.breakpoints.up("md")]: {
@@ -35,25 +35,27 @@ const NavigationTabs = ({
   handleChange
 }) => (
   <Tabs
+    fullWidth
     value={visibleTab}
     onChange={handleChange}
     indicatorColor="primary"
     textColor="primary"
   >
-    {tabButtons.map(({ id, label, disabled }, index) => (
-      <Tab
-        key={id}
-        label={label}
-        disabled={disabledTabs[index]}
-        classes={{
-          root: classes.tabRoot,
-          labelContainer: classes.labelContainer,
-          textColorPrimary: classes.textColorPrimary,
-          textColorPrimarySelected: classes.textColorPrimarySelected,
-          textColorPrimaryDisabled: classes.textColorPrimaryDisabled
-        }}
-      />
-    ))}
+    {tabButtons
+      .filter(({ disabled }, index) => !disabledTabs[index])
+      .map(({ id, label }, index) => (
+        <Tab
+          key={id}
+          label={label}
+          classes={{
+            root: classes.tabRoot,
+            labelContainer: classes.labelContainer,
+            textColorPrimary: classes.textColorPrimary,
+            textColorPrimarySelected: classes.textColorPrimarySelected,
+            textColorPrimaryDisabled: classes.textColorPrimaryDisabled
+          }}
+        />
+      ))}
     />
   </Tabs>
 );
