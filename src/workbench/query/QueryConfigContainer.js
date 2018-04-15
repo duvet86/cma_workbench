@@ -8,7 +8,8 @@ import {
   removeQueryColumn,
   addQueryConstraint,
   updateQueryConstraintType,
-  updateQueryConstraintValues
+  updateQueryConstraintValues,
+  removeQueryConstraint
 } from "workbench/actions";
 import {
   closeQueryConfig,
@@ -42,7 +43,8 @@ class QueryConfigContainer extends Component {
     dispatchRemoveQueryColumn: PropTypes.func.isRequired,
     dispatchAddQueryConstraint: PropTypes.func.isRequired,
     dispatchUpdateQueryConstraintType: PropTypes.func.isRequired,
-    dispatchUpdateQueryConstraintValues: PropTypes.func.isRequired
+    dispatchUpdateQueryConstraintValues: PropTypes.func.isRequired,
+    dispatchRemoveQueryConstraint: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -104,12 +106,18 @@ class QueryConfigContainer extends Component {
 
   handledUpdateQueryConstraintValues = (constraintId, constraintValues) => {
     const { elementConfig, dispatchUpdateQueryConstraintValues } = this.props;
-    
+
     dispatchUpdateQueryConstraintValues(
       elementConfig.ElementId,
       constraintId,
       constraintValues
     );
+  };
+
+  handledRemoveQueryConstraint = constraintId => {
+    const { elementConfig, dispatchRemoveQueryConstraint } = this.props;
+
+    dispatchRemoveQueryConstraint(elementConfig.ElementId, constraintId);
   };
 
   render() {
@@ -124,6 +132,7 @@ class QueryConfigContainer extends Component {
         handledUpdateQueryConstraintValues={
           this.handledUpdateQueryConstraintValues
         }
+        handledRemoveQueryConstraint={this.handledRemoveQueryConstraint}
       />
     );
   }
@@ -168,7 +177,9 @@ const mapDispatchToProps = dispatch => ({
   ) =>
     dispatch(
       updateQueryConstraintValues(elementId, constraintId, constraintValues)
-    )
+    ),
+  dispatchRemoveQueryConstraint: (elementId, constraintId) =>
+    dispatch(removeQueryConstraint(elementId, constraintId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

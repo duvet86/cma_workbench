@@ -118,7 +118,8 @@ function session(
             Constraints: {
               [action.constraintId]: {
                 $merge: {
-                  Values: action.constraintValues
+                  Values: action.vectorValues,
+                  ValuesHint: action.valuesHint
                 }
               }
             }

@@ -54,13 +54,17 @@ const ConstraintSelector = ({
   filterCapabilities,
   handledAddQueryConstraint,
   handledUpdateQueryConstraintType,
-  handledUpdateQueryConstraintValues
+  handledUpdateQueryConstraintValues,
+  handledRemoveQueryConstraint
 }) => {
   const handleUpdateType = constraintId => event =>
     handledUpdateQueryConstraintType(constraintId, event.target.value);
 
   const handleUpdateValues = constraintId => event =>
     handledUpdateQueryConstraintValues(constraintId, event.target.value);
+
+  const handleRemoveConstraint = constraintId => event =>
+    handledRemoveQueryConstraint(constraintId);
 
   return (
     <Fragment>
@@ -101,7 +105,11 @@ const ConstraintSelector = ({
                   onChange={handleUpdateValues(ConstraintId)}
                 />
               </FormControl>
-              <IconButton className={classes.deleteButton} aria-label="Delete">
+              <IconButton
+                className={classes.deleteButton}
+                aria-label="Delete"
+                onClick={handleRemoveConstraint(ConstraintId)}
+              >
                 <DeleteIcon />
               </IconButton>
             </Paper>
@@ -116,7 +124,8 @@ ConstraintSelector.propTypes = {
   contraintTargets: PropTypes.array.isRequired,
   queryConstraints: PropTypes.array.isRequired,
   handledAddQueryConstraint: PropTypes.func.isRequired,
-  handledUpdateQueryConstraintType: PropTypes.func.isRequired
+  handledUpdateQueryConstraintType: PropTypes.func.isRequired,
+  handledRemoveQueryConstraint: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(ConstraintSelector);

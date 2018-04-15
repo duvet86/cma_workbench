@@ -110,6 +110,7 @@ function getStepContent(step, classes, props) {
           handledUpdateQueryConstraintValues={
             props.handledUpdateQueryConstraintValues
           }
+          handledRemoveQueryConstraint={props.handledRemoveQueryConstraint}
         />
       );
     default:
@@ -210,7 +211,8 @@ QueryConfig.propTypes = {
   handleRemoveQueryColumn: PropTypes.func.isRequired,
   handledAddQueryConstraint: PropTypes.func.isRequired,
   handledUpdateQueryConstraintType: PropTypes.func.isRequired,
-  handledUpdateQueryConstraintValues: PropTypes.func.isRequired
+  handledUpdateQueryConstraintValues: PropTypes.func.isRequired,
+  handledRemoveQueryConstraint: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(QueryConfig);
