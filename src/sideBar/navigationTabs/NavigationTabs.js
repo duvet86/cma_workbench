@@ -19,12 +19,6 @@ const styles = theme => ({
   },
   textColorPrimary: {
     color: "black"
-  },
-  textColorPrimarySelected: {
-    color: theme.palette.primary.main
-  },
-  textColorPrimaryDisabled: {
-    color: theme.palette.text.disabled
   }
 });
 
@@ -45,9 +39,7 @@ const NavigationTabs = ({ classes, selectedTab, tabsState, handleChange }) => (
           classes={{
             root: classes.tabRoot,
             labelContainer: classes.labelContainer,
-            textColorPrimary: classes.textColorPrimary,
-            textColorPrimarySelected: classes.textColorPrimarySelected,
-            textColorPrimaryDisabled: classes.textColorPrimaryDisabled
+            textColorPrimary: classes.textColorPrimary
           }}
         />
       ))}
