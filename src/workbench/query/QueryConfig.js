@@ -7,7 +7,7 @@ import { BackgroundLoadingContainer } from "common/loading";
 import StepperHeader from "workbench/query/StepperHeader";
 import ConfigActions from "workbench/query/ConfigActions";
 import SourceSelector from "workbench/query/SourceSelector";
-import ColumnSelector from "workbench/query/ColumnSelector";
+import SearchableList from "workbench/query/SearchableList";
 import StepHelperText from "workbench/query/StepHelperText";
 import ConstraintSelector from "workbench/query/ConstraintSelector";
 
@@ -31,14 +31,14 @@ function getStepContent(step, props) {
       Component = (
         <Grid container spacing={16}>
           <Grid item xs={6}>
-            <ColumnSelector
+            <SearchableList
               label="Available Columns"
               columns={props.availableColumns}
               onColumnClick={props.handleAddQueryColumn}
             />
           </Grid>
           <Grid item xs={6}>
-            <ColumnSelector
+            <SearchableList
               label="Selected Columns"
               columns={props.selectedColumns}
               onColumnClick={props.handleRemoveQueryColumn}
@@ -53,8 +53,8 @@ function getStepContent(step, props) {
         <ConstraintSelector
           filterCapabilities={props.filterCapabilities}
           contraintTargets={props.contraintTargets}
-          handledAddQueryConstraint={props.handledAddQueryConstraint}
           queryConstraints={props.elementConfig.Constraints}
+          handledAddQueryConstraint={props.handledAddQueryConstraint}
           handledUpdateQueryConstraintType={
             props.handledUpdateQueryConstraintType
           }

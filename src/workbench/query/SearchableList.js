@@ -75,7 +75,7 @@ const rowRenderer = (classes, columns, onColumnClick) => ({
   );
 };
 
-class ColumnSelector extends Component {
+class SearchableList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -161,11 +161,11 @@ class ColumnSelector extends Component {
   }
 }
 
-ColumnSelector.propTypes = {
+SearchableList.propTypes = {
   classes: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   columns: PropTypes.array.isRequired,
   onColumnClick: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(ColumnSelector);
+export default withStyles(styles)(SearchableList);
