@@ -8,6 +8,7 @@ import {
   updateQueryConstraintValues,
   removeQueryConstraint
 } from "workbench/actions";
+import { filterCapabilitiesRequest } from "workbench/query/actions";
 
 import { getQuery, getConstraintTargets } from "workbench/query/selectors";
 
@@ -16,13 +17,18 @@ import ConstraintSelector from "workbench/query/ConstraintSelector";
 class ConstraintSelectorContainer extends Component {
   static propTypes = {
     elementConfig: PropTypes.object.isRequired,
-    filterCapabilities: PropTypes.array.isRequired,
+    filterCapabilities: PropTypes.object.isRequired,
     contraintTargets: PropTypes.array.isRequired,
+    dispatchFilterCapabilitiesRequest: PropTypes.func.isRequired,
     dispatchAddQueryConstraint: PropTypes.func.isRequired,
     dispatchUpdateQueryConstraintType: PropTypes.func.isRequired,
     dispatchUpdateQueryConstraintValues: PropTypes.func.isRequired,
     dispatchRemoveQueryConstraint: PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    this.props.dispatchFilterCapabilitiesRequest();
+  }
 
   handledAddQueryConstraint = selectedConstraintTarget => {
     const {
@@ -96,6 +102,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  dispatchFilterCapabilitiesRequest: () =>
+    dispatch(filterCapabilitiesRequest()),
   dispatchAddQueryConstraint: (elementId, constraintId, constraintTarget) =>
     dispatch(addQueryConstraint(elementId, constraintId, constraintTarget)),
   dispatchUpdateQueryConstraintType: (

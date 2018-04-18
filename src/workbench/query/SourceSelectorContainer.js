@@ -7,7 +7,7 @@ import { dataServicesRequest } from "workbench/query/actions";
 
 import { getQuery, getDataServices } from "workbench/query/selectors";
 
-import SelectInput from "workbench/query/SelectInput";
+import SourceSelector from "workbench/query/SourceSelector";
 
 class SourceSelectorContainer extends Component {
   static propTypes = {
@@ -33,7 +33,7 @@ class SourceSelectorContainer extends Component {
     const { elementConfig, dataServices } = this.props;
 
     return (
-      <SelectInput
+      <SourceSelector
         targetDataViewId={elementConfig.TargetDataViewId}
         dataServices={dataServices}
         handleChangeDataService={this.handleChangeDataService}

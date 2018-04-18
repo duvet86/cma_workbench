@@ -123,8 +123,10 @@ ConstraintSelector.propTypes = {
   classes: PropTypes.object.isRequired,
   contraintTargets: PropTypes.array.isRequired,
   queryConstraints: PropTypes.array.isRequired,
+  filterCapabilities: PropTypes.object.isRequired,
   handledAddQueryConstraint: PropTypes.func.isRequired,
   handledUpdateQueryConstraintType: PropTypes.func.isRequired,
+  handledUpdateQueryConstraintValues: PropTypes.func.isRequired,
   handledRemoveQueryConstraint: PropTypes.func.isRequired
 };
 

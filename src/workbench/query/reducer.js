@@ -17,7 +17,7 @@ const initialState = {
   dataServices: [],
   availableColumns: [],
   availableFilters: [],
-  filterCapabilities: []
+  filterCapabilities: {}
 };
 
 function queryConfig(state = { ...initialState }, action) {

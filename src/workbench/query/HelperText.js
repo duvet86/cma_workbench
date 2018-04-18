@@ -7,7 +7,7 @@ import Avatar from "material-ui/Avatar";
 
 import InfoIcon from "@material-ui/icons/InfoOutline";
 
-const StepHelperText = ({ currentStep }) => {
+const HelperText = ({ currentStep }) => {
   let title = "";
   let text = "";
 
@@ -48,8 +48,8 @@ const StepHelperText = ({ currentStep }) => {
   );
 };
 
-StepHelperText.propTypes = {
-  currentStep: PropTypes.number
+HelperText.propTypes = {
+  currentStep: PropTypes.number.isRequired
 };
 
-export default StepHelperText;
+export default HelperText;
