@@ -12,31 +12,19 @@ import ConstraintSelectorContainer from "workbench/query/ConstraintSelectorConta
 import ConfigActionsContainer from "workbench/query/ConfigActionsContainer";
 
 function getStepContent(currentStep) {
-  let Component;
-
   switch (currentStep) {
     case 0:
-      Component = <SourceSelectorContainer />;
-      break;
+      return <SourceSelectorContainer />;
 
     case 1:
-      Component = <ColumnsSelectorContainer />;
-      break;
+      return <ColumnsSelectorContainer />;
 
     case 2:
-      Component = <ConstraintSelectorContainer />;
-      break;
+      return <ConstraintSelectorContainer />;
 
     default:
-      Component = "Unknown step";
-      break;
+      return "Unknown step";
   }
-
-  return (
-    <Grid item xs={12}>
-      {Component}
-    </Grid>
-  );
 }
 
 const QueryConfig = ({ isLoading, currentStep, completedSteps }) => (
@@ -46,7 +34,9 @@ const QueryConfig = ({ isLoading, currentStep, completedSteps }) => (
       completedSteps={completedSteps}
     />
     <HelperText currentStep={currentStep} />
-    {getStepContent(currentStep)}
+    <Grid item xs={12}>
+      {getStepContent(currentStep)}
+    </Grid>
     <ConfigActionsContainer
       currentStep={currentStep}
       completedSteps={completedSteps}
