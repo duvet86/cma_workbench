@@ -10,7 +10,11 @@ import {
 } from "workbench/actions";
 import { filterCapabilitiesRequest } from "workbench/query/actions";
 
-import { getQuery, getConstraintTargets } from "workbench/query/selectors";
+import {
+  getQuery,
+  getQueryConstraints,
+  getConstraintTargets
+} from "workbench/query/selectors";
 
 import ConstraintSelector from "workbench/query/ConstraintSelector";
 
@@ -50,38 +54,42 @@ class ConstraintSelectorContainer extends Component {
     );
   };
 
-  handledUpdateQueryConstraintType = (constraintId, constraintType) => {
+  handledUpdateQueryConstraintType = constraintId => event => {
     const { elementConfig, dispatchUpdateQueryConstraintType } = this.props;
 
     dispatchUpdateQueryConstraintType(
       elementConfig.ElementId,
       constraintId,
-      constraintType
+      event.target.value
     );
   };
 
-  handledUpdateQueryConstraintValues = (constraintId, constraintValues) => {
+  handledUpdateQueryConstraintValues = constraintId => event => {
     const { elementConfig, dispatchUpdateQueryConstraintValues } = this.props;
 
     dispatchUpdateQueryConstraintValues(
       elementConfig.ElementId,
       constraintId,
-      constraintValues
+      event.target.value
     );
   };
 
-  handledRemoveQueryConstraint = constraintId => {
+  handledRemoveQueryConstraint = constraintId => () => {
     const { elementConfig, dispatchRemoveQueryConstraint } = this.props;
 
     dispatchRemoveQueryConstraint(elementConfig.ElementId, constraintId);
   };
 
   render() {
-    const { elementConfig, filterCapabilities, contraintTargets } = this.props;
+    const {
+      queryConstraints,
+      filterCapabilities,
+      contraintTargets
+    } = this.props;
 
     return (
       <ConstraintSelector
-        queryConstraints={elementConfig.Constraints}
+        queryConstraints={queryConstraints}
         filterCapabilities={filterCapabilities}
         contraintTargets={contraintTargets}
         handledAddQueryConstraint={this.handledAddQueryConstraint}
@@ -97,6 +105,7 @@ class ConstraintSelectorContainer extends Component {
 
 const mapStateToProps = state => ({
   elementConfig: getQuery(state),
+  queryConstraints: getQueryConstraints(state),
   filterCapabilities: state.queryConfigReducer.filterCapabilities,
   contraintTargets: getConstraintTargets(state)
 });

@@ -46,7 +46,9 @@ export const serviceDescriptionEpic = (action$, store) =>
     ofType(QUERY_DESCRIBE_REQUEST),
     mergeMap(() => {
       const {
-        sessionReducer: { session: { TenantId, SessionId, QueryGraphId } },
+        sessionReducer: {
+          session: { TenantId, SessionId, QueryGraphId }
+        },
         queryConfigReducer: { elementId }
       } = store.getState();
 

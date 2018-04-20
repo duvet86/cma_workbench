@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { setConstraintDisplayValue } from "workbench/utility";
 
 const dataServicesSelector = state => state.queryConfigReducer.dataServices;
 
@@ -103,4 +104,11 @@ export const getConstraintTargets = createSelector(
 
     return [].concat(filtersSelect, columnsSelect);
   }
+);
+
+export const getQueryConstraints = createSelector(
+  elementIdSelector,
+  querySelector,
+  (elementId, queries) =>
+    queries[elementId].Constraints.map(c => setConstraintDisplayValue(c))
 );

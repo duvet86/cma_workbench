@@ -56,68 +56,57 @@ const ConstraintSelector = ({
   handledUpdateQueryConstraintType,
   handledUpdateQueryConstraintValues,
   handledRemoveQueryConstraint
-}) => {
-  const handleUpdateType = constraintId => event =>
-    handledUpdateQueryConstraintType(constraintId, event.target.value);
-
-  const handleUpdateValues = constraintId => event =>
-    handledUpdateQueryConstraintValues(constraintId, event.target.value);
-
-  const handleRemoveConstraint = constraintId => event =>
-    handledRemoveQueryConstraint(constraintId);
-
-  return (
-    <Fragment>
-      <div className={classes.constraintTargetSelect}>
-        <SelectInput
-          OptionsIcon={ConstraintIcon}
-          iconClassName={classes.constraintIconColour}
-          inputLabel="Contraint on..."
-          options={contraintTargets}
-          handleChange={handledAddQueryConstraint}
-        />
-      </div>
-      {queryConstraints.length > 0 &&
-        queryConstraints.map(
-          ({ ConstraintId, DataType, FilterType, Values, label }) => (
-            <Paper key={ConstraintId} className={classes.paper}>
-              <ConstraintIcon className={classes.constraintIcon} />
-              <Typography variant="subheading" className={classes.targetLabel}>
-                {label}
-              </Typography>
-              <FormControl className={classes.typeSelect}>
-                <Select
-                  value={FilterType}
-                  onChange={handleUpdateType(ConstraintId)}
-                  autoWidth
-                >
-                  {filterCapabilities[DataType].map(({ Type, Label }, n) => (
-                    <MenuItem key={n} value={Type}>
-                      {Label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl className={classes.valueInput}>
-                <Input
-                  autoFocus
-                  value={Values}
-                  onChange={handleUpdateValues(ConstraintId)}
-                />
-              </FormControl>
-              <IconButton
-                className={classes.deleteButton}
-                aria-label="Delete"
-                onClick={handleRemoveConstraint(ConstraintId)}
+}) => (
+  <Fragment>
+    <div className={classes.constraintTargetSelect}>
+      <SelectInput
+        OptionsIcon={ConstraintIcon}
+        iconClassName={classes.constraintIconColour}
+        inputLabel="Contraint on..."
+        options={contraintTargets}
+        handleChange={handledAddQueryConstraint}
+      />
+    </div>
+    {queryConstraints.length > 0 &&
+      queryConstraints.map(
+        ({ ConstraintId, DataType, FilterType, Values, label }) => (
+          <Paper key={ConstraintId} className={classes.paper}>
+            <ConstraintIcon className={classes.constraintIcon} />
+            <Typography variant="subheading" className={classes.targetLabel}>
+              {label}
+            </Typography>
+            <FormControl className={classes.typeSelect}>
+              <Select
+                value={FilterType}
+                onChange={handledUpdateQueryConstraintType(ConstraintId)}
+                autoWidth
               >
-                <DeleteIcon />
-              </IconButton>
-            </Paper>
-          )
-        )}
-    </Fragment>
-  );
-};
+                {filterCapabilities[DataType].map(({ Type, Label }, n) => (
+                  <MenuItem key={n} value={Type}>
+                    {Label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.valueInput}>
+              <Input
+                autoFocus
+                value={Values}
+                onChange={handledUpdateQueryConstraintValues(ConstraintId)}
+              />
+            </FormControl>
+            <IconButton
+              className={classes.deleteButton}
+              aria-label="Delete"
+              onClick={handledRemoveQueryConstraint(ConstraintId)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Paper>
+        )
+      )}
+  </Fragment>
+);
 
 ConstraintSelector.propTypes = {
   classes: PropTypes.object.isRequired,
