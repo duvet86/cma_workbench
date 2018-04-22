@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import Grid from "material-ui/Grid";
 
-import SearchableList from "workbench/query/SearchableList";
+import SearchableListContainer from "common/searchableList/SearchableListContainer";
 
 const ColumnsSelector = ({
   availableColumns,
@@ -13,17 +13,17 @@ const ColumnsSelector = ({
 }) => (
   <Grid container spacing={16}>
     <Grid item xs={6}>
-      <SearchableList
+      <SearchableListContainer
         label="Available Columns"
-        columns={availableColumns}
-        onColumnClick={handleAddQueryColumn}
+        items={availableColumns}
+        onItemClick={handleAddQueryColumn}
       />
     </Grid>
     <Grid item xs={6}>
-      <SearchableList
+      <SearchableListContainer
         label="Selected Columns"
-        columns={selectedColumns}
-        onColumnClick={handleRemoveQueryColumn}
+        items={selectedColumns}
+        onItemClick={handleRemoveQueryColumn}
       />
     </Grid>
   </Grid>

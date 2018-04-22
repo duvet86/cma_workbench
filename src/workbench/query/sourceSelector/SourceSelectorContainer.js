@@ -5,13 +5,14 @@ import { connect } from "react-redux";
 import { updateQueryDataService } from "workbench/actions";
 import { dataServicesRequest } from "workbench/query/actions";
 
-import { getQuery, getDataServices } from "workbench/query/selectors";
+import { getDataServices } from "workbench/query/selectors";
 
-import SourceSelector from "workbench/query/SourceSelector";
+import SourceSelector from "workbench/query/sourceSelector/SourceSelector";
 
 class SourceSelectorContainer extends Component {
   static propTypes = {
-    elementConfig: PropTypes.object.isRequired,
+    elementId: PropTypes.number.isRequired,
+    targetDataViewId: PropTypes.string.isRequired,
     dataServices: PropTypes.array.isRequired,
     dispatchDataServicesRequest: PropTypes.func.isRequired,
     dispatchDescribeQuery: PropTypes.func.isRequired
@@ -22,19 +23,19 @@ class SourceSelectorContainer extends Component {
   }
 
   handleChangeDataService = selectedDataServiceId => {
-    const { elementConfig, dispatchDescribeQuery } = this.props;
+    const { elementId, dispatchDescribeQuery } = this.props;
 
-    dispatchDescribeQuery(elementConfig.ElementId, {
+    dispatchDescribeQuery(elementId, {
       TargetDataViewId: selectedDataServiceId
     });
   };
 
   render() {
-    const { elementConfig, dataServices } = this.props;
+    const { targetDataViewId, dataServices } = this.props;
 
     return (
       <SourceSelector
-        targetDataViewId={elementConfig.TargetDataViewId}
+        targetDataViewId={targetDataViewId}
         dataServices={dataServices}
         handleChangeDataService={this.handleChangeDataService}
       />
@@ -43,7 +44,6 @@ class SourceSelectorContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  elementConfig: getQuery(state),
   dataServices: getDataServices(state)
 });
 

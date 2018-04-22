@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { setConstraintDisplayValue } from "workbench/utility";
+import { setConstraintDisplayValue } from "workbench/utils";
 
 const dataServicesSelector = state => state.queryConfigReducer.dataServices;
 
@@ -69,9 +69,12 @@ const noteSupportedDataTypes = ["DateTimeValue", "DateValue", "TimeValue"];
 export const getConstraintTargets = createSelector(
   availableColumnsSelector,
   availableFiltersSelector,
-  (columns, filters) => {
+  elementIdSelector,
+  querySelector,
+  (columns, filters, elementId, queries) => {
     const filtersSelect = filters.map(
       ({ Label, FilterName, DataType, ToColumnName }) => ({
+        FilterName,
         ToColumnName,
         value: {
           label: Label,
@@ -102,7 +105,18 @@ export const getConstraintTargets = createSelector(
         secondaryLabel: `(${DataType})`
       }));
 
-    return [].concat(filtersSelect, columnsSelect);
+    return []
+      .concat(filtersSelect, columnsSelect)
+      .filter(
+        availConstraint =>
+          !queries[elementId].Constraints.some(
+            queryConstraint =>
+              (availConstraint.FilterName &&
+                availConstraint.FilterName === queryConstraint.FilterName) ||
+              (availConstraint.ColumnName &&
+                availConstraint.ColumnName === queryConstraint.ColumnName)
+          )
+      );
   }
 );
 

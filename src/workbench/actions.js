@@ -1,8 +1,6 @@
 import { normalize } from "normalizr";
 import { graphSchema } from "workbench/schema";
 
-import { DATA_TYPES } from "workbench/utility";
-
 export const SESSION_REQUEST = "SESSION_REQUEST";
 export const SESSION_SUCCESS = "SESSION_SUCCESS";
 
@@ -78,8 +76,8 @@ export const addQuery = elementId => ({
   query: {
     ElementId: elementId,
     IsConfigured: false,
-    TargetDataServiceId: null,
-    TargetDataViewId: null,
+    TargetDataServiceId: "",
+    TargetDataViewId: "",
     ElementType: "Query",
     Columns: [],
     Constraints: []
@@ -121,7 +119,7 @@ export const addQueryConstraint = (
   elementId,
   constraint: {
     ConstraintId: constraintId,
-    Values: [],
+    Values: undefined,
     ValuesHint: "NoHint",
     ...contraintTarget
   }
@@ -141,42 +139,15 @@ export const updateQueryConstraintType = (
 export const updateQueryConstraintValues = (
   elementId,
   constraintId,
-  dataType,
-  constraintValues
-) => {
-  let vectorValues;
-  let valuesHint;
-
-  switch (dataType) {
-    case DATA_TYPES.INTERVALVALUE:
-      vectorValues = [
-        [
-          constraintValues.intervalType,
-          constraintValues.intervalString,
-          constraintValues.intervalLabel
-        ]
-      ];
-      break;
-    case DATA_TYPES.SELECT:
-    case DATA_TYPES.TEXTINPUTLIST:
-    case DATA_TYPES.MULTISELECT:
-      vectorValues = constraintValues.values;
-      valuesHint = constraintValues.valuesHint;
-      break;
-    default:
-      vectorValues = [[constraintValues]];
-      valuesHint = "NoHint";
-      break;
-  }
-
-  return {
-    type: QUERY_CONSTRAINT_VALUES,
-    elementId,
-    constraintId,
-    vectorValues,
-    valuesHint
-  };
-};
+  vectorValues,
+  valuesHint
+) => ({
+  type: QUERY_CONSTRAINT_VALUES,
+  elementId,
+  constraintId,
+  vectorValues,
+  valuesHint
+});
 
 export const removeQueryConstraint = (elementId, constraintId) => ({
   type: QUERY_CONSTRAINT_REMOVE,

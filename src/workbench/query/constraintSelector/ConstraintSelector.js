@@ -69,7 +69,7 @@ const ConstraintSelector = ({
     </div>
     {queryConstraints.length > 0 &&
       queryConstraints.map(
-        ({ ConstraintId, DataType, FilterType, Values, label }) => (
+        ({ ConstraintId, DataType, FilterType, displayValue, label }) => (
           <Paper key={ConstraintId} className={classes.paper}>
             <ConstraintIcon className={classes.constraintIcon} />
             <Typography variant="subheading" className={classes.targetLabel}>
@@ -91,8 +91,11 @@ const ConstraintSelector = ({
             <FormControl className={classes.valueInput}>
               <Input
                 autoFocus
-                value={Values}
-                onChange={handledUpdateQueryConstraintValues(ConstraintId)}
+                value={displayValue}
+                onChange={handledUpdateQueryConstraintValues(
+                  ConstraintId,
+                  DataType
+                )}
               />
             </FormControl>
             <IconButton

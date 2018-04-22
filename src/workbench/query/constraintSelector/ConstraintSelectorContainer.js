@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { getConstraintVectorValue } from "workbench/utils";
+
 import {
   addQueryConstraint,
   updateQueryConstraintType,
@@ -11,17 +13,17 @@ import {
 import { filterCapabilitiesRequest } from "workbench/query/actions";
 
 import {
-  getQuery,
   getQueryConstraints,
   getConstraintTargets
 } from "workbench/query/selectors";
 
-import ConstraintSelector from "workbench/query/ConstraintSelector";
+import ConstraintSelector from "workbench/query/constraintSelector/ConstraintSelector";
 
 class ConstraintSelectorContainer extends Component {
   static propTypes = {
-    elementConfig: PropTypes.object.isRequired,
+    elementId: PropTypes.number.isRequired,
     filterCapabilities: PropTypes.object.isRequired,
+    queryConstraints: PropTypes.array.isRequired,
     contraintTargets: PropTypes.array.isRequired,
     dispatchFilterCapabilitiesRequest: PropTypes.func.isRequired,
     dispatchAddQueryConstraint: PropTypes.func.isRequired,
@@ -36,7 +38,8 @@ class ConstraintSelectorContainer extends Component {
 
   handledAddQueryConstraint = selectedConstraintTarget => {
     const {
-      elementConfig,
+      elementId,
+      queryConstraints,
       dispatchAddQueryConstraint,
       filterCapabilities
     } = this.props;
@@ -48,36 +51,39 @@ class ConstraintSelectorContainer extends Component {
     };
 
     dispatchAddQueryConstraint(
-      elementConfig.ElementId,
-      elementConfig.Constraints.length,
+      elementId,
+      queryConstraints.length,
       constraintTarget
     );
   };
 
   handledUpdateQueryConstraintType = constraintId => event => {
-    const { elementConfig, dispatchUpdateQueryConstraintType } = this.props;
+    const { elementId, dispatchUpdateQueryConstraintType } = this.props;
 
     dispatchUpdateQueryConstraintType(
-      elementConfig.ElementId,
+      elementId,
       constraintId,
       event.target.value
     );
   };
 
-  handledUpdateQueryConstraintValues = constraintId => event => {
-    const { elementConfig, dispatchUpdateQueryConstraintValues } = this.props;
+  handledUpdateQueryConstraintValues = (constraintId, dataType) => event => {
+    const { elementId, dispatchUpdateQueryConstraintValues } = this.props;
+
+    const valuesObj = getConstraintVectorValue(dataType, event.target.value);
 
     dispatchUpdateQueryConstraintValues(
-      elementConfig.ElementId,
+      elementId,
       constraintId,
-      event.target.value
+      valuesObj.vectorValues,
+      valuesObj.valuesHint
     );
   };
 
   handledRemoveQueryConstraint = constraintId => () => {
-    const { elementConfig, dispatchRemoveQueryConstraint } = this.props;
+    const { elementId, dispatchRemoveQueryConstraint } = this.props;
 
-    dispatchRemoveQueryConstraint(elementConfig.ElementId, constraintId);
+    dispatchRemoveQueryConstraint(elementId, constraintId);
   };
 
   render() {
@@ -104,7 +110,6 @@ class ConstraintSelectorContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  elementConfig: getQuery(state),
   queryConstraints: getQueryConstraints(state),
   filterCapabilities: state.queryConfigReducer.filterCapabilities,
   contraintTargets: getConstraintTargets(state)

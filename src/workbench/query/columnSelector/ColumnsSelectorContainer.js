@@ -5,16 +5,15 @@ import { connect } from "react-redux";
 import { addQueryColumn, removeQueryColumn } from "workbench/actions";
 
 import {
-  getQuery,
   getAvailableColumns,
   getQueryColumns
 } from "workbench/query/selectors";
 
-import ColumnsSelector from "workbench/query/ColumnsSelector";
+import ColumnsSelector from "workbench/query/columnSelector/ColumnsSelector";
 
 class ColumnsSelectorContainer extends Component {
   static propTypes = {
-    elementConfig: PropTypes.object.isRequired,
+    elementId: PropTypes.number.isRequired,
     availableColumns: PropTypes.array.isRequired,
     selectedColumns: PropTypes.array.isRequired,
     dispatchAddQueryColumn: PropTypes.func.isRequired,
@@ -22,13 +21,13 @@ class ColumnsSelectorContainer extends Component {
   };
 
   handleAddQueryColumn = column => {
-    const { elementConfig, dispatchAddQueryColumn } = this.props;
-    dispatchAddQueryColumn(elementConfig.ElementId, column);
+    const { elementId, dispatchAddQueryColumn } = this.props;
+    dispatchAddQueryColumn(elementId, column);
   };
 
   handleRemoveQueryColumn = ({ ColumnName }) => {
-    const { elementConfig, dispatchRemoveQueryColumn } = this.props;
-    dispatchRemoveQueryColumn(elementConfig.ElementId, ColumnName);
+    const { elementId, dispatchRemoveQueryColumn } = this.props;
+    dispatchRemoveQueryColumn(elementId, ColumnName);
   };
 
   render() {
@@ -46,7 +45,6 @@ class ColumnsSelectorContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  elementConfig: getQuery(state),
   availableColumns: getAvailableColumns(state),
   selectedColumns: getQueryColumns(state)
 });

@@ -6,28 +6,40 @@ import Grid from "material-ui/Grid";
 import { BackgroundLoadingContainer } from "common/loading";
 import HelperText from "workbench/query/HelperText";
 import StepperHeaderContainer from "workbench/query/StepperHeaderContainer";
-import SourceSelectorContainer from "workbench/query/SourceSelectorContainer";
-import ColumnsSelectorContainer from "workbench/query/ColumnsSelectorContainer";
-import ConstraintSelectorContainer from "workbench/query/ConstraintSelectorContainer";
+import SourceSelectorContainer from "workbench/query/sourceSelector/SourceSelectorContainer";
+import ColumnsSelectorContainer from "workbench/query/columnSelector/ColumnsSelectorContainer";
+import ConstraintSelectorContainer from "workbench/query/constraintSelector/ConstraintSelectorContainer";
 import ConfigActionsContainer from "workbench/query/ConfigActionsContainer";
 
-function getStepContent(currentStep) {
+function getStepContent(currentStep, selectedQuery) {
   switch (currentStep) {
     case 0:
-      return <SourceSelectorContainer />;
+      return (
+        <SourceSelectorContainer
+          elementId={selectedQuery.ElementId}
+          targetDataViewId={selectedQuery.TargetDataViewId}
+        />
+      );
 
     case 1:
-      return <ColumnsSelectorContainer />;
+      return <ColumnsSelectorContainer elementId={selectedQuery.ElementId} />;
 
     case 2:
-      return <ConstraintSelectorContainer />;
+      return (
+        <ConstraintSelectorContainer elementId={selectedQuery.ElementId} />
+      );
 
     default:
       return "Unknown step";
   }
 }
 
-const QueryConfig = ({ isLoading, currentStep, completedSteps }) => (
+const QueryConfig = ({
+  isLoading,
+  selectedQuery,
+  currentStep,
+  completedSteps
+}) => (
   <BackgroundLoadingContainer isLoading={isLoading}>
     <StepperHeaderContainer
       currentStep={currentStep}
@@ -35,7 +47,7 @@ const QueryConfig = ({ isLoading, currentStep, completedSteps }) => (
     />
     <HelperText currentStep={currentStep} />
     <Grid item xs={12}>
-      {getStepContent(currentStep)}
+      {getStepContent(currentStep, selectedQuery)}
     </Grid>
     <ConfigActionsContainer
       currentStep={currentStep}
@@ -46,6 +58,7 @@ const QueryConfig = ({ isLoading, currentStep, completedSteps }) => (
 
 QueryConfig.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  selectedQuery: PropTypes.object.isRequired,
   currentStep: PropTypes.number.isRequired,
   completedSteps: PropTypes.array.isRequired
 };
