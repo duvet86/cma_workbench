@@ -1,6 +1,6 @@
 // @flow
 
-import { TENANT_ID } from "lib/constants";
+import { BASE_URL, TENANT_ID } from "lib/constants";
 import { getToken } from "lib/sessionStorageApi";
 
 type AuthHeader = {
@@ -65,7 +65,7 @@ export const getAsync = async (
   url: string,
   headers: Header
 ): Promise<mixed> => {
-  const response = await fetch(url, {
+  const response = await fetch(`${BASE_URL}/${url}`, {
     method: "GET",
     headers: headers
   });
@@ -78,7 +78,7 @@ export const postAsync = async (
   data: mixed,
   headers: Header
 ): Promise<mixed> => {
-  const response = await fetch(url, {
+  const response = await fetch(`${BASE_URL}/${url}`, {
     method: "POST",
     headers: headers,
     body: JSON.stringify(data)

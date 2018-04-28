@@ -1,10 +1,8 @@
-// @flow
-
-import { fromPromise } from "rxjs/observable/fromPromise";
+import { from } from "rxjs";
 import { encode } from "base-64";
 import { push } from "react-router-redux";
 
-import { BASE_URL, TIME_TO_LIVE } from "lib/constants";
+import { TIME_TO_LIVE } from "lib/constants";
 import { clearToken, getToken } from "lib/sessionStorageApi";
 import { getAsync } from "lib/http";
 
@@ -14,8 +12,8 @@ export const getTokenAsync = (
   userName: string,
   password: string
 ): Promise<string> =>
-  fromPromise(
-    getAsync(`${BASE_URL}/api/token`, {
+  from(
+    getAsync("api/token", {
       Authorization: `Basic ${encode(userName + ":" + password)}`
     })
   );

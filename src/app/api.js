@@ -1,7 +1,6 @@
-import { fromPromise } from "rxjs/observable/fromPromise";
+import { from } from "rxjs";
 
-import { BASE_URL } from "lib/constants";
 import { getWithJwtAsync } from "lib/http";
 
 export const getQesEnabledAsync = () =>
-  fromPromise(getWithJwtAsync(`${BASE_URL}/api/qes/cma-enabled`));
+  from(getWithJwtAsync("api/qes/cma-enabled"));

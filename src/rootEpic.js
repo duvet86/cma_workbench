@@ -19,6 +19,7 @@ import {
   filterCapabilitiesEpic,
   serviceDescriptionEpic
 } from "workbench/query/epic";
+import { intervalTypeEpic } from "common/intervalSelector/epic";
 
 const epics = [
   loadingEpic,
@@ -35,7 +36,8 @@ const epics = [
   dataServicesEpic,
   filterCapabilitiesEpic,
   updateQueryDataServiceEpic,
-  serviceDescriptionEpic
+  serviceDescriptionEpic,
+  intervalTypeEpic
 ];
 
 export default combineEpics(...epics);

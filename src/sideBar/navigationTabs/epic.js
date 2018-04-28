@@ -1,4 +1,4 @@
-import { of } from "rxjs/observable/of";
+import { of } from "rxjs";
 import { filter, switchMap } from "rxjs/operators";
 import { ofType } from "redux-observable";
 

@@ -1,12 +1,12 @@
-import { fromPromise } from "rxjs/observable/fromPromise";
+import { from } from "rxjs";
 
-import { BASE_URL, TENANT_ID } from "lib/constants";
+import { TENANT_ID } from "lib/constants";
 import { postWithJwtAsync, getWithJwtAsync } from "lib/http";
 
 export const getSessionInfoObs = dataViewId =>
-  fromPromise(
+  from(
     postWithJwtAsync(
-      `${BASE_URL}/api/qes/${TENANT_ID}/sessions${
+      `api/qes/${TENANT_ID}/sessions${
         dataViewId ? `?dataViewId=${dataViewId}` : ""
       }`
     )
@@ -19,9 +19,9 @@ export const saveGraphObs = (
   graphData,
   isApplyOnly = false
 ) =>
-  fromPromise(
+  from(
     postWithJwtAsync(
-      `${BASE_URL}/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?applyOnly=${isApplyOnly}`,
+      `api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?applyOnly=${isApplyOnly}`,
       graphData
     )
   );
@@ -32,22 +32,22 @@ export const getGraphObs = (
   queryGraphId,
   nextChangeNumber
 ) =>
-  fromPromise(
+  from(
     getWithJwtAsync(
-      `${BASE_URL}/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?nextChangeNumber=${nextChangeNumber}`
+      `api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/changes?nextChangeNumber=${nextChangeNumber}`
     )
   );
 
 export const pushGraphChangesObs = (tenantId, sessionId, queryGraphId) =>
-  fromPromise(
+  from(
     postWithJwtAsync(
-      `${BASE_URL}/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/push`
+      `api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/push`
     )
   );
 
 export const popGraphChangesObs = (tenantId, sessionId, queryGraphId) =>
-  fromPromise(
+  from(
     postWithJwtAsync(
-      `${BASE_URL}/api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/pop`
+      `api/qes/${tenantId}/sessions/${sessionId}/querygraph/${queryGraphId}/pop`
     )
   );

@@ -1,9 +1,7 @@
-import { fromPromise } from "rxjs/observable/fromPromise";
+import { from } from "rxjs";
 
-import { BASE_URL, TENANT_ID } from "lib/constants";
+import { TENANT_ID } from "lib/constants";
 import { getWithJwtAsync } from "lib/http";
 
 export const getOperatorsAsync = () =>
-  fromPromise(
-    getWithJwtAsync(`${BASE_URL}/api/qes/${TENANT_ID}/operatorservices`)
-  );
+  from(getWithJwtAsync(`api/qes/${TENANT_ID}/operatorservices`));

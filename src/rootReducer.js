@@ -12,6 +12,7 @@ import appReducer from "app/reducer";
 import sessionReducer from "workbench/reducer";
 import configSwitchReducer from "workbench/configSwitch/reducer";
 import queryConfigReducer from "workbench/query/reducer";
+import intervalReducer from "common/intervalSelector/reducer";
 
 export default combineReducers({
   routerReducer,
@@ -25,5 +26,6 @@ export default combineReducers({
   operatorsReducer,
   sessionReducer,
   configSwitchReducer,
-  queryConfigReducer
+  queryConfigReducer,
+  intervalReducer
 });

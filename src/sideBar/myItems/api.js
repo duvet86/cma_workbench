@@ -1,13 +1,12 @@
-import { fromPromise } from "rxjs/observable/fromPromise";
+import { from } from "rxjs";
 
-import { BASE_URL } from "lib/constants";
 import { getWithJwtAsync } from "lib/http";
 
 export const getMyItemsAsync = () =>
-  fromPromise(
+  from(
     Promise.all([
-      getWithJwtAsync(`${BASE_URL}/api/useritems/myitems`),
-      getWithJwtAsync(`${BASE_URL}/api/useritems/sharedwithme`)
+      getWithJwtAsync("api/useritems/myitems"),
+      getWithJwtAsync("api/useritems/sharedwithme")
     ]).then(arrayResponse => ({
       myItems: arrayResponse[0],
       sharedWithMe: arrayResponse[1]

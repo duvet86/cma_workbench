@@ -1,5 +1,5 @@
 import { ofType } from "redux-observable";
-import { of } from "rxjs/observable/of";
+import { of } from "rxjs";
 import { mergeMap, flatMap, catchError } from "rxjs/operators";
 import { push } from "react-router-redux";
 

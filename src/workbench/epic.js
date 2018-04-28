@@ -35,7 +35,7 @@ export const sessionEpic = action$ =>
     )
   );
 
-export const saveGraphEpic = (action$, store) =>
+export const saveGraphEpic = (action$, state$) =>
   action$.pipe(
     ofType(GRAPH_SAVE_REQUEST),
     mergeMap(({ tenantId, sessionId, queryGraphId, graphData }) => {
@@ -44,7 +44,7 @@ export const saveGraphEpic = (action$, store) =>
           session: { TenantId, SessionId, QueryGraphId },
           graph
         }
-      } = store.getState();
+      } = state$.value;
 
       return saveGraphObs(TenantId, SessionId, QueryGraphId, graph, true).pipe(
         map(() => graphSaveChangesSuccess()),
@@ -64,13 +64,15 @@ export const getGraphEpic = action$ =>
     )
   );
 
-export const pushGraphChangesEpic = (action$, store) =>
+export const pushGraphChangesEpic = (action$, state$) =>
   action$.pipe(
     ofType(GRAPH_PUSH_REQUEST),
     mergeMap(() => {
       const {
-        sessionReducer: { session: { TenantId, SessionId, QueryGraphId } }
-      } = store.getState();
+        sessionReducer: {
+          session: { TenantId, SessionId, QueryGraphId }
+        }
+      } = state$.value;
 
       return pushGraphChangesObs(TenantId, SessionId, QueryGraphId).pipe(
         map(response => graphPushSuccess(response)),
@@ -79,13 +81,13 @@ export const pushGraphChangesEpic = (action$, store) =>
     })
   );
 
-// export const popGraphChangesEpic = (action$, store) =>
+// export const popGraphChangesEpic = (action$, state$) =>
 //   action$.pipe(
 //     ofType(CLOSE_QUERY_CONFIG),
 //     mergeMap(() => {
 //       const {
 //         sessionReducer: { session: { TenantId, SessionId, QueryGraphId } }
-//       } = store.getState();
+//       } = state$.value;
 
 //       return popGraphChangesObs(TenantId, SessionId, QueryGraphId).pipe(
 //         map(response => graphPopSuccess(response)),

@@ -41,7 +41,7 @@ export const filterCapabilitiesEpic = action$ =>
     )
   );
 
-export const serviceDescriptionEpic = (action$, store) =>
+export const serviceDescriptionEpic = (action$, state$) =>
   action$.pipe(
     ofType(QUERY_DESCRIBE_REQUEST),
     mergeMap(() => {
@@ -50,7 +50,7 @@ export const serviceDescriptionEpic = (action$, store) =>
           session: { TenantId, SessionId, QueryGraphId }
         },
         queryConfigReducer: { elementId }
-      } = store.getState();
+      } = state$.value;
 
       return getDataServiceDescriptionObs(
         TenantId,
