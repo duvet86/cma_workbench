@@ -102,7 +102,7 @@ export const addQueryEpic = action$ =>
     map(({ elementId }) => openQueryConfig(elementId))
   );
 
-export const updateQueryDataServiceEpic = (action$, store) =>
+export const updateQueryDataServiceEpic = (action$, state$) =>
   action$.pipe(
     ofType(QUERY_DATASERVICE_UPDATE),
     mergeMap(({ elementId, query: { TargetDataViewId } }) => {
@@ -118,7 +118,7 @@ export const updateQueryDataServiceEpic = (action$, store) =>
           filters,
           connections
         }
-      } = store.getState();
+      } = state$.value;
 
       const denormalizedGraph = denormalize(graph, graphSchema, {
         queries,
