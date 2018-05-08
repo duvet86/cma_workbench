@@ -18,7 +18,7 @@ export const intervalTypesError = error => ({
 
 export const INTERVAL_SET_TYPE = "INTERVAL_SET_TYPE";
 
-export const setIntervalType = selectedIntervalType => ({
-  type: INTERVALTYPE_SUCCESS,
-  selectedIntervalType
+export const setIntervalType = newIntervalType => ({
+  type: INTERVAL_SET_TYPE,
+  newIntervalType
 });

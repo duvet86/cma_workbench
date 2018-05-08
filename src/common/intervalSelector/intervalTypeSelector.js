@@ -15,18 +15,36 @@ const styles = theme => ({
   }
 });
 
+const CustomBackdropComponent = ({ onClick }) => (
+  <div
+    style={{
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      zIndex: -1,
+      position: "fixed"
+    }}
+    onClick={onClick}
+    aria-hidden="true"
+  />
+);
+
 const IntervalTypeSelector = ({
   classes,
   intervalTypes,
-  selectedIntervalType
+  selectedIntervalType,
+  onChange
 }) => (
   <FormControl className={classes.formControl}>
     <InputLabel htmlFor="interval">Interval</InputLabel>
     <Select
+      MenuProps={{
+        BackdropComponent: CustomBackdropComponent
+      }}
       value={selectedIntervalType}
-      onChange={this.handleChange}
+      onChange={onChange}
       input={<Input name="interval" id="interval" />}
-      autoWidth
     >
       {intervalTypes.map(({ IntervalType, Label }) => (
         <MenuItem key={IntervalType} value={IntervalType}>
@@ -40,7 +58,8 @@ const IntervalTypeSelector = ({
 IntervalTypeSelector.propTypes = {
   classes: PropTypes.object.isRequired,
   intervalTypes: PropTypes.array.isRequired,
-  selectedIntervalType: PropTypes.string.isRequired
+  selectedIntervalType: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(IntervalTypeSelector);

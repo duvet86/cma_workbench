@@ -25,7 +25,8 @@ function interval(
       return {
         ...state,
         isLoading: false,
-        intervalTypes: action.intervalTypes
+        intervalTypes: action.intervalTypes,
+        selectedIntervalType: "DATEOP" // Default to DATEOP.
       };
 
     case INTERVALTYPE_ERROR:
@@ -38,7 +39,7 @@ function interval(
     case INTERVAL_SET_TYPE:
       return {
         ...state,
-        selectedIntervalType: action.selectedIntervalType
+        selectedIntervalType: action.newIntervalType
       };
 
     default:

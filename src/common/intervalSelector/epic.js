@@ -4,20 +4,16 @@ import { mergeMap, map, catchError } from "rxjs/operators";
 import { handleException } from "errorPage/epic";
 import {
   INTERVALTYPE_REQUEST,
-  intervalTypesSuccess,
-  setIntervalType
+  intervalTypesSuccess
 } from "common/intervalSelector/actions";
-import { getIntervalTypes } from "common/intervalSelector/api";
+import { getIntervalTypesObs } from "common/intervalSelector/api";
 
 export const intervalTypeEpic = action$ =>
   action$.pipe(
     ofType(INTERVALTYPE_REQUEST),
     mergeMap(() =>
-      getIntervalTypes().pipe(
-        map(intervalTypes => [
-          intervalTypesSuccess(intervalTypes),
-          setIntervalType("DATEOP") // Default to dateop.
-        ]),
+      getIntervalTypesObs().pipe(
+        map(intervalTypes => intervalTypesSuccess(intervalTypes)),
         catchError(error => handleException(error))
       )
     )
