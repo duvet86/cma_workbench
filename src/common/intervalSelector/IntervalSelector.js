@@ -12,6 +12,8 @@ import { MenuItem } from "material-ui/Menu";
 import ArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import ArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
+import IntervalTypeSelectorContainer from "common/intervalSelector/IntervalTypeSelectorContainer";
+
 const styles = theme => ({
   container: {
     display: "flex"
@@ -32,22 +34,7 @@ const styles = theme => ({
 
 const IntervalSelector = ({ classes }) => (
   <div className={classes.container}>
-    <FormControl className={classes.intervalTypeSelector}>
-      <InputLabel htmlFor="age-simple">Production Date</InputLabel>
-      <Select
-        value=""
-        onChange={this.handleChange}
-        input={<Input name="age" id="age-simple" />}
-        autoWidth
-      >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem>
-      </Select>
-    </FormControl>
+    <IntervalTypeSelectorContainer className={classes.intervalTypeSelector} />
     <FormControl className={classes.dateSelector}>
       <InputLabel htmlFor="name-input">Name</InputLabel>
       <Input

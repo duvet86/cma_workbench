@@ -1,19 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
-
 import Input, { InputLabel } from "material-ui/Input";
 import { FormControl } from "material-ui/Form";
 import Select from "material-ui/Select";
 import { MenuItem } from "material-ui/Menu";
-
-const styles = theme => ({
-  formControl: {
-    flexBasis: 200,
-    margin: theme.spacing.unit
-  }
-});
 
 const CustomBackdropComponent = ({ onClick }) => (
   <div
@@ -31,18 +22,18 @@ const CustomBackdropComponent = ({ onClick }) => (
 );
 
 const IntervalTypeSelector = ({
-  classes,
+  className,
   intervalTypes,
-  selectedIntervalType,
+  interval,
   onChange
 }) => (
-  <FormControl className={classes.formControl}>
+  <FormControl className={className}>
     <InputLabel htmlFor="interval">Interval</InputLabel>
     <Select
       MenuProps={{
         BackdropComponent: CustomBackdropComponent
       }}
-      value={selectedIntervalType}
+      value={interval.type}
       onChange={onChange}
       input={<Input name="interval" id="interval" />}
     >
@@ -56,10 +47,10 @@ const IntervalTypeSelector = ({
 );
 
 IntervalTypeSelector.propTypes = {
-  classes: PropTypes.object.isRequired,
   intervalTypes: PropTypes.array.isRequired,
-  selectedIntervalType: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  interval: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
 
-export default withStyles(styles)(IntervalTypeSelector);
+export default IntervalTypeSelector;

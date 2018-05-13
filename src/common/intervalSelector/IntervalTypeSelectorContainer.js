@@ -12,11 +12,12 @@ import IntervalTypeSelector from "common/intervalSelector/IntervalTypeSelector";
 class IntervalTypeSelectorContainer extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    selectedIntervalType: PropTypes.string.isRequired,
+    interval: PropTypes.object.isRequired,
     intervalTypes: PropTypes.array.isRequired,
     dispatchIntervalTypesRequest: PropTypes.func.isRequired,
     dispatchOnIntervalTypeChange: PropTypes.func.isRequired,
-    error: PropTypes.object
+    error: PropTypes.object,
+    className: PropTypes.string
   };
 
   componentDidMount() {
@@ -24,15 +25,16 @@ class IntervalTypeSelectorContainer extends Component {
   }
 
   onIntervalTypeChange = event => {
-    this.props.dispatchOnIntervalTypeChange(event.target.value);
+    this.props.dispatchOnIntervalTypeChange({ type: event.target.value });
   };
 
   render() {
-    const { selectedIntervalType, intervalTypes } = this.props;
+    const { className, interval, intervalTypes } = this.props;
 
     return (
       <IntervalTypeSelector
-        selectedIntervalType={selectedIntervalType}
+        className={className}
+        interval={interval}
         intervalTypes={intervalTypes}
         onChange={this.onIntervalTypeChange}
       />
@@ -41,11 +43,11 @@ class IntervalTypeSelectorContainer extends Component {
 }
 
 const mapStateToProps = ({
-  intervalReducer: { isLoading, intervalTypes, selectedIntervalType }
+  intervalReducer: { isLoading, intervalTypes, interval }
 }) => ({
   isLoading,
   intervalTypes,
-  selectedIntervalType
+  interval
 });
 
 const mapDispatchToProps = dispatch => ({

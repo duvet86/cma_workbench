@@ -1,8 +1,10 @@
+import update from "immutability-helper";
+
 import {
   INTERVALTYPE_REQUEST,
   INTERVALTYPE_SUCCESS,
   INTERVALTYPE_ERROR,
-  INTERVAL_SET_TYPE
+  INTERVAL_SET
 } from "common/intervalSelector/actions";
 
 function interval(
@@ -10,7 +12,9 @@ function interval(
     error: null,
     isLoading: true,
     intervalTypes: [],
-    selectedIntervalType: ""
+    interval: {
+      type: "DATEOP"
+    }
   },
   action
 ) {
@@ -25,8 +29,7 @@ function interval(
       return {
         ...state,
         isLoading: false,
-        intervalTypes: action.intervalTypes,
-        selectedIntervalType: "DATEOP" // Default to DATEOP.
+        intervalTypes: action.intervalTypes
       };
 
     case INTERVALTYPE_ERROR:
@@ -36,11 +39,14 @@ function interval(
         error: action.error
       };
 
-    case INTERVAL_SET_TYPE:
-      return {
-        ...state,
-        selectedIntervalType: action.newIntervalType
-      };
+    case INTERVAL_SET:
+      return update(state, {
+        interval: {
+          $merge: {
+            ...action.newInterval
+          }
+        }
+      });
 
     default:
       return state;

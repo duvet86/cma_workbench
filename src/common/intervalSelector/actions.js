@@ -16,9 +16,27 @@ export const intervalTypesError = error => ({
   error
 });
 
-export const INTERVAL_SET_TYPE = "INTERVAL_SET_TYPE";
+export const INTERVAL_SET = "INTERVAL_SET";
 
-export const setIntervalType = newIntervalType => ({
-  type: INTERVAL_SET_TYPE,
-  newIntervalType
+export const setIntervalType = newInterval => ({
+  type: INTERVAL_SET,
+  newInterval
+});
+
+export const RESOLVE_INTERVAL_REQUEST = "RESOLVE_INTERVAL_REQUEST";
+export const RESOLVE_INTERVAL_SUCCESS = "RESOLVE_INTERVAL_SUCCESS";
+export const RESOLVE_INTERVAL_ERROR = "RESOLVE_INTERVAL_ERROR";
+
+export const resolveStringRequest = (intervalType, offset = 0) => ({
+  type: RESOLVE_INTERVAL_REQUEST
+});
+
+export const resolveStringSuccess = intervalTypes => ({
+  type: RESOLVE_INTERVAL_SUCCESS,
+  intervalTypes
+});
+
+export const resolveStringError = error => ({
+  type: RESOLVE_INTERVAL_ERROR,
+  error
 });

@@ -11,7 +11,7 @@ import {
 
 import Canvas from "workbench/canvas/Canvas";
 
-import IntervalTypeSelectorContainer from "common/intervalSelector/IntervalTypeSelectorContainer";
+import IntervalSelector from "common/intervalSelector/IntervalSelector";
 
 const DROPPABLE_CANVAS_ID = "droppable-canvas";
 
@@ -60,7 +60,7 @@ class Workbench extends Component {
 
     return (
       <div id={CANVAS_DRAGGABLE_CONTAINER_ID} className={classes.container}>
-        <IntervalTypeSelectorContainer />
+        <IntervalSelector />
         <div id={CANVAS_DRAGGABLE_ID} className={classes.draggableItem}>
           {connectDropTarget(
             <span>
