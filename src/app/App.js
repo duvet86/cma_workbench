@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { DragDropContextProvider } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 import TopBarContainer from "topBar/TopBarContainer";
 import SideBar from "sideBar/SideBar";

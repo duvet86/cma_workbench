@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-import Grid from "material-ui/Grid";
-import Button from "material-ui/Button";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   actionButtons: {

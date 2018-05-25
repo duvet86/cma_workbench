@@ -3,15 +3,17 @@ import logo from "login/logo.svg";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-import Grid from "material-ui/Grid";
-import Paper from "material-ui/Paper";
-import Typography from "material-ui/Typography";
-import Button from "material-ui/Button";
-import { FormControl } from "material-ui/Form";
-import Input, { InputLabel, InputAdornment } from "material-ui/Input";
-import IconButton from "material-ui/IconButton";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";

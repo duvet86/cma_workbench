@@ -2,9 +2,11 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
-import { withStyles } from "material-ui/styles";
-import { ListItem, ListItemText } from "material-ui/List";
-import Divider from "material-ui/Divider";
+import { withStyles } from "@material-ui/core/styles";
+
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
 
 import Dashboard from "@material-ui/icons/Dashboard";
 

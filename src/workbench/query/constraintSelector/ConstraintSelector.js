@@ -1,15 +1,15 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-import Paper from "material-ui/Paper";
-import Typography from "material-ui/Typography";
-import Input from "material-ui/Input";
-import { MenuItem } from "material-ui/Menu";
-import { FormControl } from "material-ui/Form";
-import Select from "material-ui/Select";
-import IconButton from "material-ui/IconButton";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/Menu";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import IconButton from "@material-ui/core/IconButton";
 
 import ConstraintIcon from "@material-ui/icons/FilterList";
 import DeleteIcon from "@material-ui/icons/Delete";

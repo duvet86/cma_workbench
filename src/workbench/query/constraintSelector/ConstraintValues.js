@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-import { FormControl } from "material-ui/Form";
-import Input from "material-ui/Input";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
 
 const styles = theme => ({
   valueInput: {

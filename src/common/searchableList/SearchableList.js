@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 import { List as VirtualizedList, AutoSizer } from "react-virtualized";
 
-import Typography from "material-ui/Typography";
-import Paper from "material-ui/Paper";
-import List from "material-ui/List";
-import IconButton from "material-ui/IconButton";
-import Input, { InputLabel, InputAdornment } from "material-ui/Input";
-import { FormControl } from "material-ui/Form";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import List from "@material-ui/core/List";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
 
 import ClearIcon from "@material-ui/icons/Clear";
 

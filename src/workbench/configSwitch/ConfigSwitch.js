@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { elementType as ELEMENT_TYPE } from "sideBar/operators/operatorsData";
 
-import Grid from "material-ui/Grid";
-import Drawer from "material-ui/Drawer";
+import Grid from "@material-ui/core/Grid";
+import Drawer from "@material-ui/core/Drawer";
 
 import QueryConfigContainer from "workbench/query/QueryConfigContainer";
 

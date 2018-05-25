@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
 
-import Avatar from "material-ui/Avatar";
-import Typography from "material-ui/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   operatorContainer: {

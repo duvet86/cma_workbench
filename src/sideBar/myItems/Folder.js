@@ -1,10 +1,13 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
-import List, { ListItem, ListItemText } from "material-ui/List";
-import Collapse from "material-ui/transitions/Collapse";
-import Divider from "material-ui/Divider";
+import { withStyles } from "@material-ui/core/styles";
+
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Collapse from "@material-ui/core/Collapse";
+import Divider from "@material-ui/core/Divider";
 
 import FolderIcon from "@material-ui/icons/Folder";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";

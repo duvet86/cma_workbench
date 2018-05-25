@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { DropTarget } from "react-dnd";
 
 import { itemType } from "sideBar/operators/operatorsData";
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 import {
   CANVAS_DRAGGABLE_CONTAINER_ID,
   CANVAS_DRAGGABLE_ID

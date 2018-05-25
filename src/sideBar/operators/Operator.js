@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 
 import { DragSource } from "react-dnd";
 
-import { withStyles } from "material-ui/styles";
-import { ListItem, ListItemText } from "material-ui/List";
-import Divider from "material-ui/Divider";
-import Avatar from "material-ui/Avatar";
+import { withStyles } from "@material-ui/core/styles";
+
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import Avatar from "@material-ui/core/Avatar";
 
 import { itemType } from "sideBar/operators/operatorsData";
 

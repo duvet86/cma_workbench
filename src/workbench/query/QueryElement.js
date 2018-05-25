@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { withStyles } from "material-ui/styles";
+import { withStyles } from "@material-ui/core/styles";
 import { operatorsExtraInfo } from "sideBar/operators/operatorsData";
 
-import Avatar from "material-ui/Avatar";
-import List, { ListItem, ListItemIcon, ListItemText } from "material-ui/List";
-import Divider from "material-ui/Divider";
-import Typography from "material-ui/Typography";
+import Avatar from "@material-ui/core/Avatar";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
 
 import Settings from "@material-ui/icons/Settings";
 

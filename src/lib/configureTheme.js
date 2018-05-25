@@ -1,9 +1,9 @@
 // @flow
 
-import { createMuiTheme } from "material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 
-import amber from "material-ui/colors/amber";
-import blue from "material-ui/colors/blue";
+import amber from "@material-ui/core/colors/amber";
+import blue from "@material-ui/core/colors/blue";
 
 const configureTheme = () =>
   createMuiTheme({
