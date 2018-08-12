@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 
-import Settings from "@material-ui/icons/Settings";
+import SettingsIcon from "@material-ui/icons/SettingsApplications";
 
 const styles = theme => ({
   operatorContainer: {
@@ -85,7 +85,7 @@ const QueryElement = ({ classes, columns, elementId, elementLabel, x, y }) => (
         {columns.map(({ Label, ColumnName }) => (
           <ListItem key={ColumnName} className={classes.listItem} dense>
             <ListItemIcon className={classes.itemIcon}>
-              <Settings />
+              <SettingsIcon />
             </ListItemIcon>
             <ListItemText
               className={classes.listItem}

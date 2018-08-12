@@ -8,13 +8,15 @@ import history from "lib/history";
 import rootEpic from "rootEpic";
 import rootReducer from "rootReducer";
 
-const epicMiddleware = createEpicMiddleware(rootEpic);
+const epicMiddleware = createEpicMiddleware();
 const browserRouterMiddleware = routerMiddleware(history);
 
 const middleware = [epicMiddleware, browserRouterMiddleware];
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const configureStore = () =>
+const configureStore = () => {
   createStore(rootReducer, composeEnhancers(applyMiddleware(...middleware)));
+  epicMiddleware.run(rootEpic);
+};
 
 export default configureStore;

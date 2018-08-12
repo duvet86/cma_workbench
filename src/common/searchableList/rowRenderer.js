@@ -5,7 +5,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
 
-import SettingsIcon from "@material-ui/icons/Settings";
+import SettingsIcon from "@material-ui/icons/SettingsApplications";
 
 const rowRenderer = (classes, columns, onItemClick) => ({
   index,

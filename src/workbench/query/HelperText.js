@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Card, { CardHeader } from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
 
-import InfoIcon from "@material-ui/icons/InfoOutline";
+import InfoIcon from "@material-ui/icons/InfoOutlined";
 
 const HelperText = ({ currentStep }) => {
   let title = "";
